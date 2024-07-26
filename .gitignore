@@ -1,0 +1,17 @@
+# Global directories
+__pycache__/
+
+# Global files
+*.py[codz]
+
+# Root directories
+/.venv/
+/venv/
+/.idea/
+/.vscode/
+/.mypy_cache/
+/.pytest_cache/
+/.ruff_cache/
+
+# Project files
+/src/kcdb/_version.py
