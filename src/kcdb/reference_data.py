@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 KCDB_BASE_URL = "https://www.bipm.org/api/kcdb"
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class Domain:
     """One of General Physics, Chemistry and Biology or Ionizing Radition."""
 
@@ -22,7 +22,7 @@ class Domain:
     name: str
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class RefData:
     """Base class for reference data."""
 
@@ -59,21 +59,21 @@ class Source(RefData):
     """A Source for the RADIATION :class:`.Domain`."""
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class MetrologyArea(RefData):
     """A Metrology Area of a :class:`.Domain`."""
 
     domain: Domain
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class Branch(RefData):
     """A Branch of a :class:`.MetrologyArea`."""
 
     metrology_area: MetrologyArea
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class Service(RefData):
     """A Service for a :class:`.Branch`."""
 
@@ -81,7 +81,7 @@ class Service(RefData):
     physics_code: str
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class SubService(RefData):
     """A Sub-Service of a :class:`.Service`."""
 
@@ -89,7 +89,7 @@ class SubService(RefData):
     service: Service
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True)
 class IndividualService(RefData):
     """An Individual Service of a :class:`.SubService`."""
 
