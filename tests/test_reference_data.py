@@ -80,8 +80,7 @@ def test_countries() -> None:
 
 
 def test_domain() -> None:
-    domains = ReferenceData.domains()
-    chem, phys, rad = domains
+    chem, phys, rad = sorted(ReferenceData.domains())
     assert chem.code == "CHEM-BIO"
     assert chem.name == "Chemistry and Biology"
     assert phys.code == "PHYSICS"
