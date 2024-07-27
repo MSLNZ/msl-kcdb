@@ -168,7 +168,7 @@ def test_services_physics() -> None:
     assert service.id == 55
     assert service.label == "2"
     assert service.value == "Frequency"
-    assert service.physics_code == "55"
+    assert service.physics_code == "2"
     assert service.branch.id == 27
     assert service.branch.metrology_area.id == 7
 
@@ -185,7 +185,7 @@ def test_sub_services_physics() -> None:
     domain = Domain(code="PHYSICS", name="General physics")
     area = MetrologyArea(domain=domain, id=7, label="TF", value="Time and Frequency")
     branch = Branch(metrology_area=area, id=27, label="TF/F", value="Frequency")
-    service = Service(branch=branch, id=55, label="2", value="Frequency", physics_code="55")
+    service = Service(branch=branch, id=55, label="2", value="Frequency", physics_code="2")
 
     sub_services = ReferenceData.sub_services(service)
     meter, *rest = ReferenceData.filter(sub_services, "meter")
@@ -193,9 +193,9 @@ def test_sub_services_physics() -> None:
     assert meter.id == 218
     assert meter.label == "3"
     assert meter.value == "Frequency meter"
-    assert meter.physics_code == "55.218"
+    assert meter.physics_code == "2.3"
     assert meter.service.id == 55
-    assert meter.service.physics_code == "55"
+    assert meter.service.physics_code == "2"
     assert meter.service.branch.id == 27
     assert meter.service.branch.metrology_area.id == 7
 
@@ -204,8 +204,8 @@ def test_individual_services_physics() -> None:
     domain = Domain(code="PHYSICS", name="General physics")
     area = MetrologyArea(domain=domain, id=7, label="TF", value="Time and Frequency")
     branch = Branch(metrology_area=area, id=27, label="TF/F", value="Frequency")
-    service = Service(branch=branch, physics_code="55", id=55, label="2", value="Frequency")
-    sub_service = SubService(service=service, physics_code="55.218", id=218, label="3", value="Frequency meter")
+    service = Service(branch=branch, physics_code="2", id=55, label="2", value="Frequency")
+    sub_service = SubService(service=service, physics_code="2.3", id=218, label="3", value="Frequency meter")
 
     individual_services = ReferenceData.individual_services(sub_service)
     counter, *rest = ReferenceData.filter(individual_services, "counter")
@@ -213,11 +213,11 @@ def test_individual_services_physics() -> None:
     assert counter.id == 546
     assert counter.label == "1"
     assert counter.value == "Frequency counter"
-    assert counter.physics_code == "55.218.546"
+    assert counter.physics_code == "2.3.1"
     assert counter.sub_service.id == 218
-    assert counter.sub_service.physics_code == "55.218"
+    assert counter.sub_service.physics_code == "2.3"
     assert counter.sub_service.service.id == 55
-    assert counter.sub_service.service.physics_code == "55"
+    assert counter.sub_service.service.physics_code == "2"
     assert counter.sub_service.service.branch.id == 27
     assert counter.sub_service.service.branch.metrology_area.id == 7
 
@@ -226,8 +226,8 @@ def test_individual_services_physics_http404() -> None:
     domain = Domain(code="PHYSICS", name="General physics")
     area = MetrologyArea(id=3, label="L", value="Length", domain=domain)
     branch = Branch(id=12, label="L/DimMet", value="Dimensional metrology", metrology_area=area)
-    service = Service(id=31, label="6", value="Various dimensional", branch=branch, physics_code="31")
-    sub_service = SubService(id=104, label="7", value="Not attributed 1", service=service, physics_code="31.104")
+    service = Service(id=31, label="6", value="Various dimensional", branch=branch, physics_code="6")
+    sub_service = SubService(id=104, label="7", value="Not attributed 1", service=service, physics_code="6.7")
 
     individual_services = ReferenceData.individual_services(sub_service)
     assert not individual_services
