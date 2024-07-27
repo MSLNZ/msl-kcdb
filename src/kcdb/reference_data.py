@@ -193,7 +193,7 @@ class ReferenceData:
             return [
                 IndividualService(
                     sub_service=sub_service,
-                    physics_code=f"{sub_service.physics_code}.{data['id']}",
+                    physics_code=f"{sub_service.physics_code}.{data['label']}",
                     **data,
                 )
                 for data in response.json()["referenceData"]
@@ -258,7 +258,7 @@ class ReferenceData:
         )
         if response.ok:
             return [
-                Service(branch=branch, physics_code=f"{data['id']}", **data)
+                Service(branch=branch, physics_code=data["label"], **data)
                 for data in response.json()["referenceData"]
             ]
 
@@ -277,6 +277,6 @@ class ReferenceData:
         )
         response.raise_for_status()
         return [
-            SubService(service=service, physics_code=f"{service.physics_code}.{data['id']}", **data)
+            SubService(service=service, physics_code=f"{service.physics_code}.{data['label']}", **data)
             for data in response.json()["referenceData"]
         ]
