@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "kcdb"
 dynamic = ["version"]
 dependencies = ["requests"]
-requires-python = ">= 3.9"
+requires-python = ">= 3.8"
 description = "Interact with the BIPM key comparison database."
 license = {file = "LICENSE.txt"}
 readme = "README.md"
@@ -24,6 +24,7 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -37,8 +38,8 @@ Homepage = "https://github.com/MSLNZ/kcdb-api"
 Source = "https://github.com/MSLNZ/kcdb-api"
 
 [project.optional-dependencies]
-dev = [
-    "pytest",
+tests = [
+  "pytest",
 ]
 
 [tool.hatch.version]
@@ -49,8 +50,8 @@ version-file = "src/kcdb/_version.py"
 
 [tool.pytest.ini_options]
 addopts = [
-    "--verbose",
-    "--import-mode=importlib",
+  "--verbose",
+  "--import-mode=importlib",
 ]
 
 [tool.mypy]
@@ -60,14 +61,14 @@ implicit_reexport = true
 [tool.ruff]
 line-length = 120
 exclude = [
-    ".git",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".venv",
-    "build",
-    "dist",
-    "venv",
+  ".git",
+  ".mypy_cache",
+  ".pytest_cache",
+  ".ruff_cache",
+  ".venv",
+  "build",
+  "dist",
+  "venv",
 ]
 
 [tool.ruff.lint.isort]
