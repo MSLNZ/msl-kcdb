@@ -126,9 +126,9 @@ class IndividualService(RefData):
 class ResultAggregation:
     """Aggregation representation."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an aggregation."""
-        self.name: str = kwargs.get("name", "")
+        self.name: str = kwargs.get("name") or ""
         """Aggregation name (example: "cmcCountries")."""
 
         self.values: list[str] = kwargs.get("values", [])
@@ -142,12 +142,12 @@ class ResultAggregation:
 class ResultEquation:
     """Equation representation."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an equation."""
-        self.equation: str = kwargs.get("equation", "")
+        self.equation: str = kwargs.get("equation") or ""
         """Equation name."""
 
-        self.equation_comment: str = kwargs.get("equationComment", "")
+        self.equation_comment: str = kwargs.get("equationComment") or ""
         """Equation comment."""
 
     def __repr__(self) -> str:
@@ -158,18 +158,18 @@ class ResultEquation:
 class ResultFilter:
     """Filter representation."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a filter."""
         self.children: list[ResultFilter] = [ResultFilter(c) for c in kwargs.get("children", [])]
         """Filter children."""
 
-        self.code: str = kwargs.get("code", "")
+        self.code: str = kwargs.get("code") or ""
         """Filter code (example: "cmcMaterial")."""
 
         self.count: int = kwargs["count"]
         """Filter count."""
 
-        self.name: str = kwargs.get("name", "")
+        self.name: str = kwargs.get("name") or ""
         """Filter name (example: "cmcMaterial")."""
 
         self.order: int = kwargs["order"]
@@ -186,12 +186,12 @@ class ResultFilter:
 class ResultParam:
     """Parameter representation."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a parameter."""
-        self.parameter_name: str = kwargs.get("parameterName", "")
+        self.parameter_name: str = kwargs.get("parameterName") or ""
         """Parameter name (example: "S21 and S12")."""
 
-        self.parameter_value: str = kwargs.get("parameterValue", "")
+        self.parameter_value: str = kwargs.get("parameterValue") or ""
         """Parameter value (example: "-80 dB to 0 dB")."""
 
     def __repr__(self) -> str:
@@ -202,7 +202,7 @@ class ResultParam:
 class ResultTable:
     """Table representation."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a table."""
         self.table_rows: int = kwargs["tableRows"]
         """Number of rows in table."""
@@ -210,13 +210,13 @@ class ResultTable:
         self.table_cols: int = kwargs["tableCols"]
         """Number of columns in table."""
 
-        self.table_name: str = kwargs.get("tableName", "")
+        self.table_name: str = kwargs.get("tableName") or ""
         """Table name (example: "CH_Scatt-Atten_Mag")."""
 
-        self.table_comment: str = kwargs.get("tableComment", "")
+        self.table_comment: str = kwargs.get("tableComment") or ""
         """Table comment."""
 
-        self.table_contents: str = kwargs.get("tableContents", "")
+        self.table_contents: str = kwargs.get("tableContents") or ""
         """Table contents (example: "{"row_1":{"col_1":"val_1","col_2":"val_2"}}")."""
 
     def __repr__(self) -> str:
@@ -230,12 +230,12 @@ class ResultTable:
 class ResultUnit:
     """Units object definition."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Units object definition."""
         self.lower_limit: float | None = kwargs.get("lowerLimit")
         """Lower limit value."""
 
-        self.unit: str = kwargs.get("unit", "")
+        self.unit: str = kwargs.get("unit") or ""
         """Unit symbol (example: "%")."""
 
         self.upper_limit: float | None = kwargs.get("upperLimit")
@@ -249,7 +249,7 @@ class ResultUnit:
 class Results:
     """Attributes for advanced search results."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Attributes for advanced search results."""
         self.number_of_elements: int = kwargs["numberOfElements"]
         """Number of elements on this page."""
@@ -266,7 +266,7 @@ class Results:
         self.total_pages: int = kwargs["totalPages"]
         """Total number of pages."""
 
-        self.version_api_kcdb: str = kwargs.get("versionApiKcdb", "")
+        self.version_api_kcdb: str = kwargs.get("versionApiKcdb") or ""
         """API KCDB version (example: "1.0.7")."""
 
     def __repr__(self) -> str:
@@ -284,12 +284,12 @@ class Results:
 class ResultCommon:
     """Common attributes for advanced search results."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401, PLR0915
+    def __init__(self, kwargs: dict[str, Any]) -> None:  # noqa: PLR0915
         """Attributes for advanced search results that are common."""
         self.id: int = kwargs["id"]
         """Document database id."""
 
-        self.approval_date: str = kwargs.get("approvalDate", "")
+        self.approval_date: str = kwargs.get("approvalDate") or ""
         """Approval date (YYYY-MM-DD)."""
 
         k = kwargs.get("cmc")
@@ -308,58 +308,58 @@ class ResultCommon:
         self.cmc_uncertainty_base_unit: ResultUnit | None = ResultUnit(k) if k else None
         """CMC uncertainty base unit."""
 
-        self.comments: str = kwargs.get("comments", "")
+        self.comments: str = kwargs.get("comments") or ""
         """Comments."""
 
         self.confidence_level: float | None = kwargs.get("confidenceLevel")
         """Confidence level."""
 
-        self.country_value: str = kwargs.get("countryValue", "")
+        self.country_value: str = kwargs.get("countryValue") or ""
         """Country full name (example: "China")."""
 
         self.coverage_factor: float | None = kwargs.get("coverageFactor")
         """Coverage factor."""
 
-        self.domain_code: str = kwargs.get("domainCode", "")
+        self.domain_code: str = kwargs.get("domainCode") or ""
         """Domain code (example: "CHEM-BIO")."""
 
-        self.group_identifier: str = kwargs.get("groupIdentifier", "")
+        self.group_identifier: str = kwargs.get("groupIdentifier") or ""
         """Group identifier."""
 
-        self.kcdb_code: str = kwargs.get("kcdbCode", "")
+        self.kcdb_code: str = kwargs.get("kcdbCode") or ""
         """Document kcdb code (example: "APMP-QM-CN-00000JZR-1")."""
 
-        self.metrology_area_label: str = kwargs.get("metrologyAreaLabel", "")
+        self.metrology_area_label: str = kwargs.get("metrologyAreaLabel") or ""
         """Metrology area label (example: "QM")."""
 
-        self.nmi_code: str = kwargs.get("nmiCode", "")
+        self.nmi_code: str = kwargs.get("nmiCode") or ""
         """NMI code (example: "NIM")."""
 
-        self.nmi_name: str = kwargs.get("nmiName", "")
+        self.nmi_name: str = kwargs.get("nmiName") or ""
         """NMI name (example: "National Institute of Metrology")."""
 
-        self.nmi_service_code: str = kwargs.get("nmiServiceCode", "")
+        self.nmi_service_code: str = kwargs.get("nmiServiceCode") or ""
         """NMI service code (example: "Other-11")."""
 
-        self.nmi_service_link: str = kwargs.get("nmiServiceLink", "")
+        self.nmi_service_link: str = kwargs.get("nmiServiceLink") or ""
         """NMI service link."""
 
-        self.publication_date: str = kwargs.get("publicationDate", "")
+        self.publication_date: str = kwargs.get("publicationDate") or ""
         """Publication date (YYYY-MM-DD)."""
 
-        self.quantity_value: str = kwargs.get("quantityValue", "")
+        self.quantity_value: str = kwargs.get("quantityValue") or ""
         """Quantity value (example: "Absorbed dose/rate")."""
 
-        self.rmo: str = kwargs.get("rmo", "")
+        self.rmo: str = kwargs.get("rmo") or ""
         """RMO acronym (example: "EURAMET")."""
 
-        self.status: str = kwargs.get("status", "")
+        self.status: str = kwargs.get("status") or ""
         """CMC status (example: "Published")."""
 
-        self.status_date: str = kwargs.get("statusDate", "")
+        self.status_date: str = kwargs.get("statusDate") or ""
         """Last status date (YYYY-MM-DD)."""
 
-        self.traceability_source: str = kwargs.get("traceabilitySource", "")
+        self.traceability_source: str = kwargs.get("traceabilitySource") or ""
         """Traceability source (example: "VSL")."""
 
         k = kwargs.get("uncertaintyEquation")
@@ -378,17 +378,17 @@ class ResultCommon:
 class ResultChemistryAndBiology(ResultCommon):
     """Chemistry and Biology result."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Chemistry and Biology result."""
         super().__init__(kwargs)
 
-        self.analyte_matrix: str = kwargs.get("analyteMatrix", "")
+        self.analyte_matrix: str = kwargs.get("analyteMatrix") or ""
         """Analyte matrix (example: "high purity antimony")."""
 
-        self.analyte_value: str = kwargs.get("analyteValue", "")
+        self.analyte_value: str = kwargs.get("analyteValue") or ""
         """Analyte value (example: "antimony")."""
 
-        self.category_value: str = kwargs.get("categoryValue", "")
+        self.category_value: str = kwargs.get("categoryValue") or ""
         """Category value (example: "High purity chemicals")."""
 
         k = kwargs.get("crm")
@@ -417,13 +417,13 @@ class ResultChemistryAndBiology(ResultCommon):
         self.crm_uncertainty_table: ResultTable | None = ResultTable(k) if k else None
         """CRM uncertainty table."""
 
-        self.measurment_technique: str = kwargs.get("measurmentTechnique", "")
+        self.measurment_technique: str = kwargs.get("measurmentTechnique") or ""
         """Measurment technique (example: "Liquid-solid extraction with SPE cleanup and bracketing LC-IDMS/MS")."""
 
-        self.mechanism: str = kwargs.get("mechanism", "")
+        self.mechanism: str = kwargs.get("mechanism") or ""
         """Mechanism (example: "Customer service; GD-MS-200; delivery only to other NMIs")."""
 
-        self.sub_category_value: str = kwargs.get("subCategoryValue", "")
+        self.sub_category_value: str = kwargs.get("subCategoryValue") or ""
         """Sub category value (example: "Metals")."""
 
         k = kwargs.get("uncertaintyConvention")
@@ -438,32 +438,32 @@ class ResultChemistryAndBiology(ResultCommon):
 class ResultPhysics(ResultCommon):
     """Physics result."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Physics result."""
         super().__init__(kwargs)
 
-        self.branch_value: str = kwargs.get("branchValue", "")
+        self.branch_value: str = kwargs.get("branchValue") or ""
         """Branch value (example: "Radio frequency measurements")."""
 
-        self.individual_service_value: str = kwargs.get("individualServiceValue", "")
+        self.individual_service_value: str = kwargs.get("individualServiceValue") or ""
         """Individual service value (example: "Transmission coefficient in coaxial line (real and imaginary)")."""
 
-        self.instrument: str = kwargs.get("instrument", "")
+        self.instrument: str = kwargs.get("instrument") or ""
         """Instrument (example: "Passive device")."""
 
-        self.instrument_method: str = kwargs.get("instrumentMethod", "")
+        self.instrument_method: str = kwargs.get("instrumentMethod") or ""
         """Instrument method (example: "Vector network analyser")."""
 
-        self.international_standard: str = kwargs.get("internationalStandard", "")
+        self.international_standard: str = kwargs.get("internationalStandard") or ""
         """International standard (example: "EURAMET Cg19, ISO 8655-6")."""
 
         self.parameters: list[ResultParam] = [ResultParam(p) for p in kwargs.get("parameters", [])]
         """Parameters list with name and value."""
 
-        self.service_value: str = kwargs.get("serviceValue", "")
+        self.service_value: str = kwargs.get("serviceValue") or ""
         """Service value (example: "Radio frequency measurements")."""
 
-        self.sub_service_value: str = kwargs.get("subServiceValue", "")
+        self.sub_service_value: str = kwargs.get("subServiceValue") or ""
         """Sub service value (example: "Scattering parameters (vectors)")."""
 
     def __repr__(self) -> str:
@@ -474,38 +474,38 @@ class ResultPhysics(ResultCommon):
 class ResultRadiation(ResultCommon):
     """Radiation result."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Radiation result."""
         super().__init__(kwargs)
 
-        self.branch_value: str = kwargs.get("branchValue", "")
+        self.branch_value: str = kwargs.get("branchValue") or ""
         """Branch value (example: "Radio frequency measurements")."""
 
-        self.instrument: str = kwargs.get("instrument", "")
+        self.instrument: str = kwargs.get("instrument") or ""
         """Instrument (example: "Passive device")."""
 
-        self.instrument_method: str = kwargs.get("instrumentMethod", "")
+        self.instrument_method: str = kwargs.get("instrumentMethod") or ""
         """Instrument method (example: "Vector network analyser")."""
 
-        self.international_standard: str = kwargs.get("internationalStandard", "")
+        self.international_standard: str = kwargs.get("internationalStandard") or ""
         """International standard (example: "EURAMET Cg19, ISO 8655-6")."""
 
-        self.medium_value: str = kwargs.get("mediumValue", "")
+        self.medium_value: str = kwargs.get("mediumValue") or ""
         """Medium value (example: "Liquid")."""
 
-        self.nuclide_value: str = kwargs.get("nuclideValue", "")
+        self.nuclide_value: str = kwargs.get("nuclideValue") or ""
         """Nuclide value (example: "Cr-51")."""
 
-        self.radiation_code: str = kwargs.get("radiationCode", "")
+        self.radiation_code: str = kwargs.get("radiationCode") or ""
         """Radiation code separated by a dot for branch, quantity, source, medium (example: "2.1.3.2")."""
 
-        self.radiation_specification: str = kwargs.get("radiationSpecification", "")
+        self.radiation_specification: str = kwargs.get("radiationSpecification") or ""
         """Radiation specification name (example: "10 ml to 500 ml NMIJ/AIST standard cylindrical plastic bottle")."""
 
-        self.reference_standard: str = kwargs.get("referenceStandard", "")
+        self.reference_standard: str = kwargs.get("referenceStandard") or ""
         """Reference standard (example: "Comparison with the NMIJ/AIST standard source")."""
 
-        self.source_value: str = kwargs.get("sourceValue", "")
+        self.source_value: str = kwargs.get("sourceValue") or ""
         """Source value (example: "Multi-radionuclide source")."""
 
     def __repr__(self) -> str:
@@ -516,7 +516,7 @@ class ResultRadiation(ResultCommon):
 class ResultsChemistryAndBiology(Results):
     """Chemistry and Biology search results."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Chemistry and Biology search results."""
         super().__init__(kwargs)
 
@@ -531,7 +531,7 @@ class ResultsChemistryAndBiology(Results):
 class ResultsPhysics(Results):
     """Physics search results."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Physics search results."""
         super().__init__(kwargs)
 
@@ -546,7 +546,7 @@ class ResultsPhysics(Results):
 class ResultsQuickSearch(Results):
     """Quick search results."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Quick search results."""
         super().__init__(kwargs)
 
@@ -571,7 +571,7 @@ class ResultsQuickSearch(Results):
 class ResultsRadiation(Results):
     """Radiation search results."""
 
-    def __init__(self, kwargs: Any) -> None:  # noqa: ANN401
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Radiation search results."""
         super().__init__(kwargs)
 
