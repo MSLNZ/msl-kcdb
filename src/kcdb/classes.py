@@ -3,18 +3,18 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import StrEnum
+from enum import Enum
 from typing import Any
 
 
-class AbsoluteRelative(StrEnum):
+class AbsoluteRelative(Enum):
     """CRM uncertainty mode."""
 
     ABSOLUTE = "Absolute"
     RELATIVE = "Relative"
 
 
-class UncertaintyConvention(StrEnum):
+class UncertaintyConvention(Enum):
     """Chemistry and Biology uncertainty convention."""
 
     ONE = "One"
