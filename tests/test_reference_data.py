@@ -1,5 +1,5 @@
 from kcdb import ReferenceData
-from kcdb.reference_data import Branch, Domain, MetrologyArea, Service, SubService
+from kcdb.classes import Branch, Domain, MetrologyArea, Service, SubService
 
 
 def test_analytes() -> None:

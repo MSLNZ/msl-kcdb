@@ -2,17 +2,18 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import requests
 
-from .reference_data import KCDB_BASE_URL, Country
+from .classes import Country, ResultsChemistryAndBiology, ResultsPhysics, ResultsQuickSearch, ResultsRadiation
+from .reference_data import KCDB_BASE_URL
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from datetime import date
 
-    from .reference_data import (
+    from .classes import (
         Analyte,
         Branch,
         Category,
@@ -32,7 +33,7 @@ class CMCSearchData:
     """Perform a CMC search."""
 
     MAX_PAGE_SIZE: int = 10_000
-    TIMEOUT: float = 10.0
+    TIMEOUT: float = 30.0
 
     @staticmethod
     def chemistry_and_biology(  # noqa: PLR0913
@@ -43,11 +44,11 @@ class CMCSearchData:
         keywords: str | None = None,
         metrology_area_label: str | MetrologyArea = "QM",
         page: int = 0,
-        page_size: int = 10000,
+        page_size: int = 100,
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
-    ) -> dict[str, Any]:
+    ) -> ResultsChemistryAndBiology:
         """Chemistry and biology search criteria.
 
         :param analyte_label: Search for analyte containing this value.
@@ -106,8 +107,7 @@ class CMCSearchData:
             timeout=CMCSearchData.TIMEOUT,
         )
         response.raise_for_status()
-        json: dict[str, Any] = response.json()
-        return json
+        return ResultsChemistryAndBiology(response.json())
 
     @staticmethod
     def physics(  # noqa: PLR0913
@@ -122,7 +122,7 @@ class CMCSearchData:
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
-    ) -> dict[str, Any]:
+    ) -> ResultsPhysics:
         """Physics search criteria.
 
         :param metrology_area_label: Metrology-area label to search.
@@ -185,8 +185,7 @@ class CMCSearchData:
             timeout=CMCSearchData.TIMEOUT,
         )
         response.raise_for_status()
-        json: dict[str, Any] = response.json()
-        return json
+        return ResultsPhysics(response.json())
 
     @staticmethod
     def quick_search(  # noqa: PLR0913
@@ -197,7 +196,7 @@ class CMCSearchData:
         page: int = 0,
         page_size: int = 100,
         show_table: bool = False,
-    ) -> dict[str, Any]:
+    ) -> ResultsQuickSearch:
         """Quick search criteria.
 
         :param excluded_filters: Excluded filter list.
@@ -237,8 +236,7 @@ class CMCSearchData:
             timeout=CMCSearchData.TIMEOUT,
         )
         response.raise_for_status()
-        json: dict[str, Any] = response.json()
-        return json
+        return ResultsQuickSearch(response.json())
 
     @staticmethod
     def radiation(  # noqa: C901, PLR0913
@@ -256,7 +254,7 @@ class CMCSearchData:
         quantity_label: str | Quantity | None = None,
         show_table: bool = False,
         source_label: str | Source | None = None,
-    ) -> dict[str, Any]:
+    ) -> ResultsRadiation:
         """Radiation search criteria.
 
         :param branch_label: Branch label.
@@ -330,8 +328,7 @@ class CMCSearchData:
             timeout=CMCSearchData.TIMEOUT,
         )
         response.raise_for_status()
-        json: dict[str, Any] = response.json()
-        return json
+        return ResultsRadiation(response.json())
 
 
 def _label(obj: str | RefData) -> str:

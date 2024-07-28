@@ -3,101 +3,33 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, TypeVar
 
 import requests
 
+from .classes import (
+    Analyte,
+    Branch,
+    Category,
+    Country,
+    Domain,
+    IndividualService,
+    Medium,
+    MetrologyArea,
+    Nuclide,
+    Quantity,
+    RefData,
+    Service,
+    Source,
+    SubService,
+)
+
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-KCDB_BASE_URL = "https://www.bipm.org/api/kcdb"
-
-
-@dataclass(frozen=True, order=True)
-class Domain:
-    """One of General Physics, Chemistry and Biology or Ionizing Radition."""
-
-    code: str
-    name: str
-
-
-@dataclass(frozen=True, order=True)
-class RefData:
-    """Base class for reference data."""
-
-    id: int
-    label: str
-    value: str
-
-
-class Analyte(RefData):
-    """An Analyte for the CHEM-BIO :class:`.Domain`."""
-
-
-class Category(RefData):
-    """A Category for the CHEM-BIO :class:`.Domain`."""
-
-
-class Country(RefData):
-    """Information about a country."""
-
-
-class Nuclide(RefData):
-    """A Nuclide for the RADIATION :class:`.Domain`."""
-
-
-class Medium(RefData):
-    """A Medium for the RADIATION :class:`.Domain`."""
-
-
-class Quantity(RefData):
-    """A Quantity for the RADIATION :class:`.Domain`."""
-
-
-class Source(RefData):
-    """A Source for the RADIATION :class:`.Domain`."""
-
-
-@dataclass(frozen=True, order=True)
-class MetrologyArea(RefData):
-    """A Metrology Area of a :class:`.Domain`."""
-
-    domain: Domain
-
-
-@dataclass(frozen=True, order=True)
-class Branch(RefData):
-    """A Branch of a :class:`.MetrologyArea`."""
-
-    metrology_area: MetrologyArea
-
-
-@dataclass(frozen=True, order=True)
-class Service(RefData):
-    """A Service for a :class:`.Branch`."""
-
-    branch: Branch
-    physics_code: str
-
-
-@dataclass(frozen=True, order=True)
-class SubService(RefData):
-    """A Sub-Service of a :class:`.Service`."""
-
-    physics_code: str
-    service: Service
-
-
-@dataclass(frozen=True, order=True)
-class IndividualService(RefData):
-    """An Individual Service of a :class:`.SubService`."""
-
-    physics_code: str
-    sub_service: SubService
-
-
 T = TypeVar("T", bound=RefData)
+
+KCDB_BASE_URL = "https://www.bipm.org/api/kcdb"
 
 
 class ReferenceData:
@@ -258,8 +190,7 @@ class ReferenceData:
         )
         if response.ok:
             return [
-                Service(branch=branch, physics_code=data["label"], **data)
-                for data in response.json()["referenceData"]
+                Service(branch=branch, physics_code=data["label"], **data) for data in response.json()["referenceData"]
             ]
 
         # Dosimetry(id=32), Radioactivity(id=33) and Neutron Measurements(id=34) do not have Services
