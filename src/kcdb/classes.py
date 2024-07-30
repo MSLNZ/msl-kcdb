@@ -26,10 +26,10 @@ class Domain:
     """One of General Physics, Chemistry and Biology or Ionizing Radition."""
 
     code: str
-    """Domain code (example: "PHYSICS")."""
+    """Domain code (example: `"PHYSICS"`)."""
 
     name: str
-    """Domain code (example: "General physics")."""
+    """Domain code (example: `"General physics"`)."""
 
 
 @dataclass(frozen=True, order=True)
@@ -40,18 +40,18 @@ class RefData:
     """Reference data identity."""
 
     label: str
-    """Reference data label (example: "QM")."""
+    """Reference data label (example: `"QM"`)."""
 
     value: str
-    """Reference data value (example: "Chemistry and Biology")."""
+    """Reference data value (example: `"Chemistry and Biology"`)."""
 
 
 class Analyte(RefData):
-    """An Analyte for the CHEM-BIO :class:`.Domain`."""
+    """An Analyte for the `CHEM-BIO` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
 
 class Category(RefData):
-    """A Category for the CHEM-BIO :class:`.Domain`."""
+    """A Category for the `CHEM-BIO` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
 
 class Country(RefData):
@@ -59,24 +59,24 @@ class Country(RefData):
 
 
 class Nuclide(RefData):
-    """A Nuclide for the RADIATION :class:`.Domain`."""
+    """A Nuclide for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
 
 class Medium(RefData):
-    """A Medium for the RADIATION :class:`.Domain`."""
+    """A Medium for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
 
 class Quantity(RefData):
-    """A Quantity for the RADIATION :class:`.Domain`."""
+    """A Quantity for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
 
 class Source(RefData):
-    """A Source for the RADIATION :class:`.Domain`."""
+    """A Source for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
 
 @dataclass(frozen=True, order=True)
 class MetrologyArea(RefData):
-    """A Metrology Area of a :class:`.Domain`."""
+    """A Metrology Area of a [Domain](/api/classes/#src.kcdb.classes.Domain)."""
 
     domain: Domain
     """The Domain that the Metrology Area belongs to."""
@@ -84,18 +84,18 @@ class MetrologyArea(RefData):
 
 @dataclass(frozen=True, order=True)
 class Branch(RefData):
-    """A Branch of a :class:`.MetrologyArea`."""
+    """A Branch of a [MetrologyArea](/api/classes/#src.kcdb.classes.MetrologyArea)."""
 
     metrology_area: MetrologyArea
-    """The Metrology Area that the Branch belongs to."""
+    """The Metrology Area that the [Branch](/api/classes/#src.kcdb.classes.Branch) belongs to."""
 
 
 @dataclass(frozen=True, order=True)
 class Service(RefData):
-    """A Service for a :class:`.Branch`."""
+    """A Service for a [Branch](/api/classes/#src.kcdb.classes.Branch)."""
 
     branch: Branch
-    """The Branch that the Service belongs to."""
+    """The [Branch](/api/classes/#src.kcdb.classes.Branch) that the Service belongs to."""
 
     physics_code: str
     """The physics code for this Service."""
@@ -103,24 +103,24 @@ class Service(RefData):
 
 @dataclass(frozen=True, order=True)
 class SubService(RefData):
-    """A Sub-Service of a :class:`.Service`."""
+    """A Sub-Service of a [Service](/api/classes/#src.kcdb.classes.Service)."""
 
     physics_code: str
     """The physics code for this Sub Service."""
 
     service: Service
-    """The Service that the Sub Service belongs to."""
+    """The [Service](/api/classes/#src.kcdb.classes.Service) that the Sub Service belongs to."""
 
 
 @dataclass(frozen=True, order=True)
 class IndividualService(RefData):
-    """An Individual Service of a :class:`.SubService`."""
+    """An Individual Service of a [SubService](/api/classes/#src.kcdb.classes.SubService)."""
 
     physics_code: str
     """The physics code for this Individual Service."""
 
     sub_service: SubService
-    """The Sub Service that the Individual Service belongs to."""
+    """The [SubService](/api/classes/#src.kcdb.classes.SubService) that the Individual Service belongs to."""
 
 
 class ResultAggregation:
@@ -129,10 +129,10 @@ class ResultAggregation:
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an aggregation."""
         self.name: str = kwargs.get("name") or ""
-        """Aggregation name (example: "cmcCountries")."""
+        """Aggregation name (example: `"cmcCountries"`)."""
 
         self.values: list[str] = kwargs.get("values", [])
-        """Aggreation values (example: ["Kazakhstan", "Portugal", "Greece"])."""
+        """Aggreation values (example: `["Kazakhstan", "Portugal", "Greece"]`)."""
 
     def __repr__(self) -> str:
         """Return the object representation."""

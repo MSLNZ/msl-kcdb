@@ -1,4 +1,4 @@
-"""Wrapper around the API for CMC search queries."""
+"""Wrapper around the KCDB API for CMC search queries."""
 
 from __future__ import annotations
 
@@ -30,10 +30,13 @@ if TYPE_CHECKING:
 
 
 class CMCSearchData:
-    """Perform a CMC search."""
+    """Helper class that contains `staticmethod`s to perform a CMC search."""
 
     MAX_PAGE_SIZE: int = 10_000
+    """The maximum number of pages that may be requested."""
+
     TIMEOUT: float = 30.0
+    """The maximum number of seconds to wait for a response from the KCDB server."""
 
     @staticmethod
     def chemistry_and_biology(  # noqa: PLR0913
@@ -51,25 +54,20 @@ class CMCSearchData:
     ) -> ResultsChemistryAndBiology:
         """Chemistry and biology search criteria.
 
-        :param analyte_label: Search for analyte containing this value.
-            Example: "antimony"
-        :param category_label: Category label.
-            Example: "5"
-        :param countries: Country code list.
-            Example: ["CH", "FR", "JP"]
-        :param keywords: Search keywords in elasticsearch format.
-            Example: "phase OR multichannel OR water"
-        :param metrology_area_label: Metrology-area label to search.
-            Example: "QM"
-        :param page: Page number requested (0 means first page).
-        :param page_size: Maximum number of elements in one page (maximum value is 10000).
-        :param public_date_from: Minimal publication date (YYYY-MM-DD).
-            Example: "2005-01-31"
-        :param public_date_to: Maximal publication date (YYYY-MM-DD).
-            Example: "2020-06-30"
-        :param show_table: Set to true to return table data.
+        Args:
+            analyte_label: Search for analyte containing this value (example: `"antimony"`).
+            category_label: Category label (example: `"5"`).
+            countries: Country code(s) (example: `["CH", "FR", "JP"]`).
+            keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
+            metrology_area_label: Metrology-area label to search (example: `"QM"`).
+            page: Page number requested (0 means first page).
+            page_size: Maximum number of elements in one page (maximum value is 10000).
+            public_date_from: Minimal publication date (example: `"2005-01-31"`).
+            public_date_to: Maximal publication date (example: `"2020-06-30"`).
+            show_table: Set to `True` to return table data.
 
-        :return: The CMC results.
+        Returns:
+            The CMC results.
         """
         if page_size > CMCSearchData.MAX_PAGE_SIZE:
             msg = f"Page size, {page_size}, too big. Must be <= {CMCSearchData.MAX_PAGE_SIZE}"
@@ -125,26 +123,21 @@ class CMCSearchData:
     ) -> ResultsPhysics:
         """Physics search criteria.
 
-        :param metrology_area_label: Metrology-area label to search.
-            Example: "EM"
-        :param branch_label: Branch label.
-            Example: "EM/RF"
-        :param countries: Country code list.
-            Example: ["CH", "FR", "JP"]
-        :param keywords: Search keywords in elasticsearch format.
-            Example: "phase OR multichannel OR water"
-        :param page: Page number requested (0 means first page).
-        :param page_size: Maximum number of elements in one page (maximum value is 10000).
-        :param physics_code: Physics code is composed of "service identifier", "subService identifier" if
-            requested and "individualService identifier" if requested, separated using dot.
-            Example: "11.3.3"
-        :param public_date_from: Minimal publication date (YYYY-MM-DD).
-            Example: "2005-01-31"
-        :param public_date_to: Maximal publication date (YYYY-MM-DD).
-            Example: "2020-06-30"
-        :param show_table: Set to true to return table data.
+        Args:
+            metrology_area_label: Metrology-area label to search (example: `"EM"`).
+            branch_label: Branch label (example: `"EM/RF"`).
+            countries: Country code(s) (example: `["CH", "FR", "JP"]`).
+            keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
+            page: Page number requested (0 means first page).
+            page_size: Maximum number of elements in one page (maximum value is 10000).
+            physics_code: Physics code is composed of "service-label", "subService-label" if
+                requested and "individualService-label" if requested, separated using dot (example: `"11.3.3"`).
+            public_date_from: Minimal publication date (example: `"2005-01-31"`).
+            public_date_to: Maximal publication date (example: `"2020-06-30"`).
+            show_table: Set to `True` to return table data.
 
-        :return: The CMC results.
+        Returns:
+            The CMC results.
         """
         if page_size > CMCSearchData.MAX_PAGE_SIZE:
             msg = f"Page size, {page_size}, too big. Must be <= {CMCSearchData.MAX_PAGE_SIZE}"
@@ -199,17 +192,16 @@ class CMCSearchData:
     ) -> ResultsQuickSearch:
         """Quick search criteria.
 
-        :param excluded_filters: Excluded filter list.
-            Example: ["cmcServices.AC current", "cmcServices.AC power"]
-        :param included_filters: Included filter list.
-            Example: ["cmcDomain.CHEM-BIO", "cmcBranches.Dimensional metrology"]
-        :param keywords: Search keywords in elasticsearch format.
-            Example: "phase OR test"
-        :param page: Page number requested (0 means first page).
-        :param page_size: Maximum number of elements in one page (maximum value is 10000).
-        :param show_table: Set to true to return table data.
+        Args:
+            excluded_filters: Excluded filters (example: `["cmcServices.AC current", "cmcServices.AC power"]`).
+            included_filters: Included filters (example: `["cmcDomain.CHEM-BIO", "cmcBranches.Dimensional metrology"]`).
+            keywords: Search keywords in elasticsearch format (example: `"phase OR test"`).
+            page: Page number requested (0 means first page).
+            page_size: Maximum number of elements in one page (maximum value is 10000).
+            show_table: Set to `True` to return table data.
 
-        :return: The CMC results.
+        Returns:
+            The CMC results.
         """
         if page_size > CMCSearchData.MAX_PAGE_SIZE:
             msg = f"Page size, {page_size}, too big. Must be <= {CMCSearchData.MAX_PAGE_SIZE}"
@@ -257,31 +249,23 @@ class CMCSearchData:
     ) -> ResultsRadiation:
         """Radiation search criteria.
 
-        :param branch_label: Branch label.
-            Example: "RAD"
-        :param countries: Country code list.
-            Example: ["CH", "FR", "JP"]
-        :param keywords: Search keywords in elasticsearch format.
-            Example: "phase OR multichannel OR water"
-        :param medium_label: Medium radiation service label.
-            Example: "3"
-        :param metrology_area_label: Metrology-area label to search.
-            Example: "RI"
-        :param nuclide_label: Nuclide label.
-            Example: "Co-60"
-        :param page: Page number requested (0 means first page).
-        :param page_size: Maximum number of elements in one page (maximum value is 10000).
-        :param public_date_from: Minimal publication date (YYYY-MM-DD).
-            Example: "2005-01-31"
-        :param public_date_to: Maximal publication date (YYYY-MM-DD).
-            Example: "2020-06-30"
-        :param quantity_label: Quantity radiation service label.
-            Example: "1"
-        :param show_table: Set to true to return table data.
-        :param source_label: Source radiation service label.
-            Example: "2"
+        Args:
+            branch_label: Branch label (example: `"RAD"`).
+            countries: Country code(s) (example: `["CH", "FR", "JP"]`).
+            keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
+            medium_label: Medium radiation service label (example: `"3"`).
+            metrology_area_label: Metrology-area label to search (example: `"RI"`).
+            nuclide_label: Nuclide label (example: `"Co-60"`).
+            page: Page number requested (0 means first page).
+            page_size: Maximum number of elements in one page (maximum value is 10000).
+            public_date_from: Minimal publication date (example: `"2005-01-31"`).
+            public_date_to: Maximal publication date (example: `"2020-06-30"`).
+            quantity_label: Quantity radiation service label (example: `"1"`).
+            show_table: Set to `True` to return table data.
+            source_label: Source radiation service label (example: `"2"`).
 
-        :return: The CMC results.
+        Returns:
+            The CMC results.
         """
         if page_size > CMCSearchData.MAX_PAGE_SIZE:
             msg = f"Page size, {page_size}, too big. Must be <= {CMCSearchData.MAX_PAGE_SIZE}"

@@ -1,4 +1,4 @@
-"""Wrapper around the API to recover reference data for CMC queries."""
+"""Wrapper around the KCDB API to recover reference data for CMC queries."""
 
 from __future__ import annotations
 
@@ -33,20 +33,21 @@ KCDB_BASE_URL = "https://www.bipm.org/api/kcdb"
 
 
 class ReferenceData:
-    """Static Reference-Data API functions to perform CMC search queries."""
+    """Helper class that contains `staticmethod`s to recover reference data for CMC queries."""
 
     TIMEOUT: float = 10.0
+    """The maximum number of seconds to wait for a response from the KCDB server."""
 
     @staticmethod
     def analytes() -> list[Analyte]:
-        """Return a list of all analytes."""
+        """Return all analytes for the `CHEM-BIO` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/analyte", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
         return [Analyte(**data) for data in response.json()["referenceData"]]
 
     @staticmethod
     def branches(metrology_area: MetrologyArea) -> list[Branch]:
-        """Return all branches for the specified :class:`.MetrologyArea`."""
+        """Return all branches for the specified [MetrologyArea](/api/classes/#src.kcdb.classes.MetrologyArea)."""
         response = requests.get(
             f"{KCDB_BASE_URL}/referenceData/branch",
             params={"areaId": metrology_area.id},
@@ -62,7 +63,7 @@ class ReferenceData:
 
     @staticmethod
     def categories() -> list[Category]:
-        """Return all categories for the CHEM-BIO :class:`.Domain`."""
+        """Return all categories for the `CHEM-BIO` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/category", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
         return [Category(**data) for data in response.json()["referenceData"]]
@@ -85,12 +86,14 @@ class ReferenceData:
     def filter(ref_data: Iterable[T], pattern: str, *, flags: int = 0) -> list[T]:
         """Filter the reference data based on a string search.
 
-        :param ref_data: An iterable of reference data.
-        :param pattern: A regular-expression pattern to use to filter results.
-            Uses the `label` and `value` attributes of each item in `ref_data` to perform the filtering.
-        :param flags: Pattern flags passed to :func:`re.compile` [default: 0].
+        Args:
+            ref_data: An iterable of reference data.
+            pattern: A regular-expression pattern to use to filter results.
+                Uses the `label` and `value` attributes of each item in `ref_data` to perform the filtering.
+            flags: Pattern flags passed to [re.compile]().
 
-        :return: The filtered reference data.
+        Returns:
+            The filtered reference data.
         """
         regex = re.compile(pattern, flags=flags)
         return [item for item in ref_data if regex.search(item.value) or regex.search(item.label)]
@@ -99,12 +102,15 @@ class ReferenceData:
     def find(ref_data: Iterable[T], id: int) -> T:  # noqa: A002
         """Find the item in the reference data based on an id search.
 
-        :param ref_data: An iterable of reference data.
-        :param id: The id in `ref_data` to find.
+        Args:
+            ref_data: An iterable of reference data.
+            id: The id in `ref_data` to find.
 
-        :raises ValueError: If the `id` cannot be found.
+        Raises:
+            ValueError: If the `id` cannot be found.
 
-        :return: The item with the specified `id`.
+        Returns:
+            The item with the specified `id`.
         """
         for item in ref_data:
             if item.id == id:
@@ -115,7 +121,7 @@ class ReferenceData:
 
     @staticmethod
     def individual_services(sub_service: SubService) -> list[IndividualService]:
-        """Return all Individual Services for the specified :class:`.SubService`."""
+        """Return all individual-services for the specified [SubService](/api/classes/#src.kcdb.classes.SubService)."""
         response = requests.get(
             f"{KCDB_BASE_URL}/referenceData/individualService",
             params={"subServiceId": sub_service.id},
@@ -138,7 +144,7 @@ class ReferenceData:
 
     @staticmethod
     def metrology_areas(domain: Domain) -> list[MetrologyArea]:
-        """Return all metrology areas for the specified domain."""
+        """Return all metrology areas for the specified [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(
             f"{KCDB_BASE_URL}/referenceData/metrologyArea",
             params={"domainCode": domain.code},
@@ -149,14 +155,14 @@ class ReferenceData:
 
     @staticmethod
     def nuclides() -> list[Nuclide]:
-        """Return a list of all nuclides for the RADIATION :class:`.Domain`."""
+        """Return all nuclides for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/nuclide", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
         return [Nuclide(**data) for data in response.json()["referenceData"]]
 
     @staticmethod
     def quantities() -> list[Quantity]:
-        """Return a list of all quantities for the RADIATION :class:`.Domain`."""
+        """Return all quantities for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/quantity", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
         out = []
@@ -168,21 +174,21 @@ class ReferenceData:
 
     @staticmethod
     def radiation_mediums() -> list[Medium]:
-        """Return a list of all radiation mediums for the RADIATION :class:`.Domain`."""
+        """Return all radiation mediums for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/radiationMedium", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
         return [Medium(**data) for data in response.json()["referenceData"]]
 
     @staticmethod
     def radiation_sources() -> list[Source]:
-        """Return a list of all Radiation Sources for the RADIATION :class:`.Domain`."""
+        """Return all radiation sources for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/radiationSource", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
         return [Source(**data) for data in response.json()["referenceData"]]
 
     @staticmethod
     def services(branch: Branch) -> list[Service]:
-        """Return all Services for the specified :class:`.Branch`."""
+        """Return all services for the specified [Branch](/api/classes/#src.kcdb.classes.Branch)."""
         response = requests.get(
             f"{KCDB_BASE_URL}/referenceData/service",
             params={"branchId": branch.id},
@@ -200,7 +206,7 @@ class ReferenceData:
 
     @staticmethod
     def sub_services(service: Service) -> list[SubService]:
-        """Return all Sub Services for the specified :class:`.Service`."""
+        """Return all sub-services for the specified [Service](/api/classes/#src.kcdb.classes.Service)."""
         response = requests.get(
             f"{KCDB_BASE_URL}/referenceData/subService",
             params={"serviceId": service.id},
