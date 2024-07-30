@@ -41,6 +41,14 @@ Source = "https://github.com/MSLNZ/kcdb-api"
 tests = [
   "pytest",
 ]
+docs = [
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocstrings-python",
+]
+dev = [
+  "kcdb[tests,docs]",
+]
 
 [tool.hatch.version]
 source = "vcs"
