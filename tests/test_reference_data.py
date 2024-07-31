@@ -36,14 +36,18 @@ def test_nuclides() -> None:
 
 
 def test_quantities() -> None:
-    quantities = ReferenceData.quantities()
-    assert len(quantities) > 100
+    domain=Domain(code="RADIATION", name="Ionizing radiation")
+    metrology_area=MetrologyArea(id=9, label="RI", value="Ionizing Radiation", domain=domain)
+    branch = Branch(id=32, label="DOS", value="Dosimetry", metrology_area=metrology_area)
 
-    quantity, *rest = ReferenceData.filter(quantities, "Luminance coefficient")
+    quantities = ReferenceData.quantities(branch)
+    assert len(quantities) == 16
+
+    quantity, *rest = ReferenceData.filter(quantities, "X-ray")
     assert not rest
-    assert quantity.id == 116
-    assert quantity.label == ""
-    assert quantity.value == "Luminance coefficient"
+    assert quantity.id == 14
+    assert quantity.label == "14"
+    assert quantity.value == "X-ray tube voltage"
 
 
 def test_radiation_mediums() -> None:
