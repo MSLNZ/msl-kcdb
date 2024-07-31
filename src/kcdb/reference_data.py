@@ -161,16 +161,18 @@ class ReferenceData:
         return [Nuclide(**data) for data in response.json()["referenceData"]]
 
     @staticmethod
-    def quantities() -> list[Quantity]:
-        """Return all quantities for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+    def quantities(branch: Branch) -> list[Quantity]:
+        """Return all quantities for the specified `RADIATION` [Branch](/api/classes/#src.kcdb.classes.Branch)."""
         response = requests.get(f"{KCDB_BASE_URL}/referenceData/quantity", timeout=ReferenceData.TIMEOUT)
         response.raise_for_status()
-        out = []
-        for data in response.json()["referenceData"]:
-            if data["label"] is None:
-                data["label"] = ""
-            out.append(Quantity(**data))
-        return out
+        quantities = [data for data in response.json()["referenceData"] if data["label"]]
+        if branch.label == "DOS":
+            return [Quantity(**q) for q in quantities if q["id"] < 32]  # noqa: PLR2004
+        if branch.label == "NEU":
+            return [Quantity(**q) for q in quantities if q["id"] >= 47]  # noqa: PLR2004
+        if branch.label == "RAD":
+            return [Quantity(**q) for q in quantities if 32 <= q["id"] < 47]  # noqa: PLR2004
+        return []
 
     @staticmethod
     def radiation_mediums() -> list[Medium]:
