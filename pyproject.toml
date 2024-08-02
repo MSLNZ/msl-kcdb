@@ -3,7 +3,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
-name = "kcdb"
+name = "msl-kcdb"
 dynamic = ["version"]
 dependencies = ["requests"]
 requires-python = ">= 3.8"
@@ -34,12 +34,13 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/MSLNZ/kcdb-api"
-Source = "https://github.com/MSLNZ/kcdb-api"
+Homepage = "https://github.com/MSLNZ/msl-kcdb"
+Source = "https://github.com/MSLNZ/msl-kcdb"
 
 [project.optional-dependencies]
 tests = [
   "pytest",
+  "pytest-cov",
 ]
 docs = [
   "mkdocs",
@@ -47,24 +48,34 @@ docs = [
   "mkdocstrings-python",
 ]
 dev = [
-  "kcdb[tests,docs]",
+  "ipykernel",
+  "msl-kcdb[tests,docs]",
+  "mypy",
+  "types-requests",
 ]
 
 [tool.hatch.version]
 source = "vcs"
 
 [tool.hatch.build.hooks.vcs]
-version-file = "src/kcdb/_version.py"
+version-file = "src/msl/kcdb/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/msl"]
 
 [tool.pytest.ini_options]
 addopts = [
+  "--cov=src",
+  "--cov-report=html",
   "--verbose",
   "--import-mode=importlib",
 ]
+consider_namespace_packages = true
 
 [tool.mypy]
 strict = true
 implicit_reexport = true
+namespace_packages = true
 
 [tool.ruff]
 line-length = 120
@@ -78,9 +89,10 @@ exclude = [
   "dist",
   "venv",
 ]
+namespace-packages = ["src/msl"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["kcdb"]
+known-first-party = ["msl.kcdb"]
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -107,4 +119,20 @@ ignore = [
 ]
 
 [tool.ruff.lint.pydocstyle]
-convention = "pep257"
+convention = "google"
+
+[tool.coverage.run]
+branch = true
+data_file = ".coverage_html/.coverage"
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+include_namespace_packages = true
+
+[tool.coverage.html]
+directory = ".coverage_html"
+title = "MSL-KCDB coverage report"

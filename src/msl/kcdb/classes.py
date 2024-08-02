@@ -1,10 +1,17 @@
-"""Classes defined in the KCDB API schema."""
+"""Common classes for the KCDB API."""
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING, TypeVar
+
+import requests
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from typing import Any
 
 
 class AbsoluteRelative(Enum):
@@ -23,7 +30,7 @@ class UncertaintyConvention(Enum):
 
 @dataclass(frozen=True, order=True)
 class Domain:
-    """One of General Physics, Chemistry and Biology or Ionizing Radition."""
+    """The domain of either General Physics, Chemistry and Biology or Ionizing Radiation."""
 
     code: str
     """Domain code (example: `"PHYSICS"`)."""
@@ -47,11 +54,11 @@ class RefData:
 
 
 class Analyte(RefData):
-    """An Analyte for the `CHEM-BIO` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+    """An Analyte of Chemistry and Biology."""
 
 
 class Category(RefData):
-    """A Category for the `CHEM-BIO` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+    """A Category of Chemistry and Biology."""
 
 
 class Country(RefData):
@@ -59,24 +66,23 @@ class Country(RefData):
 
 
 class Nuclide(RefData):
-    """A Nuclide for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+    """A Nuclide of Ionizing Radiation."""
 
 
-class Medium(RefData):
-    """A Medium for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+@dataclass(frozen=True, order=True)
+class NonIonizingQuantity:
+    """A Quantity that is not Ionizing Radiation."""
 
+    id: int
+    """Reference data identity."""
 
-class Quantity(RefData):
-    """A Quantity for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
-
-
-class Source(RefData):
-    """A Source for the `RADIATION` [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+    value: str
+    """Reference data value (example: `"Absorbance, regular, spectral"`)."""
 
 
 @dataclass(frozen=True, order=True)
 class MetrologyArea(RefData):
-    """A Metrology Area of a [Domain](/api/classes/#src.kcdb.classes.Domain)."""
+    """A Metrology Area of a [Domain][]."""
 
     domain: Domain
     """The Domain that the Metrology Area belongs to."""
@@ -84,18 +90,18 @@ class MetrologyArea(RefData):
 
 @dataclass(frozen=True, order=True)
 class Branch(RefData):
-    """A Branch of a [MetrologyArea](/api/classes/#src.kcdb.classes.MetrologyArea)."""
+    """A Branch of General Physics or Ionizing Radiation."""
 
     metrology_area: MetrologyArea
-    """The Metrology Area that the [Branch](/api/classes/#src.kcdb.classes.Branch) belongs to."""
+    """The Metrology Area that the Branch belongs to."""
 
 
 @dataclass(frozen=True, order=True)
 class Service(RefData):
-    """A Service for a [Branch](/api/classes/#src.kcdb.classes.Branch)."""
+    """A Service of General Physics."""
 
     branch: Branch
-    """The [Branch](/api/classes/#src.kcdb.classes.Branch) that the Service belongs to."""
+    """The Branch that the Service belongs to."""
 
     physics_code: str
     """The physics code for this Service."""
@@ -103,24 +109,48 @@ class Service(RefData):
 
 @dataclass(frozen=True, order=True)
 class SubService(RefData):
-    """A Sub-Service of a [Service](/api/classes/#src.kcdb.classes.Service)."""
+    """A Sub Service of General Physics."""
 
     physics_code: str
     """The physics code for this Sub Service."""
 
     service: Service
-    """The [Service](/api/classes/#src.kcdb.classes.Service) that the Sub Service belongs to."""
+    """The Service that the Sub Service belongs to."""
 
 
 @dataclass(frozen=True, order=True)
 class IndividualService(RefData):
-    """An Individual Service of a [SubService](/api/classes/#src.kcdb.classes.SubService)."""
+    """An Individual Service of General Physics."""
 
     physics_code: str
     """The physics code for this Individual Service."""
 
     sub_service: SubService
-    """The [SubService](/api/classes/#src.kcdb.classes.SubService) that the Individual Service belongs to."""
+    """The Sub Service that the Individual Service belongs to."""
+
+
+@dataclass(frozen=True, order=True)
+class Quantity(RefData):
+    """A Quantity of Ionizing Radiation."""
+
+    branch: Branch
+    """The Branch that the Quantity belongs to."""
+
+
+@dataclass(frozen=True, order=True)
+class Medium(RefData):
+    """A Medium of Ionizing Radiation."""
+
+    branch: Branch
+    """The Branch that the Medium belongs to."""
+
+
+@dataclass(frozen=True, order=True)
+class Source(RefData):
+    """A Source of Ionizing Radiation."""
+
+    branch: Branch
+    """The Branch that the Source belongs to."""
 
 
 class ResultAggregation:
@@ -581,3 +611,162 @@ class ResultsRadiation(Results):
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultsRadiation({super().__repr__()})"
+
+
+T = TypeVar("T", bound=RefData)
+
+
+class KCDB:
+    """KCDB API base class."""
+
+    BASE_URL: str = "https://www.bipm.org/api/kcdb"
+    """The base url to the KCDB API."""
+
+    MAX_PAGE_SIZE: int = 10_000
+    """The maximum number of pages that may be requested."""
+
+    DOMAIN: Domain
+
+    def __init__(self, timeout: float | None = 30) -> None:
+        """KCDB API base class.
+
+        Args:
+            timeout: The maximum number of seconds to wait for a response from the KCDB server.
+        """
+        self.timeout = timeout
+
+    def __repr__(self) -> str:
+        """Reutn the object representation."""
+        return f"{self.__class__.__name__}(code={self.DOMAIN.code!r}, name={self.DOMAIN.name!r})"
+
+    @staticmethod
+    def _check_page_info(page: int, page_size: int) -> None:
+        if page < 0:
+            msg = f"Invalid page value, {page}. Must be >= 0"
+            raise ValueError(msg)
+
+        if page_size < 1 or page_size > KCDB.MAX_PAGE_SIZE:
+            msg = f"Invalid page size, {page_size}. Must be in the range [1, {KCDB.MAX_PAGE_SIZE}]"
+            raise ValueError(msg)
+
+    @staticmethod
+    def _to_countries(countries: str | Country | Iterable[str | Country]) -> list[str]:
+        if isinstance(countries, str):
+            return [countries]
+        if isinstance(countries, Country):
+            return [countries.label]
+        return [c if isinstance(c, str) else c.label for c in countries]
+
+    @staticmethod
+    def _to_label(obj: str | RefData) -> str:
+        if isinstance(obj, str):
+            return obj
+        return obj.label
+
+    def countries(self) -> list[Country]:
+        """Return all countries."""
+        response = requests.get(f"{KCDB.BASE_URL}/referenceData/country", timeout=self._timeout)
+        response.raise_for_status()
+        return [Country(**data) for data in response.json()["referenceData"]]
+
+    def domains(self) -> list[Domain]:
+        """Return all KCDB domains."""
+        response = requests.get(f"{KCDB.BASE_URL}/referenceData/domain", timeout=self._timeout)
+        response.raise_for_status()
+        return [Domain(**data) for data in response.json()["domains"]]
+
+    @staticmethod
+    def filter(data: Iterable[T], pattern: str, *, flags: int = 0) -> list[T]:
+        """Filter the reference data based on a string search.
+
+        Args:
+            data: An iterable of KCDB reference data.
+            pattern: A regular-expression pattern to use to filter results. Uses the `label`
+                and `value` attributes of each item in `data` to perform the filtering.
+            flags: Pattern flags passed to [re.compile][].
+
+        Returns:
+            The filtered reference data.
+        """
+        regex = re.compile(pattern, flags=flags)
+        return [item for item in data if regex.search(item.value) or regex.search(item.label)]
+
+    def metrology_areas(self) -> list[MetrologyArea]:
+        """Return all metrology areas."""
+        response = requests.get(
+            f"{KCDB.BASE_URL}/referenceData/metrologyArea",
+            params={"domainCode": self.DOMAIN.code},
+            timeout=self._timeout,
+        )
+        response.raise_for_status()
+        return [MetrologyArea(domain=self.DOMAIN, **data) for data in response.json()["referenceData"]]
+
+    def non_ionizing_quantities(self) -> list[NonIonizingQuantity]:
+        """Return all non-Ionizing Radiation quantities."""
+        response = requests.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
+        response.raise_for_status()
+        return [
+            NonIonizingQuantity(id=d["id"], value=d["value"])
+            for d in response.json()["referenceData"]
+            if d["label"] is None
+        ]
+
+    def quick_search(  # noqa: PLR0913
+        self,
+        *,
+        excluded_filters: Iterable[str] | None = None,
+        included_filters: Iterable[str] | None = None,
+        keywords: str | None = None,
+        page: int = 0,
+        page_size: int = 100,
+        show_table: bool = False,
+    ) -> ResultsQuickSearch:
+        """Quick search criteria.
+
+        Args:
+            excluded_filters: Excluded filters (example: `["cmcServices.AC current", "cmcServices.AC power"]`).
+            included_filters: Included filters (example: `["cmcDomain.CHEM-BIO", "cmcBranches.Dimensional metrology"]`).
+            keywords: Search keywords in elasticsearch format (example: `"phase OR test"`).
+            page: Page number requested (0 means first page).
+            page_size: Maximum number of elements in one page (maximum value is 10000).
+            show_table: Set to `True` to return table data.
+
+        Returns:
+            The CMC results.
+        """
+        self._check_page_info(page, page_size)
+
+        request: dict[str, bool | str | int | list[str]] = {
+            "page": page,
+            "pageSize": page_size,
+            "showTable": show_table,
+        }
+
+        if excluded_filters:
+            request["excludedFilters"] = list(excluded_filters)
+
+        if included_filters:
+            request["includedFilters"] = list(included_filters)
+
+        if keywords:
+            request["keywords"] = keywords
+
+        response = requests.post(
+            f"{KCDB.BASE_URL}/cmc/searchData/quickSearch",
+            json=request,
+            timeout=self._timeout,
+        )
+        response.raise_for_status()
+        return ResultsQuickSearch(response.json())
+
+    @property
+    def timeout(self) -> float | None:
+        """The timeout value for an KCDB API request."""
+        return self._timeout
+
+    @timeout.setter
+    def timeout(self, value: float | None) -> None:
+        if value is None or value < 0:
+            self._timeout = None
+        else:
+            self._timeout = float(value)

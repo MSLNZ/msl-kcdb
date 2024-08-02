@@ -9,9 +9,10 @@ __pycache__/
 /venv/
 /.idea/
 /.vscode/
+/.coverage_html/
 /.mypy_cache/
 /.pytest_cache/
 /.ruff_cache/
 
 # Project files
-/src/kcdb/_version.py
+/src/msl/kcdb/_version.py
