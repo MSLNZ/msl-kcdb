@@ -42,7 +42,8 @@ nav:
     - License: about/license.md
 
 markdown_extensions:
-  - pymdownx.snippets:  # allows for using --8<--
+  - attr_list  # enables: [link](url){:target="_blank"}
+  - pymdownx.snippets:  # enables: --8<--
       check_paths: true
   - toc:
       permalink: "¤"
