@@ -53,16 +53,18 @@ class IonizingRadiation(KCDB):
         """
         # The /radiationMedium endpoint does not accept parameters, so we need to filter the mediums
         # based on the Branch that is specified
+        if branch.label not in ["RAD", "DOS", "NEU"]:
+            return []
+
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/radiationMedium", timeout=self._timeout)
         response.raise_for_status()
         data = response.json()["referenceData"]
+
         if branch.label == "RAD":
             return [Medium(branch=branch, **d) for d in data if d["id"] < 17]  # noqa: PLR2004
         if branch.label == "DOS":
             return [Medium(branch=branch, **d) for d in data if 17 <= d["id"] < 24]  # noqa: PLR2004
-        if branch.label == "NEU":
-            return [Medium(branch=branch, **d) for d in data if d["id"] >= 24]  # noqa: PLR2004
-        return []
+        return [Medium(branch=branch, **d) for d in data if d["id"] >= 24]  # noqa: PLR2004
 
     def nuclides(self) -> list[Nuclide]:
         """Return all Ionizing Radiation nuclides.
@@ -87,16 +89,18 @@ class IonizingRadiation(KCDB):
         # based on the Branch that is specified. There are many more quantities after id=78, but
         # these all have "label": null, so we ignore these additional quantities here and
         # provide them in KCDB.non_ionizing_quantities()
+        if branch.label not in ["RAD", "DOS", "NEU"]:
+            return []
+
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
         response.raise_for_status()
         data = response.json()["referenceData"]
+
         if branch.label == "DOS":
             return [Quantity(branch=branch, **d) for d in data if d["id"] < 32]  # noqa: PLR2004
         if branch.label == "RAD":
             return [Quantity(branch=branch, **d) for d in data if 32 <= d["id"] < 47]  # noqa: PLR2004
-        if branch.label == "NEU":
-            return [Quantity(branch=branch, **d) for d in data if 47 <= d["id"] < 78]  # noqa: PLR2004
-        return []
+        return [Quantity(branch=branch, **d) for d in data if 47 <= d["id"] < 78]  # noqa: PLR2004
 
     def search(  # noqa: PLR0913
         self,
@@ -191,13 +195,15 @@ class IonizingRadiation(KCDB):
         """
         # The /radiationSource endpoint does not accept parameters, so we need to filter the sources
         # based on the Branch that is specified
+        if branch.label not in ["RAD", "DOS", "NEU"]:
+            return []
+
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/radiationSource", timeout=self._timeout)
         response.raise_for_status()
         data = response.json()["referenceData"]
+
         if branch.label == "DOS":
             return [Source(branch=branch, **d) for d in data if d["id"] < 32]  # noqa: PLR2004
         if branch.label == "RAD":
             return [Source(branch=branch, **d) for d in data if 32 <= d["id"] < 35]  # noqa: PLR2004
-        if branch.label == "NEU":
-            return [Source(branch=branch, **d) for d in data if d["id"] >= 35]  # noqa: PLR2004
-        return []
+        return [Source(branch=branch, **d) for d in data if d["id"] >= 35]  # noqa: PLR2004
