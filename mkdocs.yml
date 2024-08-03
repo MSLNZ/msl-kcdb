@@ -1,0 +1,84 @@
+site_name: MSL KCDB
+site_description: Interact with the BIPM key comparison database (KCDB)
+copyright: Copyright &copy; 2024 Measurement Standards Laboratory of New Zealand
+repo_url: https://github.com/MSLNZ/msl-kcdb
+
+theme:
+  name: material
+  language: en
+  features:
+    - content.code.copy
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: lime
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+watch: [src/msl/kcdb]
+
+nav:
+  - Overview: index.md
+  - API:
+    - Chemistry and Biology: api/chemistry_biology.md
+    - General Physics: api/general_physics.md
+    - Ionizing Radiation: api/ionizing_radiation.md
+    - Classes: api/classes.md
+  - About:
+    - Release Notes: about/release-notes.md
+    - License: about/license.md
+
+markdown_extensions:
+  - pymdownx.snippets:  # allows for using --8<--
+      check_paths: true
+  - toc:
+      permalink: "¤"
+
+plugins:
+  - search
+  - autorefs
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          import:
+            - url: https://docs.python.org/3/objects.inv
+              domains: [std, py]
+          options:
+            # General
+            show_source: false
+
+            # Headings
+            show_root_toc_entry: false
+
+            # Members
+            filters: ["!^_"]
+            inherited_members: true
+
+            # Docstrings
+            docstring_options:
+              ignore_init_summary: true
+            merge_init_into_class: true
+
+            # Signatures
+            separate_signature: true
+
+extra:
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/MSLNZ/msl-kcdb
+  - icon: fontawesome/brands/python
+    link: https://pypi.org/project/msl-kcdb/

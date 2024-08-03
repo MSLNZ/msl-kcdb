@@ -7,7 +7,7 @@ name = "msl-kcdb"
 dynamic = ["version"]
 dependencies = ["requests"]
 requires-python = ">= 3.8"
-description = "Interact with the BIPM key comparison database."
+description = "Interact with the BIPM key comparison database (KCDB)."
 license = {file = "LICENSE.txt"}
 readme = "README.md"
 authors = [
@@ -43,6 +43,7 @@ tests = [
   "pytest-cov",
 ]
 docs = [
+  "black",
   "mkdocs",
   "mkdocs-material",
   "mkdocstrings-python",
