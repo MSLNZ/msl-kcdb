@@ -1,4 +1,4 @@
-"""Search CMCs for Ionizing Radiation."""
+"""Search the Ionizing Radiation database."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import requests
 
-from .classes import KCDB, Branch, Domain, Medium, Nuclide, Quantity, ResultsRadiation, Source
+from .classes import KCDB, Branch, Domain, Medium, Nuclide, Quantity, ResultsIonizingRadiation, Source
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -16,13 +16,20 @@ if TYPE_CHECKING:
 
 
 class IonizingRadiation(KCDB):
-    """Search CMCs for Ionizing Radiation."""
+    """Ionizing Radiation class."""
 
     DOMAIN = Domain(code="RADIATION", name="Ionizing radiation")
     """The Ionizing Radiation domain."""
 
     def branches(self, metrology_area: MetrologyArea) -> list[Branch]:
-        """Return all Ionizing Radiation [Branch][]es."""
+        """Return all Ionizing Radiation branches for the specified metrology area.
+
+        Args:
+            metrology_area: The metrology area to return the branches for.
+
+        Returns:
+            A list of [Branch][msl.kcdb.classes.Branch]es.
+        """
         if metrology_area.id < 9:  # noqa: PLR2004
             # ignore PHYSICS and CHEM-BIO
             return []
@@ -36,7 +43,14 @@ class IonizingRadiation(KCDB):
         return [Branch(metrology_area=metrology_area, **data) for data in response.json()["referenceData"]]
 
     def mediums(self, branch: Branch) -> list[Medium]:
-        """Return all Ionizing Radiation mediums for the specified [Branch][]."""
+        """Return all Ionizing Radiation mediums for the specified branch.
+
+        Args:
+            branch: The branch to return the mediums for.
+
+        Returns:
+            A list of [Medium][msl.kcdb.classes.Medium]s.
+        """
         # The /radiationMedium endpoint does not accept parameters, so we need to filter the mediums
         # based on the Branch that is specified
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/radiationMedium", timeout=self._timeout)
@@ -51,13 +65,24 @@ class IonizingRadiation(KCDB):
         return []
 
     def nuclides(self) -> list[Nuclide]:
-        """Return all Ionizing Radiation nuclides."""
+        """Return all Ionizing Radiation nuclides.
+
+        Returns:
+            A list of [Nuclide][msl.kcdb.classes.Nuclide]s.
+        """
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/nuclide", timeout=self._timeout)
         response.raise_for_status()
         return [Nuclide(**data) for data in response.json()["referenceData"]]
 
     def quantities(self, branch: Branch) -> list[Quantity]:
-        """Return all Ionizing Radiation quantities for the specified [Branch][]."""
+        """Return all Ionizing Radiation quantities for the specified branch.
+
+        Args:
+            branch: The branch to return the quantities for.
+
+        Returns:
+            A list of [Quantity][msl.kcdb.classes.Quantity]'s.
+        """
         # The /quantity endpoint does not accept parameters, so we need to filter the quantities
         # based on the Branch that is specified. There are many more quantities after id=78, but
         # these all have "label": null, so we ignore these additional quantities here and
@@ -89,7 +114,7 @@ class IonizingRadiation(KCDB):
         quantity: str | Quantity | None = None,
         show_table: bool = False,
         source: str | Source | None = None,
-    ) -> ResultsRadiation:
+    ) -> ResultsIonizingRadiation:
         """Perform an Ionizing Radiation search.
 
         Args:
@@ -100,7 +125,7 @@ class IonizingRadiation(KCDB):
             metrology_area: Metrology Area label (example: `"RI"`).
             nuclide: Nuclide label (example: `"Co-60"`).
             page: Page number requested (0 means first page).
-            page_size: Maximum number of elements in one page (maximum value is 10000).
+            page_size: Maximum number of elements in a page (maximum value is 10000).
             public_date_from: Minimal publication date (example: `"2005-01-31"`).
             public_date_to: Maximal publication date (example: `"2020-06-30"`).
             quantity: Quantity label (example: `"1"`).
@@ -153,10 +178,17 @@ class IonizingRadiation(KCDB):
             timeout=self._timeout,
         )
         response.raise_for_status()
-        return ResultsRadiation(response.json())
+        return ResultsIonizingRadiation(response.json())
 
     def sources(self, branch: Branch) -> list[Source]:
-        """Return all Ionizing Radiation sources for the specified [Branch][]."""
+        """Return all Ionizing Radiation sources for the specified branch.
+
+        Args:
+            branch: The branch to return the mediums for.
+
+        Returns:
+            A list of [Source][msl.kcdb.classes.Source]s.
+        """
         # The /radiationSource endpoint does not accept parameters, so we need to filter the sources
         # based on the Branch that is specified
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/radiationSource", timeout=self._timeout)

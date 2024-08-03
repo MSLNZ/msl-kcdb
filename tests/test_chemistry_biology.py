@@ -69,6 +69,6 @@ class TestChemBio:
         assert chem_bio.data[0].nmi_service_code == "5-01-02"
 
         assert str(chem_bio) == (
-            f"ResultsChemistryAndBiology(number_of_elements=1, page_number=0, page_size=100, "
+            f"ResultsChemistryBiology(number_of_elements=1, page_number=0, page_size=100, "
             f"total_elements=1, total_pages=1, version_api_kcdb={chem_bio.version_api_kcdb!r})"
         )

@@ -1,4 +1,4 @@
-"""Search CMCs for General Physics."""
+"""Search the General Physics database."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import requests
 
-from .classes import KCDB, Branch, Domain, IndividualService, ResultsPhysics, Service, SubService
+from .classes import KCDB, Branch, Domain, IndividualService, ResultsGeneralPhysics, Service, SubService
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -16,13 +16,20 @@ if TYPE_CHECKING:
 
 
 class GeneralPhysics(KCDB):
-    """Search CMCs for General Physics."""
+    """General Physics class."""
 
     DOMAIN = Domain(code="PHYSICS", name="General physics")
     """The General Physics domain."""
 
     def branches(self, metrology_area: MetrologyArea) -> list[Branch]:
-        """Return all General Physics [Branch][]es for the specified [MetrologyArea][]."""
+        """Return all General Physics branches for the specified metrology area.
+
+        Args:
+            metrology_area: The metrology area to return the branches for.
+
+        Returns:
+            A list of [Branch][msl.kcdb.classes.Branch]es.
+        """
         if metrology_area.label in ["QM", "RI"]:
             # ignore CHEM-BIO and RADIATION
             return []
@@ -36,7 +43,14 @@ class GeneralPhysics(KCDB):
         return [Branch(metrology_area=metrology_area, **data) for data in response.json()["referenceData"]]
 
     def individual_services(self, sub_service: SubService) -> list[IndividualService]:
-        """Return all [IndividualService][]s for the specified [SubService][]."""
+        """Return all General Physics individual services for the specified subservice.
+
+        Args:
+            sub_service: The subservice to return the individual services for.
+
+        Returns:
+            A list of [IndividualService][msl.kcdb.classes.IndividualService]s.
+        """
         response = requests.get(
             f"{KCDB.BASE_URL}/referenceData/individualService",
             params={"subServiceId": sub_service.id},
@@ -70,7 +84,7 @@ class GeneralPhysics(KCDB):
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
-    ) -> ResultsPhysics:
+    ) -> ResultsGeneralPhysics:
         """Perform a General Physics search.
 
         Args:
@@ -79,7 +93,7 @@ class GeneralPhysics(KCDB):
             countries: Country label(s) (example: `["CH", "FR", "JP"]`).
             keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
             page: Page number requested (0 means first page).
-            page_size: Maximum number of elements in one page (maximum value is 10000).
+            page_size: Maximum number of elements in a page (maximum value is 10000).
             physics_code: Physics code is composed of `Service.label`, `SubService.label` (if requested)
                 and `IndividualService.label` (if requested) separated by dots (example: `"11.3.3"`).
             public_date_from: Minimal publication date (example: `"2005-01-31"`).
@@ -126,10 +140,17 @@ class GeneralPhysics(KCDB):
             timeout=self._timeout,
         )
         response.raise_for_status()
-        return ResultsPhysics(response.json())
+        return ResultsGeneralPhysics(response.json())
 
     def services(self, branch: Branch) -> list[Service]:
-        """Return all [Service][]s for the specified [Branch][]."""
+        """Return all General Physics services for the specified branch.
+
+        Args:
+            branch: The branch to return the services for.
+
+        Returns:
+            A list of [Service][msl.kcdb.classes.Service]s.
+        """
         if branch.id in [32, 33, 34]:
             # Dosimetry(id=32), Radioactivity(id=33) and Neutron Measurements(id=34) do not have Services
             return []
@@ -143,7 +164,14 @@ class GeneralPhysics(KCDB):
         return [Service(branch=branch, physics_code=data["label"], **data) for data in response.json()["referenceData"]]
 
     def sub_services(self, service: Service) -> list[SubService]:
-        """Return all [SubService][] for the specified [Service][]."""
+        """Return all General Physics subservices for the specified service.
+
+        Args:
+            service: The service to return the subservices for.
+
+        Returns:
+            A list of [SubService][msl.kcdb.classes.SubService]s.
+        """
         response = requests.get(
             f"{KCDB.BASE_URL}/referenceData/subService",
             params={"serviceId": service.id},

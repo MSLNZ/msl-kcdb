@@ -15,154 +15,192 @@ if TYPE_CHECKING:
 
 
 class AbsoluteRelative(Enum):
-    """CRM uncertainty mode."""
+    """CRM uncertainty mode.
 
-    ABSOLUTE = "Absolute"
-    RELATIVE = "Relative"
+    Attributes:
+        ABSOLUTE: `"Absolute"`
+        RELATIVE: `"Relative"`
+    """
+
+    ABSOLUTE: str = "Absolute"
+    RELATIVE: str = "Relative"
 
 
 class UncertaintyConvention(Enum):
-    """Chemistry and Biology uncertainty convention."""
+    """Chemistry and Biology uncertainty convention.
 
-    ONE = "One"
-    TWO = "Two"
+    Attributes:
+        ONE: `"One"`
+        TWO: `"Two"`
+    """
+
+    ONE: str = "One"
+    TWO: str = "Two"
 
 
 @dataclass(frozen=True, order=True)
 class Domain:
-    """The domain of either General Physics, Chemistry and Biology or Ionizing Radiation."""
+    """The domain of either General Physics, Chemistry and Biology or Ionizing Radiation.
+
+    Attributes:
+        code: Domain code. _Example:_ `"PHYSICS"`
+        name: Domain name. _Example:_ `"General physics"`
+    """
 
     code: str
-    """Domain code (example: `"PHYSICS"`)."""
-
     name: str
-    """Domain code (example: `"General physics"`)."""
 
 
 @dataclass(frozen=True, order=True)
-class RefData:
-    """Base class for reference data."""
+class ReferenceData:
+    """Base class for reference data.
+
+    Attributes:
+        id: Reference data identity. _Example:_ 8
+        label: Reference data label. _Example:_ `"QM"`
+        value: Reference data value. _Example:_ `"Chemistry and Biology"`
+    """
 
     id: int
-    """Reference data identity."""
-
     label: str
-    """Reference data label (example: `"QM"`)."""
-
     value: str
-    """Reference data value (example: `"Chemistry and Biology"`)."""
 
 
-class Analyte(RefData):
-    """An Analyte of Chemistry and Biology."""
+class Analyte(ReferenceData):
+    """An analyte of Chemistry and Biology."""
 
 
-class Category(RefData):
-    """A Category of Chemistry and Biology."""
+class Category(ReferenceData):
+    """A category of Chemistry and Biology."""
 
 
-class Country(RefData):
+class Country(ReferenceData):
     """Information about a country."""
 
 
-class Nuclide(RefData):
-    """A Nuclide of Ionizing Radiation."""
+class Nuclide(ReferenceData):
+    """A nuclide of Ionizing Radiation."""
 
 
 @dataclass(frozen=True, order=True)
 class NonIonizingQuantity:
-    """A Quantity that is not Ionizing Radiation."""
+    """A quantity that is not Ionizing Radiation.
+
+    Attributes:
+        id: Reference data identity. _Example:_ 109
+        value: Reference data value. _Example:_ `"Absorbance, regular, spectral"`
+    """
 
     id: int
-    """Reference data identity."""
-
     value: str
-    """Reference data value (example: `"Absorbance, regular, spectral"`)."""
 
 
 @dataclass(frozen=True, order=True)
-class MetrologyArea(RefData):
-    """A Metrology Area of a [Domain][]."""
+class MetrologyArea(ReferenceData):
+    """A metrology area of a domain.
+
+    Attributes:
+        domain: The domain that the metrology area belongs to.
+    """
 
     domain: Domain
-    """The Domain that the Metrology Area belongs to."""
 
 
 @dataclass(frozen=True, order=True)
-class Branch(RefData):
-    """A Branch of General Physics or Ionizing Radiation."""
+class Branch(ReferenceData):
+    """A branch of General Physics or Ionizing Radiation.
+
+    Attributes:
+        metrology_area: The metrology area that the branch belongs to.
+    """
 
     metrology_area: MetrologyArea
-    """The Metrology Area that the Branch belongs to."""
 
 
 @dataclass(frozen=True, order=True)
-class Service(RefData):
-    """A Service of General Physics."""
+class Service(ReferenceData):
+    """A service of General Physics.
+
+    Attributes:
+        branch: The branch that the service belongs to.
+        physics_code: The physics code for this service. _Example:_ `"9"`
+    """
 
     branch: Branch
-    """The Branch that the Service belongs to."""
-
     physics_code: str
-    """The physics code for this Service."""
 
 
 @dataclass(frozen=True, order=True)
-class SubService(RefData):
-    """A Sub Service of General Physics."""
+class SubService(ReferenceData):
+    """A subservice of General Physics.
+
+    Attributes:
+        physics_code: The physics code for this subservice. _Example:_ `"9.10"`
+        service: The service that the subservice belongs to.
+    """
 
     physics_code: str
-    """The physics code for this Sub Service."""
-
     service: Service
-    """The Service that the Sub Service belongs to."""
 
 
 @dataclass(frozen=True, order=True)
-class IndividualService(RefData):
-    """An Individual Service of General Physics."""
+class IndividualService(ReferenceData):
+    """An individual service of General Physics.
+
+    Attributes:
+        physics_code: The physics code for this individual service. _Example:_ `"9.10.2"`
+        sub_service: The subservice that the individual service belongs to.
+    """
 
     physics_code: str
-    """The physics code for this Individual Service."""
-
     sub_service: SubService
-    """The Sub Service that the Individual Service belongs to."""
 
 
 @dataclass(frozen=True, order=True)
-class Quantity(RefData):
-    """A Quantity of Ionizing Radiation."""
+class Quantity(ReferenceData):
+    """A quantity of Ionizing Radiation.
+
+    Attributes:
+        branch: The branch that the quantity belongs to.
+    """
 
     branch: Branch
-    """The Branch that the Quantity belongs to."""
 
 
 @dataclass(frozen=True, order=True)
-class Medium(RefData):
-    """A Medium of Ionizing Radiation."""
+class Medium(ReferenceData):
+    """A medium of Ionizing Radiation.
+
+    Attributes:
+        branch: The branch that the medium belongs to.
+    """
 
     branch: Branch
-    """The Branch that the Medium belongs to."""
 
 
 @dataclass(frozen=True, order=True)
-class Source(RefData):
-    """A Source of Ionizing Radiation."""
+class Source(ReferenceData):
+    """A source of Ionizing Radiation.
+
+    Attributes:
+        branch: The branch that the source belongs to.
+    """
 
     branch: Branch
-    """The Branch that the Source belongs to."""
 
 
 class ResultAggregation:
-    """Aggregation representation."""
+    """Aggregation representation.
+
+    Attributes:
+        name: Aggregation name. _Example:_ `"cmcCountries"`
+        values: Aggreation values. _Example:_ `["Kazakhstan", "Portugal", "Greece"]`
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an aggregation."""
         self.name: str = kwargs.get("name") or ""
-        """Aggregation name (example: `"cmcCountries"`)."""
-
         self.values: list[str] = kwargs.get("values", [])
-        """Aggreation values (example: `["Kazakhstan", "Portugal", "Greece"]`)."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -170,15 +208,17 @@ class ResultAggregation:
 
 
 class ResultEquation:
-    """Equation representation."""
+    """Equation representation.
+
+    Attributes:
+        equation: Equation name.
+        equation_comment: Equation comment.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an equation."""
         self.equation: str = kwargs.get("equation") or ""
-        """Equation name."""
-
         self.equation_comment: str = kwargs.get("equationComment") or ""
-        """Equation comment."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -186,24 +226,23 @@ class ResultEquation:
 
 
 class ResultFilter:
-    """Filter representation."""
+    """Filter representation.
+
+    Attributes:
+        children: Filter children.
+        code: Filter code. _Example:_ `"cmcMaterial"`
+        count: Filter count.
+        name: Filter name. _Example:_ `"cmcMaterial"`
+        order: Filter order.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a filter."""
         self.children: list[ResultFilter] = [ResultFilter(c) for c in kwargs.get("children", [])]
-        """Filter children."""
-
         self.code: str = kwargs.get("code") or ""
-        """Filter code (example: "cmcMaterial")."""
-
         self.count: int = kwargs["count"]
-        """Filter count."""
-
         self.name: str = kwargs.get("name") or ""
-        """Filter name (example: "cmcMaterial")."""
-
         self.order: int = kwargs["order"]
-        """Filter order."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -214,15 +253,17 @@ class ResultFilter:
 
 
 class ResultParam:
-    """Parameter representation."""
+    """Parameter representation.
+
+    Attributes:
+        parameter_name: Parameter name. _Example:_ `"S21 and S12"`
+        parameter_value: Parameter value. _Example:_ `"-80 dB to 0 dB"`
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a parameter."""
         self.parameter_name: str = kwargs.get("parameterName") or ""
-        """Parameter name (example: "S21 and S12")."""
-
         self.parameter_value: str = kwargs.get("parameterValue") or ""
-        """Parameter value (example: "-80 dB to 0 dB")."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -230,24 +271,23 @@ class ResultParam:
 
 
 class ResultTable:
-    """Table representation."""
+    """Table representation.
+
+    Attributes:
+        table_rows: Number of rows in table.
+        table_cols: Number of columns in table.
+        table_name: Table name. _Example:_ `"CH_Scatt-Atten_Mag"`
+        table_comment: Table comment.
+        table_contents: Table contents. _Example:_ `"{"row1":{"col1":"val1","col2":"val2"}}"`
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a table."""
         self.table_rows: int = kwargs["tableRows"]
-        """Number of rows in table."""
-
         self.table_cols: int = kwargs["tableCols"]
-        """Number of columns in table."""
-
         self.table_name: str = kwargs.get("tableName") or ""
-        """Table name (example: "CH_Scatt-Atten_Mag")."""
-
         self.table_comment: str = kwargs.get("tableComment") or ""
-        """Table comment."""
-
         self.table_contents: str = kwargs.get("tableContents") or ""
-        """Table contents (example: "{"row_1":{"col_1":"val_1","col_2":"val_2"}}")."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -258,18 +298,19 @@ class ResultTable:
 
 
 class ResultUnit:
-    """Units object definition."""
+    """Units object definition.
+
+    Attributes:
+        lower_limit: Lower limit value.
+        unit: Unit symbol. _Example:_ `"%"`
+        upper_limit: Upper limit value.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Units object definition."""
         self.lower_limit: float | None = kwargs.get("lowerLimit")
-        """Lower limit value."""
-
         self.unit: str = kwargs.get("unit") or ""
-        """Unit symbol (example: "%")."""
-
         self.upper_limit: float | None = kwargs.get("upperLimit")
-        """Upper limit value."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -277,27 +318,25 @@ class ResultUnit:
 
 
 class Results:
-    """Attributes for advanced search results."""
+    """Attributes for advanced search results.
+
+    Attributes:
+        number_of_elements: Number of elements on this page.
+        page_number: Page number (first page is 0).
+        page_size: Number of elements in the page.
+        total_elements: Total number of elements available (in all pages).
+        total_pages: Total number of pages.
+        version_api_kcdb: API KCDB version. _Example:_ `"1.0.7"`
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Attributes for advanced search results."""
         self.number_of_elements: int = kwargs["numberOfElements"]
-        """Number of elements on this page."""
-
         self.page_number: int = kwargs["pageNumber"]
-        """Page number, 0 as first page."""
-
         self.page_size: int = kwargs["pageSize"]
-        """Number of elements in the page."""
-
         self.total_elements: int = kwargs["totalElements"]
-        """Total number of elements available."""
-
         self.total_pages: int = kwargs["totalPages"]
-        """Total number of pages."""
-
         self.version_api_kcdb: str = kwargs.get("versionApiKcdb") or ""
-        """API KCDB version (example: "1.0.7")."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -312,282 +351,260 @@ class Results:
 
 
 class ResultCommon:
-    """Common attributes for advanced search results."""
+    """Common attributes for advanced search results.
 
-    def __init__(self, kwargs: dict[str, Any]) -> None:  # noqa: PLR0915
+    Attributes:
+        id: Document database id.
+        approval_date: Approval date (YYYY-MM-DD).
+        cmc: CMC result unit.
+        cmc_base_unit: CMC base unit.
+        cmc_uncertainty: CMC uncertainty.
+        cmc_uncertainty_base_unit: CMC uncertainty base unit.
+        comments: Comments.
+        confidence_level: Confidence level.
+        country_value: Country full name. _Example:_ `"China"`
+        coverage_factor:Coverage factor.
+        domain_code: Domain code. _Example:_ `"CHEM-BIO"`
+        group_identifier: Group identifier.
+        kcdb_code: Document kcdb code. _Example:_ `"APMP-QM-CN-00000JZR-1"`
+        metrology_area_label: Metrology area label. _Example:_ `"QM"`
+        nmi_code: NMI code. _Example:_ `"NIM"`
+        nmi_name: NMI name. _Example:_ `"National Institute of Metrology"`
+        nmi_service_code: NMI service code. _Example:_ `"NIM/11.1.4a"`
+        nmi_service_link: NMI service link.
+        publication_date: Publication date (YYYY-MM-DD).
+        quantity_value: Quantity value. _Example:_ `"Absorbed dose/rate"`
+        rmo: RMO acronym. _Example:_ `"EURAMET"`
+        status: CMC status. _Example:_ `"Published"`
+        status_date: Last status date (YYYY-MM-DD).
+        traceability_source: Traceability source. _Example:_ `"VSL"`
+        uncertainty_equation: Uncertainty equation.
+        uncertainty_mode: Uncertainty mode.
+        uncertainty_table: Uncertainty table.
+    """
+
+    def __init__(self, kwargs: dict[str, Any]) -> None:
         """Attributes for advanced search results that are common."""
         self.id: int = kwargs["id"]
-        """Document database id."""
-
         self.approval_date: str = kwargs.get("approvalDate") or ""
-        """Approval date (YYYY-MM-DD)."""
 
         k = kwargs.get("cmc")
         self.cmc: ResultUnit | None = ResultUnit(k) if k else None
-        """CMC result unit."""
 
         k = kwargs.get("cmcBaseUnit")
         self.cmc_base_unit: ResultUnit | None = ResultUnit(k) if k else None
-        """CMC base unit."""
 
         k = kwargs.get("cmcUncertainty")
         self.cmc_uncertainty: ResultUnit | None = ResultUnit(k) if k else None
-        """CMC uncertainty."""
 
         k = kwargs.get("cmcUncertaintyBaseUnit")
         self.cmc_uncertainty_base_unit: ResultUnit | None = ResultUnit(k) if k else None
-        """CMC uncertainty base unit."""
 
         self.comments: str = kwargs.get("comments") or ""
-        """Comments."""
-
         self.confidence_level: float | None = kwargs.get("confidenceLevel")
-        """Confidence level."""
-
         self.country_value: str = kwargs.get("countryValue") or ""
-        """Country full name (example: "China")."""
-
         self.coverage_factor: float | None = kwargs.get("coverageFactor")
-        """Coverage factor."""
-
         self.domain_code: str = kwargs.get("domainCode") or ""
-        """Domain code (example: "CHEM-BIO")."""
-
         self.group_identifier: str = kwargs.get("groupIdentifier") or ""
-        """Group identifier."""
-
         self.kcdb_code: str = kwargs.get("kcdbCode") or ""
-        """Document kcdb code (example: "APMP-QM-CN-00000JZR-1")."""
-
         self.metrology_area_label: str = kwargs.get("metrologyAreaLabel") or ""
-        """Metrology area label (example: "QM")."""
-
         self.nmi_code: str = kwargs.get("nmiCode") or ""
-        """NMI code (example: "NIM")."""
-
         self.nmi_name: str = kwargs.get("nmiName") or ""
-        """NMI name (example: "National Institute of Metrology")."""
-
         self.nmi_service_code: str = kwargs.get("nmiServiceCode") or ""
-        """NMI service code (example: "Other-11")."""
-
         self.nmi_service_link: str = kwargs.get("nmiServiceLink") or ""
-        """NMI service link."""
-
         self.publication_date: str = kwargs.get("publicationDate") or ""
-        """Publication date (YYYY-MM-DD)."""
-
         self.quantity_value: str = kwargs.get("quantityValue") or ""
-        """Quantity value (example: "Absorbed dose/rate")."""
-
         self.rmo: str = kwargs.get("rmo") or ""
-        """RMO acronym (example: "EURAMET")."""
-
         self.status: str = kwargs.get("status") or ""
-        """CMC status (example: "Published")."""
-
         self.status_date: str = kwargs.get("statusDate") or ""
-        """Last status date (YYYY-MM-DD)."""
-
         self.traceability_source: str = kwargs.get("traceabilitySource") or ""
-        """Traceability source (example: "VSL")."""
 
         k = kwargs.get("uncertaintyEquation")
         self.uncertainty_equation: ResultEquation | None = ResultEquation(k) if k else None
-        """Uncertainty equation."""
 
         k = kwargs.get("uncertaintyMode")
         self.uncertainty_mode: AbsoluteRelative | None = AbsoluteRelative(k) if k else None
-        """Uncertainty mode."""
 
         k = kwargs.get("uncertaintyTable")
         self.uncertainty_table: ResultTable | None = ResultTable(k) if k else None
-        """Uncertainty table."""
 
 
-class ResultChemistryAndBiology(ResultCommon):
-    """Chemistry and Biology result."""
+class ResultChemistryBiology(ResultCommon):
+    """Chemistry and Biology result.
+
+    Attributes:
+        analyte_matrix: Analyte matrix. _Example:_ `"high purity antimony"`
+        analyte_value: Analyte value. _Example:_ `"antimony"`
+        category_value: Category value. _Example:_ `"High purity chemicals"`
+        crm: CRM unit.
+        crm_confidence_level: CRM confidence level.
+        crm_coverage_factor: CRM coverage factor.
+        crm_uncertainty: CRM uncertainty.
+        crm_uncertainty_equation: CRM uncertainty equation.
+        crm_uncertainty_mode: CRM uncertainty mode.
+        crm_uncertainty_table: CRM uncertainty table.
+        measurment_technique: Measurment technique.
+            _Example:_ `"Liquid-solid extraction with SPE cleanup and bracketing LC-IDMS/MS"`
+        mechanism: Mechanism. _Example:_ `"Customer service; GD-MS-200; delivery only to other NMIs"`
+        sub_category_value: Sub category value. _Example:_ `"Metals"`
+        uncertainty_convention: Uncertainty convention.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Chemistry and Biology result."""
         super().__init__(kwargs)
 
         self.analyte_matrix: str = kwargs.get("analyteMatrix") or ""
-        """Analyte matrix (example: "high purity antimony")."""
-
         self.analyte_value: str = kwargs.get("analyteValue") or ""
-        """Analyte value (example: "antimony")."""
-
         self.category_value: str = kwargs.get("categoryValue") or ""
-        """Category value (example: "High purity chemicals")."""
 
         k = kwargs.get("crm")
         self.crm: ResultUnit | None = ResultUnit(k) if k else None
-        """CRM unit."""
 
         self.crm_confidence_level: float | None = kwargs.get("crmConfidenceLevel")
-        """CRM confidence level."""
-
         self.crm_coverage_factor: float | None = kwargs.get("crmCoverageFactor")
-        """CRM coverage factor."""
 
         k = kwargs.get("crmUncertainty")
         self.crm_uncertainty: ResultUnit | None = ResultUnit(k) if k else None
-        """CRM uncertainty."""
 
         k = kwargs.get("crmUncertaintyEquation")
         self.crm_uncertainty_equation: ResultEquation | None = ResultEquation(k) if k else None
-        """CRM uncertainty equation."""
 
         k = kwargs.get("crmUncertaintyMode")
         self.crm_uncertainty_mode: AbsoluteRelative | None = AbsoluteRelative(k) if k else None
-        """CRM uncertainty mode."""
 
         k = kwargs.get("crmUncertaintyTable")
         self.crm_uncertainty_table: ResultTable | None = ResultTable(k) if k else None
-        """CRM uncertainty table."""
 
         self.measurment_technique: str = kwargs.get("measurmentTechnique") or ""
-        """Measurment technique (example: "Liquid-solid extraction with SPE cleanup and bracketing LC-IDMS/MS")."""
-
         self.mechanism: str = kwargs.get("mechanism") or ""
-        """Mechanism (example: "Customer service; GD-MS-200; delivery only to other NMIs")."""
-
         self.sub_category_value: str = kwargs.get("subCategoryValue") or ""
-        """Sub category value (example: "Metals")."""
 
         k = kwargs.get("uncertaintyConvention")
         self.uncertainty_convention: UncertaintyConvention | None = UncertaintyConvention(k) if k else None
-        """Uncertainty convention."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultChemistryAndBiology(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
-class ResultPhysics(ResultCommon):
-    """Physics result."""
+class ResultGeneralPhysics(ResultCommon):
+    """General Physics result.
+
+    Attributes:
+        branch_value: Branch value. _Example:_ `"Radio frequency measurements"`
+        individual_service_value: Individual service value.
+            _Example:_ `"Transmission coefficient in coaxial line (real and imaginary)"`
+        instrument: Instrument. _Example:_ `"Passive device"`
+        instrument_method: Instrument method. _Example:_ `"Vector network analyser"`
+        international_standard: International standard. _Example:_ `"EURAMET Cg19, ISO 8655-6"`
+        parameters: Parameters list with name and value.
+        service_value: Service value. _Example:_ `"Radio frequency measurements"`
+        sub_service_value: Subservice value. _Example:_ `"Scattering parameters (vectors)"`
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Physics result."""
         super().__init__(kwargs)
-
         self.branch_value: str = kwargs.get("branchValue") or ""
-        """Branch value (example: "Radio frequency measurements")."""
-
         self.individual_service_value: str = kwargs.get("individualServiceValue") or ""
-        """Individual service value (example: "Transmission coefficient in coaxial line (real and imaginary)")."""
-
         self.instrument: str = kwargs.get("instrument") or ""
-        """Instrument (example: "Passive device")."""
-
         self.instrument_method: str = kwargs.get("instrumentMethod") or ""
-        """Instrument method (example: "Vector network analyser")."""
-
         self.international_standard: str = kwargs.get("internationalStandard") or ""
-        """International standard (example: "EURAMET Cg19, ISO 8655-6")."""
-
         self.parameters: list[ResultParam] = [ResultParam(p) for p in kwargs.get("parameters", [])]
-        """Parameters list with name and value."""
-
         self.service_value: str = kwargs.get("serviceValue") or ""
-        """Service value (example: "Radio frequency measurements")."""
-
         self.sub_service_value: str = kwargs.get("subServiceValue") or ""
-        """Sub service value (example: "Scattering parameters (vectors)")."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
-class ResultRadiation(ResultCommon):
-    """Radiation result."""
+class ResultIonizingRadiation(ResultCommon):
+    """Ionizing Radiation result.
+
+    Attributes:
+        branch_value: Branch value. _Example:_ `"Radioactivity"`
+        instrument: Instrument. _Example:_ `"Multiple nuclide source, solution"`
+        instrument_method: Instrument method. _Example:_ `"Ge detector, multichannel analyzer"`
+        international_standard: International standard. _Example:_ `"EURAMET Cg19, ISO 8655-6"`
+        medium_value: Medium value. _Example:_ `"Liquid"`
+        nuclide_value: Nuclide value. _Example:_ `"Cr-51"`
+        radiation_code: Radiation code separated by a dot for branch, quantity, source, medium. _Example:_ `"2.1.3.2"`
+        radiation_specification: Radiation specification name.
+            _Example:_ `"10 ml to 500 ml NMIJ/AIST standard cylindrical plastic bottle"`
+        reference_standard: Reference standard. _Example:_ `"Comparison with the NMIJ/AIST standard source"`
+        source_value: Source value. _Example:_ `"Multi-radionuclide source"`
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Radiation result."""
         super().__init__(kwargs)
-
         self.branch_value: str = kwargs.get("branchValue") or ""
-        """Branch value (example: "Radio frequency measurements")."""
-
         self.instrument: str = kwargs.get("instrument") or ""
-        """Instrument (example: "Passive device")."""
-
         self.instrument_method: str = kwargs.get("instrumentMethod") or ""
-        """Instrument method (example: "Vector network analyser")."""
-
         self.international_standard: str = kwargs.get("internationalStandard") or ""
-        """International standard (example: "EURAMET Cg19, ISO 8655-6")."""
-
         self.medium_value: str = kwargs.get("mediumValue") or ""
-        """Medium value (example: "Liquid")."""
-
         self.nuclide_value: str = kwargs.get("nuclideValue") or ""
-        """Nuclide value (example: "Cr-51")."""
-
         self.radiation_code: str = kwargs.get("radiationCode") or ""
-        """Radiation code separated by a dot for branch, quantity, source, medium (example: "2.1.3.2")."""
-
         self.radiation_specification: str = kwargs.get("radiationSpecification") or ""
-        """Radiation specification name (example: "10 ml to 500 ml NMIJ/AIST standard cylindrical plastic bottle")."""
-
         self.reference_standard: str = kwargs.get("referenceStandard") or ""
-        """Reference standard (example: "Comparison with the NMIJ/AIST standard source")."""
-
         self.source_value: str = kwargs.get("sourceValue") or ""
-        """Source value (example: "Multi-radionuclide source")."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultRadiation(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
-class ResultsChemistryAndBiology(Results):
-    """Chemistry and Biology search results."""
+class ResultsChemistryBiology(Results):
+    """Chemistry and Biology search results.
+
+    Attributes:
+        data: The chemistry and biology result data.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Chemistry and Biology search results."""
         super().__init__(kwargs)
-
-        self.data: list[ResultChemistryAndBiology] = [ResultChemistryAndBiology(d) for d in kwargs.get("data", [])]
-        """The chemistry and biology result data."""
+        self.data: list[ResultChemistryBiology] = [ResultChemistryBiology(d) for d in kwargs.get("data", [])]
 
     def __repr__(self) -> str:
         """Return the object representation."""
-        return f"ResultsChemistryAndBiology({super().__repr__()})"
+        return f"ResultsChemistryBiology({super().__repr__()})"
 
 
-class ResultsPhysics(Results):
-    """Physics search results."""
+class ResultsGeneralPhysics(Results):
+    """Physics search results.
+
+    Attributes:
+        data: The physics result data.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
-        """Physics search results."""
+        """General Physics search results."""
         super().__init__(kwargs)
-
-        self.data: list[ResultPhysics] = [ResultPhysics(d) for d in kwargs.get("data", [])]
-        """The physics result data."""
+        self.data: list[ResultGeneralPhysics] = [ResultGeneralPhysics(d) for d in kwargs.get("data", [])]
 
     def __repr__(self) -> str:
         """Return the object representation."""
-        return f"ResultsPhysics({super().__repr__()})"
+        return f"ResultsGeneralPhysics({super().__repr__()})"
 
 
 class ResultsQuickSearch(Results):
-    """Quick search results."""
+    """Quick search results.
+
+    Attributes:
+        aggregations: The aggregations list.
+        data: The quick search results data.
+        filters_list: The filters list.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Quick search results."""
         super().__init__(kwargs)
-
         self.aggregations: list[ResultAggregation] = [ResultAggregation(d) for d in kwargs.get("aggregations", [])]
-        """The aggregations list."""
-
         self.data: list[Any] = kwargs.get("data", [])
-        """The quick search results data."""
-
         self.filters_list: list[ResultFilter] = [ResultFilter(d) for d in kwargs.get("filtersList", [])]
-        """The filters list."""
 
     def __repr__(self) -> str:
         """Return the object representation."""
@@ -598,37 +615,39 @@ class ResultsQuickSearch(Results):
         )
 
 
-class ResultsRadiation(Results):
-    """Radiation search results."""
+class ResultsIonizingRadiation(Results):
+    """Ionizing Radiation search results.
+
+    Attributes:
+        data: The ionizing radiation results data.
+    """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
-        """Radiation search results."""
+        """Ionizing Radiation search results."""
         super().__init__(kwargs)
-
-        self.data: list[ResultRadiation] = [ResultRadiation(d) for d in kwargs.get("data", [])]
-        """The radiation results data."""
+        self.data: list[ResultIonizingRadiation] = [ResultIonizingRadiation(d) for d in kwargs.get("data", [])]
 
     def __repr__(self) -> str:
         """Return the object representation."""
-        return f"ResultsRadiation({super().__repr__()})"
+        return f"ResultsIonizingRadiation({super().__repr__()})"
 
 
-T = TypeVar("T", bound=RefData)
+T = TypeVar("T", bound=ReferenceData)
 
 
 class KCDB:
-    """KCDB API base class."""
+    """KCDB base class."""
 
     BASE_URL: str = "https://www.bipm.org/api/kcdb"
     """The base url to the KCDB API."""
 
     MAX_PAGE_SIZE: int = 10_000
-    """The maximum number of pages that may be requested."""
+    """The maximum number of pages that may be requested in a single request."""
 
     DOMAIN: Domain
 
     def __init__(self, timeout: float | None = 30) -> None:
-        """KCDB API base class.
+        """Initialise the KCDB base class.
 
         Args:
             timeout: The maximum number of seconds to wait for a response from the KCDB server.
@@ -658,29 +677,37 @@ class KCDB:
         return [c if isinstance(c, str) else c.label for c in countries]
 
     @staticmethod
-    def _to_label(obj: str | RefData) -> str:
+    def _to_label(obj: str | ReferenceData) -> str:
         if isinstance(obj, str):
             return obj
         return obj.label
 
     def countries(self) -> list[Country]:
-        """Return all countries."""
+        """Return all countries.
+
+        Returns:
+            A list of [Country][msl.kcdb.classes.Country]'s.
+        """
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/country", timeout=self._timeout)
         response.raise_for_status()
         return [Country(**data) for data in response.json()["referenceData"]]
 
     def domains(self) -> list[Domain]:
-        """Return all KCDB domains."""
+        """Return all KCDB domains.
+
+        Returns:
+            A list of [Domain][msl.kcdb.classes.Domain]s.
+        """
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/domain", timeout=self._timeout)
         response.raise_for_status()
         return [Domain(**data) for data in response.json()["domains"]]
 
     @staticmethod
     def filter(data: Iterable[T], pattern: str, *, flags: int = 0) -> list[T]:
-        """Filter the reference data based on a string search.
+        """Filter the reference data based on a pattern search.
 
         Args:
-            data: An iterable of KCDB reference data.
+            data: An iterable of a [ReferenceData][msl.kcdb.classes.ReferenceData] subclass.
             pattern: A regular-expression pattern to use to filter results. Uses the `label`
                 and `value` attributes of each item in `data` to perform the filtering.
             flags: Pattern flags passed to [re.compile][].
@@ -692,7 +719,11 @@ class KCDB:
         return [item for item in data if regex.search(item.value) or regex.search(item.label)]
 
     def metrology_areas(self) -> list[MetrologyArea]:
-        """Return all metrology areas."""
+        """Return all metrology areas for this domain.
+
+        Returns:
+            A list of [MetrologyArea][msl.kcdb.classes.MetrologyArea]s.
+        """
         response = requests.get(
             f"{KCDB.BASE_URL}/referenceData/metrologyArea",
             params={"domainCode": self.DOMAIN.code},
@@ -702,7 +733,11 @@ class KCDB:
         return [MetrologyArea(domain=self.DOMAIN, **data) for data in response.json()["referenceData"]]
 
     def non_ionizing_quantities(self) -> list[NonIonizingQuantity]:
-        """Return all non-Ionizing Radiation quantities."""
+        """Return all non-Ionizing Radiation quantities.
+
+        Returns:
+            A list of [NonIonizingQuantity][msl.kcdb.classes.NonIonizingQuantity]'s.
+        """
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
         response.raise_for_status()
         return [
@@ -721,18 +756,18 @@ class KCDB:
         page_size: int = 100,
         show_table: bool = False,
     ) -> ResultsQuickSearch:
-        """Quick search criteria.
+        """Perform a quick search.
 
         Args:
             excluded_filters: Excluded filters (example: `["cmcServices.AC current", "cmcServices.AC power"]`).
             included_filters: Included filters (example: `["cmcDomain.CHEM-BIO", "cmcBranches.Dimensional metrology"]`).
             keywords: Search keywords in elasticsearch format (example: `"phase OR test"`).
             page: Page number requested (0 means first page).
-            page_size: Maximum number of elements in one page (maximum value is 10000).
+            page_size: Maximum number of elements in a page (maximum value is 10000).
             show_table: Set to `True` to return table data.
 
         Returns:
-            The CMC results.
+            The CMC quick-search results.
         """
         self._check_page_info(page, page_size)
 
@@ -761,7 +796,11 @@ class KCDB:
 
     @property
     def timeout(self) -> float | None:
-        """The timeout value for an KCDB API request."""
+        """The timeout value, in seconds, to use for a KCDB request.
+
+        Returns:
+            The maximum number of seconds to wait for a response from the KCDB server.
+        """
         return self._timeout
 
     @timeout.setter

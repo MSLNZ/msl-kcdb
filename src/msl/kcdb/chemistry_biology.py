@@ -1,4 +1,4 @@
-"""Search CMCs for Chemistry and Biology."""
+"""Search the Chemistry and Biology database."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import requests
 
-from .classes import KCDB, Analyte, Category, Domain, ResultsChemistryAndBiology
+from .classes import KCDB, Analyte, Category, Domain, ResultsChemistryBiology
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -16,19 +16,27 @@ if TYPE_CHECKING:
 
 
 class ChemistryBiology(KCDB):
-    """Search CMCs for Chemistry and Biology."""
+    """Chemistry and Biology class."""
 
     DOMAIN = Domain(code="CHEM-BIO", name="Chemistry and Biology")
     """The Chemistry and Biology domain."""
 
     def analytes(self) -> list[Analyte]:
-        """Return all Chemistry and Biology analytes."""
+        """Return all Chemistry and Biology analytes.
+
+        Returns:
+            A list of [Analyte][msl.kcdb.classes.Analyte]s
+        """
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/analyte", timeout=self._timeout)
         response.raise_for_status()
         return [Analyte(**data) for data in response.json()["referenceData"]]
 
     def categories(self) -> list[Category]:
-        """Return all Chemistry and Biology categories."""
+        """Return all Chemistry and Biology categories.
+
+        Returns:
+            A list of [Category][msl.kcdb.classes.Category]'s
+        """
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/category", timeout=self._timeout)
         response.raise_for_status()
         return [Category(**data) for data in response.json()["referenceData"]]
@@ -46,7 +54,7 @@ class ChemistryBiology(KCDB):
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
-    ) -> ResultsChemistryAndBiology:
+    ) -> ResultsChemistryBiology:
         """Perform a Chemistry and Biology search.
 
         Args:
@@ -56,7 +64,7 @@ class ChemistryBiology(KCDB):
             keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
             metrology_area: Metrology Area label (example: `"QM"`).
             page: Page number requested (0 means first page).
-            page_size: Maximum number of elements in one page (maximum value is 10000).
+            page_size: Maximum number of elements in a page (maximum value is 10000).
             public_date_from: Minimal publication date (example: `"2005-01-31"`).
             public_date_to: Maximal publication date (example: `"2020-06-30"`).
             show_table: Set to `True` to return table data.
@@ -98,4 +106,4 @@ class ChemistryBiology(KCDB):
             timeout=self._timeout,
         )
         response.raise_for_status()
-        return ResultsChemistryAndBiology(response.json())
+        return ResultsChemistryBiology(response.json())

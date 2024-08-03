@@ -122,7 +122,7 @@ class TestGeneralPhysics:
         assert physics.data[0].nmi_service_code == "217.01.04"
 
         assert str(physics) == (
-            f"ResultsPhysics(number_of_elements=1, page_number=0, page_size=100, "
+            f"ResultsGeneralPhysics(number_of_elements=1, page_number=0, page_size=100, "
             f"total_elements=1, total_pages=1, version_api_kcdb={physics.version_api_kcdb!r})"
         )
 

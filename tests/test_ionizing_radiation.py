@@ -141,7 +141,7 @@ class TestIonizingRadiation:
         assert radiation.data[0].nmi_service_code == "APM-RAD-NMIJ/AIST-2144"
 
         assert str(radiation) == (
-            f"ResultsRadiation(number_of_elements=1, page_number=0, page_size=100, "
+            f"ResultsIonizingRadiation(number_of_elements=1, page_number=0, page_size=100, "
             f"total_elements=1, total_pages=1, version_api_kcdb={radiation.version_api_kcdb!r})"
         )
 
