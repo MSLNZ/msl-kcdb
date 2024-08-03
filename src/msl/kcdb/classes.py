@@ -642,7 +642,7 @@ class KCDB:
     """The base url to the KCDB API."""
 
     MAX_PAGE_SIZE: int = 10_000
-    """The maximum number of pages that may be requested in a single request."""
+    """The maximum number of elements that can be returned in a single KCDB request."""
 
     DOMAIN: Domain
 
