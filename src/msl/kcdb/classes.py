@@ -504,7 +504,7 @@ class ResultGeneralPhysics(ResultCommon):
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
-        """Physics result."""
+        """General Physics result."""
         super().__init__(kwargs)
         self.branch_value: str = kwargs.get("branchValue") or ""
         self.individual_service_value: str = kwargs.get("individualServiceValue") or ""
@@ -538,7 +538,7 @@ class ResultIonizingRadiation(ResultCommon):
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
-        """Radiation result."""
+        """Ionizing Radiation result."""
         super().__init__(kwargs)
         self.branch_value: str = kwargs.get("branchValue") or ""
         self.instrument: str = kwargs.get("instrument") or ""
@@ -560,7 +560,7 @@ class ResultsChemistryBiology(Results):
     """Chemistry and Biology search results.
 
     Attributes:
-        data: The chemistry and biology result data.
+        data: Chemistry and Biology result data.
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
@@ -574,10 +574,10 @@ class ResultsChemistryBiology(Results):
 
 
 class ResultsGeneralPhysics(Results):
-    """Physics search results.
+    """General Physics search results.
 
     Attributes:
-        data: The physics result data.
+        data: General Physics result data.
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
@@ -595,7 +595,7 @@ class ResultsQuickSearch(Results):
 
     Attributes:
         aggregations: The aggregations list.
-        data: The quick search results data.
+        data: The quick search result data.
         filters_list: The filters list.
     """
 
@@ -619,7 +619,7 @@ class ResultsIonizingRadiation(Results):
     """Ionizing Radiation search results.
 
     Attributes:
-        data: The ionizing radiation results data.
+        data: Ionizing Radiation result data.
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
