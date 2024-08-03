@@ -88,16 +88,16 @@ class GeneralPhysics(KCDB):
         """Perform a General Physics search.
 
         Args:
-            metrology_area: Metrology Area label (example: `"EM"`).
-            branch: Branch label (example: `"EM/RF"`).
-            countries: Country label(s) (example: `["CH", "FR", "JP"]`).
-            keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
+            metrology_area: Metrology area label. _Example:_ `"EM"`
+            branch: Branch label. _Example:_ `"EM/RF"`
+            countries: Country label(s). _Example:_ `["CH", "FR", "JP"]`
+            keywords: Search keywords in elasticsearch format. _Example:_ `"phase OR multichannel OR water"`
             page: Page number requested (0 means first page).
             page_size: Maximum number of elements in a page (maximum value is 10000).
             physics_code: Physics code is composed of `Service.label`, `SubService.label` (if requested)
-                and `IndividualService.label` (if requested) separated by dots (example: `"11.3.3"`).
-            public_date_from: Minimal publication date (example: `"2005-01-31"`).
-            public_date_to: Maximal publication date (example: `"2020-06-30"`).
+                and `IndividualService.label` (if requested) separated by dots. _Example:_ `"11.3.3"`
+            public_date_from: Minimal publication date. _Example:_ `"2005-01-31"`
+            public_date_to: Maximal publication date. _Example:_ `"2020-06-30"`
             show_table: Set to `True` to return table data.
 
         Returns:

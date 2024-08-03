@@ -122,19 +122,19 @@ class IonizingRadiation(KCDB):
         """Perform an Ionizing Radiation search.
 
         Args:
-            branch: Branch label (example: `"RAD"`).
-            countries: Country label(s) (example: `["CH", "FR", "JP"]`).
-            keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
-            medium: Medium label (example: `"3"`).
-            metrology_area: Metrology Area label (example: `"RI"`).
-            nuclide: Nuclide label (example: `"Co-60"`).
+            branch: Branch label. _Example:_ `"RAD"`
+            countries: Country label(s). _Example:_ `["CH", "FR", "JP"]`
+            keywords: Search keywords in elasticsearch format. _Example:_ `"phase OR multichannel OR water"`
+            medium: Medium label. _Example:_ `"3"`
+            metrology_area: Metrology area label. _Example:_ `"RI"`
+            nuclide: Nuclide label. _Example:_ `"Co-60"`
             page: Page number requested (0 means first page).
             page_size: Maximum number of elements in a page (maximum value is 10000).
-            public_date_from: Minimal publication date (example: `"2005-01-31"`).
-            public_date_to: Maximal publication date (example: `"2020-06-30"`).
-            quantity: Quantity label (example: `"1"`).
+            public_date_from: Minimal publication date. _Example:_ `"2005-01-31"`
+            public_date_to: Maximal publication date. _Example:_ `"2020-06-30"`
+            quantity: Quantity label. _Example:_ `"1"`
             show_table: Set to `True` to return table data.
-            source: Source label (example: `"2"`).
+            source: Source label. _Example:_ `"2"`
 
         Returns:
             The CMC results for Ionizing Radiation.

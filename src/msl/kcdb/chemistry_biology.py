@@ -58,15 +58,15 @@ class ChemistryBiology(KCDB):
         """Perform a Chemistry and Biology search.
 
         Args:
-            analyte: Analyte label (example: `"antimony"`).
-            category: Category label (example: `"5"`).
-            countries: Country label(s) (example: `["CH", "FR", "JP"]`).
-            keywords: Search keywords in elasticsearch format (example: `"phase OR multichannel OR water"`).
-            metrology_area: Metrology Area label (example: `"QM"`).
+            analyte: Analyte label. _Example:_ `"antimony"`
+            category: Category label. _Example:_ `"5"`
+            countries: Country label(s). _Example:_ `["CH", "FR", "JP"]`
+            keywords: Search keywords in elasticsearch format. _Example:_ `"phase OR multichannel OR water"`
+            metrology_area: Metrology area label. _Example:_ `"QM"`
             page: Page number requested (0 means first page).
             page_size: Maximum number of elements in a page (maximum value is 10000).
-            public_date_from: Minimal publication date (example: `"2005-01-31"`).
-            public_date_to: Maximal publication date (example: `"2020-06-30"`).
+            public_date_from: Minimal publication date. _Example:_ `"2005-01-31"`
+            public_date_to: Maximal publication date. _Example:_ `"2020-06-30"`
             show_table: Set to `True` to return table data.
 
         Returns:

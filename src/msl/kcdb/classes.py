@@ -759,9 +759,9 @@ class KCDB:
         """Perform a quick search.
 
         Args:
-            excluded_filters: Excluded filters (example: `["cmcServices.AC current", "cmcServices.AC power"]`).
-            included_filters: Included filters (example: `["cmcDomain.CHEM-BIO", "cmcBranches.Dimensional metrology"]`).
-            keywords: Search keywords in elasticsearch format (example: `"phase OR test"`).
+            excluded_filters: Excluded filters. _Example:_ `["cmcServices.AC current", "cmcServices.AC power"]`
+            included_filters: Included filters. _Example:_ `["cmcDomain.CHEM-BIO", "cmcBranches.Dimensional metrology"]`
+            keywords: Search keywords in elasticsearch format. _Example:_ `"phase OR test"`
             page: Page number requested (0 means first page).
             page_size: Maximum number of elements in a page (maximum value is 10000).
             show_table: Set to `True` to return table data.
