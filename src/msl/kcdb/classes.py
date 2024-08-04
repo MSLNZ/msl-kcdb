@@ -319,11 +319,11 @@ class Results:
 
     Attributes:
         number_of_elements: Number of elements on this page.
-        page_number: Page number (first page is 0).
-        page_size: Number of elements in the page.
+        page_number: The page number (first page is 0) of the request.
+        page_size: The page size that was requested.
         total_elements: Total number of elements available (in all pages).
         total_pages: Total number of pages.
-        version_api_kcdb: API KCDB version. _Example:_ `"1.0.7"`
+        version_api_kcdb: KCDB API version. _Example:_ `"1.0.7"`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
