@@ -82,17 +82,14 @@ class Nuclide(ReferenceData):
     """A nuclide of Ionizing Radiation."""
 
 
-@dataclass(frozen=True, order=True)
-class NonIonizingQuantity:
+class NonIonizingQuantity(ReferenceData):
     """A quantity that is not Ionizing Radiation.
 
     Attributes:
-        id: Reference data identity. _Example:_ 109
-        value: Reference data value. _Example:_ `"Absorbance, regular, spectral"`
+        id (int): Reference data identity. _Example:_ 109
+        label (str): Always an empty string. _Example:_ `""`
+        value (str): Reference data value. _Example:_ `"Absorbance, regular, spectral"`
     """
-
-    id: int
-    value: str
 
 
 @dataclass(frozen=True, order=True)
@@ -741,7 +738,7 @@ class KCDB:
         response = requests.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
         response.raise_for_status()
         return [
-            NonIonizingQuantity(id=d["id"], value=d["value"])
+            NonIonizingQuantity(id=d["id"], label="", value=d["value"])
             for d in response.json()["referenceData"]
             if d["label"] is None
         ]

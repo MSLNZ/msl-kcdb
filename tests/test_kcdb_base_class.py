@@ -45,11 +45,9 @@ class TestKCDB:
         """Test KCDB.non_ionizing_quantities()."""
         quantities = self.kcdb.non_ionizing_quantities()
         assert len(quantities) > 1000
-        quantity = None
-        for q in quantities:
-            if q.id == 78:
-                quantity = q
-                break
+
+        quantity, *rest = self.kcdb.filter(quantities, "Sound pressure response")
+        assert not rest
         assert quantity is not None
         assert quantity.id == 78
         assert quantity.value == "Sound pressure response level"
