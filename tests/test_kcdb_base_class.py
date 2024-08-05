@@ -83,3 +83,8 @@ class TestKCDB:
 
         self.kcdb.timeout = -1
         assert self.kcdb.timeout is None
+
+    def test_to_label_raises(self) -> None:
+        """Test KCDB._to_label() for an invalid object."""
+        with pytest.raises(AttributeError):
+            KCDB._to_label(None)  # type: ignore[arg-type] # noqa: SLF001
