@@ -275,7 +275,7 @@ class ResultTable:
         table_cols: Number of columns in table.
         table_name: Table name. _Example:_ `"CH_Scatt-Atten_Mag"`
         table_comment: Table comment.
-        table_contents: Table contents. _Example:_ `"{"row1":{"col1":"val1","col2":"val2"}}"`
+        table_contents: Table contents. _Example:_ `"{"row_1":{"col_1":"val1","col_2":"val2"}}"`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
