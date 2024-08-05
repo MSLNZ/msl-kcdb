@@ -1,5 +1,5 @@
 site_name: MSL KCDB
-site_description: Interact with the BIPM key comparison database (KCDB)
+site_description: Search the BIPM key comparison database (KCDB)
 copyright: Copyright &copy; 2024 Measurement Standards Laboratory of New Zealand
 repo_url: https://github.com/MSLNZ/msl-kcdb
 
