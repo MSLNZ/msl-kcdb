@@ -53,7 +53,7 @@ class TestChemBio:
         """Test string representation."""
         assert str(self.chem_bio) == "ChemistryBiology(code='CHEM-BIO', name='Chemistry and Biology')"
 
-    def test_search(self) -> None:
+    def test_search(self) -> None:  # noqa: PLR0915
         """Test ChemistryBiology.search()."""
         chem_bio = self.chem_bio.search(
             analyte="antimony",
@@ -64,11 +64,114 @@ class TestChemBio:
             public_date_to=date(2024, 6, 30),
         )
 
-        assert chem_bio.total_elements == 1
-        assert chem_bio.data[0].nmi_code == "NMIJ AIST"
-        assert chem_bio.data[0].nmi_service_code == "5-01-02"
-
         assert str(chem_bio) == (
-            f"ResultsChemistryBiology(number_of_elements=1, page_number=0, page_size=100, "
-            f"total_elements=1, total_pages=1, version_api_kcdb={chem_bio.version_api_kcdb!r})"
+            "ResultsChemistryBiology(number_of_elements=1, page_number=0, page_size=100, "
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.7')"
         )
+
+        assert chem_bio.version_api_kcdb == "1.0.7"
+        assert chem_bio.page_number == 0
+        assert chem_bio.page_size == 100
+        assert chem_bio.number_of_elements == 1
+        assert chem_bio.total_elements == 1
+        assert chem_bio.total_pages == 1
+        assert len(chem_bio.data) == 1
+        data = chem_bio.data[0]
+        assert str(data) == "ResultChemistryBiology(id=32770, nmi_code='NMIJ AIST', rmo='APMP')"
+        assert data.id == 32770
+        assert data.status == "Published"
+        assert data.status_date == "2022-01-04"
+        assert data.kcdb_code == "APMP-QM-JP-000001GZ-2"
+        assert data.domain_code == "CHEM-BIO"
+        assert data.metrology_area_label == "QM"
+        assert data.rmo == "APMP"
+        assert data.country_value == "Japan"
+        assert data.nmi_code == "NMIJ AIST"
+        assert data.nmi_name == "National Metrology Institute of Japan"
+        assert data.nmi_service_code == "5-01-02"
+        assert data.nmi_service_link == ""
+        assert data.quantity_value == "Mass fraction"
+        assert data.cmc is not None
+        assert str(data.cmc) == "ResultUnit(lower_limit=0.001, unit='µg/kg', upper_limit=10.0)"
+        assert data.cmc.lower_limit == 0.001
+        assert data.cmc.unit == "µg/kg"
+        assert data.cmc.upper_limit == 10.0
+        assert data.cmc_uncertainty is not None
+        assert str(data.cmc_uncertainty) == "ResultUnit(lower_limit=10.0, unit='%', upper_limit=1.0)"
+        assert data.cmc_uncertainty.lower_limit == 10.0
+        assert data.cmc_uncertainty.unit == "%"
+        assert data.cmc_uncertainty.upper_limit == 1.0
+        assert data.cmc_base_unit is not None
+        assert (
+            str(data.cmc_base_unit) == "ResultUnit(lower_limit=1.0000000000000002e-12, unit='kg/kg', upper_limit=1e-08)"
+        )
+        assert data.cmc_base_unit.lower_limit == 1.0000000000000002e-12
+        assert data.cmc_base_unit.unit == "kg/kg"
+        assert data.cmc_base_unit.upper_limit == 1e-8
+        assert data.cmc_uncertainty_base_unit is not None
+        assert (
+            str(data.cmc_uncertainty_base_unit)
+            == "ResultUnit(lower_limit=1.0000000000000003e-13, unit='dimension 1', upper_limit=1e-10)"
+        )
+        assert data.cmc_uncertainty_base_unit.lower_limit == 1.0000000000000003e-13
+        assert data.cmc_uncertainty_base_unit.unit == "dimension 1"
+        assert data.cmc_uncertainty_base_unit.upper_limit == 1e-10
+        assert data.confidence_level == 95
+        assert data.coverage_factor == 2
+        assert data.uncertainty_equation is not None
+        assert str(data.uncertainty_equation) == "ResultEquation(equation='', equation_comment='')"
+        assert data.uncertainty_equation.equation == ""
+        assert data.uncertainty_equation.equation_comment == ""
+        assert data.uncertainty_table is not None
+        assert str(data.uncertainty_table) == "ResultTable(table_rows=0, table_cols=0, table_name='', table_comment='')"
+        assert data.uncertainty_table.table_name == ""
+        assert data.uncertainty_table.table_rows == 0
+        assert data.uncertainty_table.table_cols == 0
+        assert data.uncertainty_table.table_comment == ""
+        assert data.uncertainty_table.table_contents == "<masked>"
+        assert data.uncertainty_mode is not None
+        assert data.uncertainty_mode.name == "RELATIVE"
+        assert data.uncertainty_mode.value == "Relative"
+        assert data.traceability_source == ""
+        assert data.comments == ""
+        assert data.group_identifier == ""
+        assert data.publication_date == "2021-01-12"
+        assert data.approval_date == "2017-08-30"
+        assert data.uncertainty_convention is not None
+        assert data.uncertainty_convention.name == "TWO"
+        assert data.uncertainty_convention.value == "Two"
+        assert data.category_value == "Water"
+        assert data.sub_category_value == "Fresh water"
+        assert data.analyte_matrix == "river water and drinking water"
+        assert data.analyte_value == "antimony"
+        assert data.crm is not None
+        assert str(data.crm) == "ResultUnit(lower_limit=0.0103, unit='µg/kg', upper_limit=0.146)"
+        assert data.crm.lower_limit == 0.0103
+        assert data.crm.unit == "µg/kg"
+        assert data.crm.upper_limit == 0.146
+        assert data.crm_uncertainty is not None
+        assert str(data.crm_uncertainty) == "ResultUnit(lower_limit=0.0004, unit='µg/kg', upper_limit=0.009)"
+        assert data.crm_uncertainty.lower_limit == 0.0004
+        assert data.crm_uncertainty.unit == "µg/kg"
+        assert data.crm_uncertainty.upper_limit == 0.009
+        assert data.mechanism == "NMIJ CRM 7202, NMIJ CRM 7203"
+        assert data.crm_confidence_level == 95
+        assert data.crm_coverage_factor == 2
+        assert data.crm_uncertainty_equation is not None
+        assert str(data.crm_uncertainty_equation) == "ResultEquation(equation='', equation_comment='')"
+        assert data.crm_uncertainty_equation.equation == ""
+        assert data.crm_uncertainty_equation.equation_comment == ""
+        assert data.crm_uncertainty_table is not None
+        assert (
+            str(data.crm_uncertainty_table)
+            == "ResultTable(table_rows=0, table_cols=0, table_name='', table_comment='')"
+        )
+        assert data.crm_uncertainty_table.table_name == ""
+        assert data.crm_uncertainty_table.table_rows == 0
+        assert data.crm_uncertainty_table.table_cols == 0
+        assert data.crm_uncertainty_table.table_comment == ""
+        assert data.crm_uncertainty_table.table_contents == "<masked>"
+        assert data.crm_uncertainty_mode is not None
+        assert data.crm_uncertainty_mode.name == "ABSOLUTE"
+        assert data.crm_uncertainty_mode.value == "Absolute"
+        assert data.measurment_technique == ""

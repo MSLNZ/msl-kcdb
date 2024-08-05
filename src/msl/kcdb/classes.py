@@ -482,7 +482,7 @@ class ResultChemistryBiology(ResultCommon):
 
     def __repr__(self) -> str:
         """Return the object representation."""
-        return f"ResultChemistryAndBiology(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
+        return f"ResultChemistryBiology(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
 class ResultGeneralPhysics(ResultCommon):
@@ -514,7 +514,7 @@ class ResultGeneralPhysics(ResultCommon):
 
     def __repr__(self) -> str:
         """Return the object representation."""
-        return f"ResultPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
+        return f"ResultGeneralPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
 class ResultIonizingRadiation(ResultCommon):
@@ -550,7 +550,7 @@ class ResultIonizingRadiation(ResultCommon):
 
     def __repr__(self) -> str:
         """Return the object representation."""
-        return f"ResultRadiation(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
+        return f"ResultIonizingRadiation(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
 class ResultsChemistryBiology(Results):

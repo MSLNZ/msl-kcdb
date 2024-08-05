@@ -122,7 +122,7 @@ class TestIonizingRadiation:
         """Test string representation."""
         assert str(self.radiation) == "IonizingRadiation(code='RADIATION', name='Ionizing radiation')"
 
-    def test_search(self) -> None:
+    def test_search(self) -> None:  # noqa: PLR0915
         """Test IonizingRadiation.search()."""
         radiation = self.radiation.search(
             branch="RAD",
@@ -133,17 +133,87 @@ class TestIonizingRadiation:
             keywords="phase OR multichannel OR water",
             countries=Country(id=1, label="JP", value="Japan"),
             public_date_from=date(2005, 1, 31),
-            public_date_to="2020-06-30",
+            public_date_to="2024-06-30",
         )
-
-        assert radiation.total_elements == 1
-        assert radiation.data[0].nmi_code == "NMIJ AIST"
-        assert radiation.data[0].nmi_service_code == "APM-RAD-NMIJ/AIST-2144"
 
         assert str(radiation) == (
-            f"ResultsIonizingRadiation(number_of_elements=1, page_number=0, page_size=100, "
-            f"total_elements=1, total_pages=1, version_api_kcdb={radiation.version_api_kcdb!r})"
+            "ResultsIonizingRadiation(number_of_elements=1, page_number=0, page_size=100, "
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.7')"
         )
+
+        assert radiation.version_api_kcdb == "1.0.7"
+        assert radiation.page_number == 0
+        assert radiation.page_size == 100
+        assert radiation.number_of_elements == 1
+        assert radiation.total_elements == 1
+        assert radiation.total_pages == 1
+        assert len(radiation.data) == 1
+        data = radiation.data[0]
+        assert str(data) == "ResultIonizingRadiation(id=23054, nmi_code='NMIJ AIST', rmo='APMP')"
+        assert data.id == 23054
+        assert data.status == "Published"
+        assert data.status_date == "2019-10-17"
+        assert data.kcdb_code == "APMP-RI-JP-00000HSE-1"
+        assert data.domain_code == "RADIATION"
+        assert data.metrology_area_label == "RI"
+        assert data.rmo == "APMP"
+        assert data.country_value == "Japan"
+        assert data.nmi_code == "NMIJ AIST"
+        assert data.nmi_name == "National Metrology Institute of Japan"
+        assert data.nmi_service_code == "APM-RAD-NMIJ/AIST-2144"
+        assert data.nmi_service_link == ""
+        assert data.quantity_value == "Activity"
+        assert data.cmc is not None
+        assert str(data.cmc) == "ResultUnit(lower_limit=2000.0, unit='Bq', upper_limit=200000.0)"
+        assert data.cmc.lower_limit == 2000.0
+        assert data.cmc.unit == "Bq"
+        assert data.cmc.upper_limit == 200000.0
+        assert data.cmc_uncertainty is not None
+        assert str(data.cmc_uncertainty) == "ResultUnit(lower_limit=4.0, unit='%', upper_limit=4.0)"
+        assert data.cmc_uncertainty.lower_limit == 4.0
+        assert data.cmc_uncertainty.unit == "%"
+        assert data.cmc_uncertainty.upper_limit == 4.0
+        assert data.cmc_base_unit is not None
+        assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=2000.0, unit='Bq', upper_limit=200000.0)"
+        assert data.cmc_base_unit.lower_limit == 2000.0
+        assert data.cmc_base_unit.unit == "Bq"
+        assert data.cmc_base_unit.upper_limit == 200000.0
+        assert data.cmc_uncertainty_base_unit is not None
+        assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=80.0, unit='Bq', upper_limit=8000.0)"
+        assert data.cmc_uncertainty_base_unit.lower_limit == 80.0
+        assert data.cmc_uncertainty_base_unit.unit == "Bq"
+        assert data.cmc_uncertainty_base_unit.upper_limit == 8000.0
+        assert data.confidence_level == 95
+        assert data.coverage_factor == 2
+        assert data.uncertainty_equation is not None
+        assert str(data.uncertainty_equation) == "ResultEquation(equation='', equation_comment='')"
+        assert data.uncertainty_equation.equation == ""
+        assert data.uncertainty_equation.equation_comment == ""
+        assert data.uncertainty_table is not None
+        assert str(data.uncertainty_table) == "ResultTable(table_rows=0, table_cols=0, table_name='', table_comment='')"
+        assert data.uncertainty_table.table_name == ""
+        assert data.uncertainty_table.table_rows == 0
+        assert data.uncertainty_table.table_cols == 0
+        assert data.uncertainty_table.table_comment == ""
+        assert data.uncertainty_table.table_contents == "<masked>"
+        assert data.uncertainty_mode is not None
+        assert data.uncertainty_mode.name == "RELATIVE"
+        assert data.uncertainty_mode.value == "Relative"
+        assert data.traceability_source == "NMIJ/AIST"
+        assert data.comments == ""
+        assert data.group_identifier == ""
+        assert data.publication_date == "2005-02-14"
+        assert data.approval_date == "2005-02-14"
+        assert data.branch_value == "Radioactivity"
+        assert data.instrument == "Multiple nuclide source, solution"
+        assert data.instrument_method == "Ge detector, multichannel analyzer"
+        assert data.source_value == "Multi-radionuclide source"
+        assert data.medium_value == "Liquid"
+        assert data.nuclide_value == "Co-60"
+        assert data.radiation_specification == "10 ml to 500 ml NMIJ/AIST standard cylindrical plastic bottle"
+        assert data.international_standard == ""
+        assert data.reference_standard == "Comparison with the NMIJ/AIST standard source"
+        assert data.radiation_code == "2.1.3.2"
 
     def test_sources_dosimetry(self) -> None:
         """Test IonizingRadiation.sources() for Dosimetry branch."""

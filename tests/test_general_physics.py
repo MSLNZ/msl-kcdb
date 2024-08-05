@@ -104,7 +104,7 @@ class TestGeneralPhysics:
         """Test string representation."""
         assert str(self.physics) == "GeneralPhysics(code='PHYSICS', name='General physics')"
 
-    def test_search(self) -> None:
+    def test_search(self) -> None:  # noqa: PLR0915
         """Test GeneralPhysics.search()."""
         physics = self.physics.search(
             "EM",
@@ -117,14 +117,104 @@ class TestGeneralPhysics:
             show_table=True,
         )
 
-        assert physics.total_elements == 1
-        assert physics.data[0].nmi_code == "METAS"
-        assert physics.data[0].nmi_service_code == "217.01.04"
-
         assert str(physics) == (
-            f"ResultsGeneralPhysics(number_of_elements=1, page_number=0, page_size=100, "
-            f"total_elements=1, total_pages=1, version_api_kcdb={physics.version_api_kcdb!r})"
+            "ResultsGeneralPhysics(number_of_elements=1, page_number=0, page_size=100, "
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.7')"
         )
+
+        assert physics.version_api_kcdb == "1.0.7"
+        assert physics.page_number == 0
+        assert physics.page_size == 100
+        assert physics.number_of_elements == 1
+        assert physics.total_elements == 1
+        assert physics.total_pages == 1
+        assert len(physics.data) == 1
+        data = physics.data[0]
+        assert str(data) == "ResultGeneralPhysics(id=35071, nmi_code='METAS', rmo='EURAMET')"
+        assert data.id == 35071
+        assert data.status == "Published"
+        assert data.status_date == "2022-01-04"
+        assert data.kcdb_code == "EURAMET-EM-CH-00000GFB-5"
+        assert data.domain_code == "PHYSICS"
+        assert data.metrology_area_label == "EM"
+        assert data.rmo == "EURAMET"
+        assert data.country_value == "Switzerland"
+        assert data.nmi_code == "METAS"
+        assert data.nmi_name == "Federal Institute of Metrology"
+        assert data.nmi_service_code == "217.01.04"
+        assert data.nmi_service_link == ""
+        assert data.quantity_value == "Scattering parameters: transmission coefficient (Sij) in coaxial line, phase"
+        assert data.cmc is not None
+        assert str(data.cmc) == "ResultUnit(lower_limit=-180.0, unit='degree', upper_limit=180.0)"
+        assert data.cmc.lower_limit == -180.0
+        assert data.cmc.upper_limit == 180.0
+        assert data.cmc.unit == "degree"
+        assert data.cmc_uncertainty is not None
+        assert str(data.cmc_uncertainty) == "ResultUnit(lower_limit=0.2, unit='degree', upper_limit=1.4)"
+        assert data.cmc_uncertainty.lower_limit == 0.2
+        assert data.cmc_uncertainty.upper_limit == 1.4
+        assert data.cmc_uncertainty.unit == "degree"
+        assert data.cmc_base_unit is not None
+        assert (
+            str(data.cmc_base_unit)
+            == "ResultUnit(lower_limit=-3.141592653589794, unit='rad', upper_limit=3.141592653589794)"
+        )
+        assert data.cmc_base_unit.lower_limit == -3.141592653589794
+        assert data.cmc_base_unit.upper_limit == 3.141592653589794
+        assert data.cmc_base_unit.unit == "rad"
+        assert data.cmc_uncertainty_base_unit is not None
+        assert (
+            str(data.cmc_uncertainty_base_unit)
+            == "ResultUnit(lower_limit=0.0034906585039886605, unit='rad', upper_limit=0.024434609527920616)"
+        )
+        assert data.cmc_uncertainty_base_unit.lower_limit == 0.0034906585039886605
+        assert data.cmc_uncertainty_base_unit.upper_limit == 0.024434609527920616
+        assert data.cmc_uncertainty_base_unit.unit == "rad"
+        assert data.confidence_level == 95
+        assert data.coverage_factor == 2
+        assert data.uncertainty_equation is not None
+        assert str(data.uncertainty_equation) == "ResultEquation(equation='', equation_comment='')"
+        assert data.uncertainty_equation.equation == ""
+        assert data.uncertainty_equation.equation_comment == ""
+        assert data.uncertainty_table is not None
+        assert (
+            str(data.uncertainty_table)
+            == "ResultTable(table_rows=122, table_cols=13, table_name='Scat_coax_atten_phase', table_comment='')"
+        )
+        assert data.uncertainty_table.table_name == "Scat_coax_atten_phase"
+        assert data.uncertainty_table.table_rows == 122
+        assert data.uncertainty_table.table_cols == 13
+        assert data.uncertainty_table.table_comment == ""
+        assert data.uncertainty_table.table_contents.startswith('{"row_1":{"col_1":"Connector",')
+        assert data.uncertainty_mode is not None
+        assert data.uncertainty_mode.name == "ABSOLUTE"
+        assert data.uncertainty_mode.value == "Absolute"
+        assert data.traceability_source == "METAS"
+        assert data.comments == ""
+        assert data.group_identifier == "F"
+        assert data.publication_date == "2022-01-04"
+        assert data.approval_date == "2022-01-04"
+        assert data.international_standard == ""
+        assert data.branch_value == "Radio frequency measurements"
+        assert data.service_value == "Radio frequency measurements"
+        assert data.sub_service_value == "Scattering parameters (vectors)"
+        assert data.individual_service_value == "Transmission coefficient in coaxial line (real and imaginary)"
+        assert data.instrument == "Passive device"
+        assert data.instrument_method == "Vector network analyser"
+        assert len(data.parameters) == 4
+        assert (
+            str(data.parameters[0]) == "ResultParam(parameter_name='Frequency', parameter_value='9 kHz to 116.5 GHz')"
+        )
+        assert data.parameters[1].parameter_name == "Connector"
+        assert data.parameters[1].parameter_value == (
+            "BNC 50 ohm,<br />\r\nType-N 75 ohm,<br />\r\n4.3-10<br />\r\nType-N 50 ohm,<br />\r\n"
+            "PC-7 mm,<br />\r\nNEX10,<br />\r\nPC-3.5 mm,<br />\r\nPC-2.92 mm,<br />\r\n"
+            "PC-2.4 mm,<br />\r\nPC-1.85 mm,<br />\r\nPC-1.0 mm"
+        )
+        assert data.parameters[2].parameter_name == "S11 and S22"
+        assert data.parameters[2].parameter_value == "&lt; 0.1"
+        assert data.parameters[3].parameter_name == "S21 and S12"
+        assert data.parameters[3].parameter_value == "-80 dB to 0 dB"
 
     def test_services(self) -> None:
         """Test GeneralPhysics.search()."""

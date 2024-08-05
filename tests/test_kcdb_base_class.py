@@ -66,8 +66,44 @@ class TestKCDB:
             ],
         )
 
-        assert quick.total_elements > 10
         assert str(quick).startswith("ResultsQuickSearch(")
+        assert quick.total_elements > 40
+
+        found_cmc_domain = False
+        found_chem_bio = False
+        assert len(quick.filters_list) > 3
+        for item in quick.filters_list:
+            if item.code == "cmcDomain":
+                found_cmc_domain = True
+                assert (
+                    str(item) == "ResultFilter(code='cmcDomain', count=0, name='cmcDomain', order=0, len(children)=3)"
+                )
+                for child in item.children:
+                    if child.name == "CHEM-BIO":
+                        found_chem_bio = True
+                        assert child.code == "cmcDomain.CHEM-BIO"
+                        assert child.name == "CHEM-BIO"
+                        assert child.count > 50
+                        assert child.order == -1
+                        assert child.children == []
+                        break
+                break
+        assert found_cmc_domain
+        assert found_chem_bio
+
+        found_cmc_rmo = False
+        assert len(quick.aggregations) > 2
+        for aggregation in quick.aggregations:
+            if aggregation.name == "cmcRmo":
+                found_cmc_rmo = True
+                assert str(aggregation) == "ResultAggregation(name='cmcRmo', len(values)=5)"
+                rmos = aggregation.values  # noqa: PD011
+                assert "EURAMET" in rmos
+                assert "AFRIMETS" in rmos
+                assert "SIM" in rmos
+                assert "COOMET" in rmos
+                assert "APMP" in rmos
+        assert found_cmc_rmo
 
     def test_timeout(self) -> None:
         """Test timeout setter/getter."""
