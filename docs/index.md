@@ -17,4 +17,4 @@ Three classes are available to search the three metrology domains
 
 Examples on how to use the classes are available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/src/msl/examples/kcdb){:target="_blank"} and these examples are also included with the `msl-kcdb` installation in the `../site-packages/msl/examples/kcdb` directory of your Python interpreter.
 
-The examples are provided as [Jupyter](https://jupyter.org/){:target="_blank"} notebooks. Follow [these instructions](https://jupyter.org/install){:target="_blank"} to learn how to install and start Jupyter notebooks.
+The examples are provided as [Jupyter](https://jupyter.org/){:target="_blank"} notebooks. Follow [these instructions](https://jupyter.org/install){:target="_blank"} to learn how to install and launch a Jupyter notebook.
