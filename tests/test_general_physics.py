@@ -217,7 +217,7 @@ class TestGeneralPhysics:
         assert data.parameters[3].parameter_value == "-80 dB to 0 dB"
 
     def test_services(self) -> None:
-        """Test GeneralPhysics.search()."""
+        """Test GeneralPhysics.services()."""
         areas = self.physics.filter(self.metrology_areas, "TF")
         assert len(areas) == 1
         branches = self.physics.filter(self.physics.branches(areas[0]), r"TF/F")
@@ -232,6 +232,13 @@ class TestGeneralPhysics:
         assert service.physics_code == "2"
         assert service.branch.id == 27
         assert service.branch.metrology_area.id == 7
+
+    def test_services_radiation_branches(self) -> None:
+        """Test GeneralPhysics.services() for Ionizing Radiation branches."""
+        radiation = IonizingRadiation()
+        for area in radiation.metrology_areas():
+            for branch in radiation.branches(area):
+                assert not self.physics.services(branch)
 
     def test_sub_services(self) -> None:
         """Test GeneralPhysics.sub_services()."""
