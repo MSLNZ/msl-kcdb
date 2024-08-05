@@ -679,6 +679,12 @@ class KCDB:
             return obj
         return obj.label
 
+    @staticmethod
+    def _to_physics_code(obj: str | Service | SubService | IndividualService) -> str:
+        if isinstance(obj, str):
+            return obj
+        return obj.physics_code
+
     def countries(self) -> list[Country]:
         """Return all countries.
 

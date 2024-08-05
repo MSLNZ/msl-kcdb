@@ -123,10 +123,7 @@ class GeneralPhysics(KCDB):
             request["keywords"] = keywords
 
         if physics_code:
-            if isinstance(physics_code, str):
-                request["physicsCode"] = physics_code
-            else:
-                request["physicsCode"] = physics_code.physics_code
+            request["physicsCode"] = self._to_physics_code(physics_code)
 
         if public_date_from:
             request["publicDateFrom"] = str(public_date_from)
