@@ -32,7 +32,7 @@ theme:
         icon: material/weather-night
         name: Switch to light mode
 
-watch: [src/msl/kcdb]
+watch: [src/msl/kcdb, includes]
 
 nav:
   - Overview: index.md
@@ -46,9 +46,12 @@ nav:
     - License: about/license.md
 
 markdown_extensions:
+  - abbr
   - attr_list  # enables: [link](url){:target="_blank"}
   - pymdownx.snippets:  # enables: --8<--
       check_paths: true
+      auto_append:
+        - includes/abbreviations.md
   - toc:
       permalink: "¤"
 
