@@ -71,7 +71,7 @@ class GeneralPhysics(KCDB):
         assert sub_service.id in [104, 151]  # noqa: S101
         return []
 
-    def search(  # noqa: PLR0913
+    def search(
         self,
         metrology_area: str | MetrologyArea,
         *,

@@ -749,7 +749,7 @@ class KCDB:
             if d["label"] is None
         ]
 
-    def quick_search(  # noqa: PLR0913
+    def quick_search(
         self,
         *,
         excluded_filters: Iterable[str] | None = None,

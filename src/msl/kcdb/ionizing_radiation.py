@@ -102,7 +102,7 @@ class IonizingRadiation(KCDB):
             return [Quantity(branch=branch, **d) for d in data if 32 <= d["id"] < 47]  # noqa: PLR2004
         return [Quantity(branch=branch, **d) for d in data if 47 <= d["id"] < 78]  # noqa: PLR2004
 
-    def search(  # noqa: PLR0913
+    def search(
         self,
         *,
         branch: str | Branch | None = None,

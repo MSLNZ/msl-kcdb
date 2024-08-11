@@ -41,7 +41,7 @@ class ChemistryBiology(KCDB):
         response.raise_for_status()
         return [Category(**data) for data in response.json()["referenceData"]]
 
-    def search(  # noqa: PLR0913
+    def search(
         self,
         *,
         analyte: str | Analyte | None = None,

@@ -123,6 +123,9 @@ ignore = [
   "T201",  # allow print statements
 ]
 
+[tool.ruff.lint.pylint]
+max-args = 13
+
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
