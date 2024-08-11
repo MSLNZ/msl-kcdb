@@ -35,7 +35,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/MSLNZ/msl-kcdb"
+Changelog = "https://mslnz.github.io/msl-kcdb/about/release-notes/"
+Documentation = "https://mslnz.github.io/msl-kcdb/"
+Homepage = "https://mslnz.github.io/msl-kcdb/"
+Issues = "https://github.com/MSLNZ/msl-kcdb/issues"
 Source = "https://github.com/MSLNZ/msl-kcdb"
 
 [project.optional-dependencies]
