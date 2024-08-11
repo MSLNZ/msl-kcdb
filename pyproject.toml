@@ -10,6 +10,7 @@ requires-python = ">= 3.8"
 description = "Search the BIPM key comparison database (KCDB)."
 license = {file = "LICENSE.txt"}
 readme = "README.md"
+keywords = ["BIPM", "KCDB", "API", "MSL"]
 authors = [
   {name = "Measurement Standards Laboratory of New Zealand", email = "info@measurement.govt.nz"},
 ]
