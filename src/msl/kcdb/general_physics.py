@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import requests
-
+from . import http
 from .classes import KCDB, Branch, Domain, IndividualService, ResultsGeneralPhysics, Service, SubService
 
 if TYPE_CHECKING:
@@ -34,7 +33,7 @@ class GeneralPhysics(KCDB):
             # ignore CHEM-BIO and RADIATION
             return []
 
-        response = requests.get(
+        response = http.get(
             f"{KCDB.BASE_URL}/referenceData/branch",
             params={"areaId": metrology_area.id},
             timeout=self._timeout,
@@ -51,7 +50,7 @@ class GeneralPhysics(KCDB):
         Returns:
             A list of [IndividualService][msl.kcdb.classes.IndividualService]s.
         """
-        response = requests.get(
+        response = http.get(
             f"{KCDB.BASE_URL}/referenceData/individualService",
             params={"subServiceId": sub_service.id},
             timeout=self._timeout,
@@ -131,7 +130,7 @@ class GeneralPhysics(KCDB):
         if public_date_to:
             request["publicDateTo"] = str(public_date_to)
 
-        response = requests.post(
+        response = http.post(
             f"{KCDB.BASE_URL}/cmc/searchData/physics",
             json=request,
             timeout=self._timeout,
@@ -152,7 +151,7 @@ class GeneralPhysics(KCDB):
             # Dosimetry(id=32), Radioactivity(id=33) and Neutron Measurements(id=34) do not have Services
             return []
 
-        response = requests.get(
+        response = http.get(
             f"{KCDB.BASE_URL}/referenceData/service",
             params={"branchId": branch.id},
             timeout=self._timeout,
@@ -169,7 +168,7 @@ class GeneralPhysics(KCDB):
         Returns:
             A list of [SubService][msl.kcdb.classes.SubService]s.
         """
-        response = requests.get(
+        response = http.get(
             f"{KCDB.BASE_URL}/referenceData/subService",
             params={"serviceId": service.id},
             timeout=self._timeout,

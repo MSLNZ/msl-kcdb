@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, TypeVar
 
-import requests
+from . import http
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -692,7 +692,7 @@ class KCDB:
         Returns:
             A list of [Country][msl.kcdb.classes.Country]'s.
         """
-        response = requests.get(f"{KCDB.BASE_URL}/referenceData/country", timeout=self._timeout)
+        response = http.get(f"{KCDB.BASE_URL}/referenceData/country", timeout=self._timeout)
         response.raise_for_status()
         return [Country(**data) for data in response.json()["referenceData"]]
 
@@ -702,7 +702,7 @@ class KCDB:
         Returns:
             A list of [Domain][msl.kcdb.classes.Domain]s.
         """
-        response = requests.get(f"{KCDB.BASE_URL}/referenceData/domain", timeout=self._timeout)
+        response = http.get(f"{KCDB.BASE_URL}/referenceData/domain", timeout=self._timeout)
         response.raise_for_status()
         return [Domain(**data) for data in response.json()["domains"]]
 
@@ -728,7 +728,7 @@ class KCDB:
         Returns:
             A list of [MetrologyArea][msl.kcdb.classes.MetrologyArea]s.
         """
-        response = requests.get(
+        response = http.get(
             f"{KCDB.BASE_URL}/referenceData/metrologyArea",
             params={"domainCode": self.DOMAIN.code},
             timeout=self._timeout,
@@ -742,7 +742,7 @@ class KCDB:
         Returns:
             A list of [NonIonizingQuantity][msl.kcdb.classes.NonIonizingQuantity]'s.
         """
-        response = requests.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
+        response = http.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
         response.raise_for_status()
         return [
             NonIonizingQuantity(id=d["id"], label="", value=d["value"])
@@ -790,7 +790,7 @@ class KCDB:
         if keywords:
             request["keywords"] = keywords
 
-        response = requests.post(
+        response = http.post(
             f"{KCDB.BASE_URL}/cmc/searchData/quickSearch",
             json=request,
             timeout=self._timeout,

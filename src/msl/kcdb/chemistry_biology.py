@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import requests
-
+from . import http
 from .classes import KCDB, Analyte, Category, Domain, ResultsChemistryBiology
 
 if TYPE_CHECKING:
@@ -27,7 +26,7 @@ class ChemistryBiology(KCDB):
         Returns:
             A list of [Analyte][msl.kcdb.classes.Analyte]s
         """
-        response = requests.get(f"{KCDB.BASE_URL}/referenceData/analyte", timeout=self._timeout)
+        response = http.get(f"{KCDB.BASE_URL}/referenceData/analyte", timeout=self._timeout)
         response.raise_for_status()
         return [Analyte(**data) for data in response.json()["referenceData"]]
 
@@ -37,7 +36,7 @@ class ChemistryBiology(KCDB):
         Returns:
             A list of [Category][msl.kcdb.classes.Category]'s
         """
-        response = requests.get(f"{KCDB.BASE_URL}/referenceData/category", timeout=self._timeout)
+        response = http.get(f"{KCDB.BASE_URL}/referenceData/category", timeout=self._timeout)
         response.raise_for_status()
         return [Category(**data) for data in response.json()["referenceData"]]
 
@@ -100,7 +99,7 @@ class ChemistryBiology(KCDB):
         if public_date_to:
             request["publicDateTo"] = str(public_date_to)
 
-        response = requests.post(
+        response = http.post(
             f"{KCDB.BASE_URL}/cmc/searchData/chemistryAndBiology",
             json=request,
             timeout=self._timeout,
