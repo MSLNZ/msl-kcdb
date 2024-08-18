@@ -108,7 +108,9 @@ class TestKCDB:
         assert found_cmc_rmo
 
     def test_timeout(self) -> None:
-        """Test timeout setter/getter."""
+        """Test timeout setter/getter and error message."""
+        original = self.kcdb.timeout
+
         self.kcdb.timeout = 100
         assert isinstance(self.kcdb.timeout, float)
         assert self.kcdb.timeout == 100.0
@@ -116,11 +118,19 @@ class TestKCDB:
         self.kcdb.timeout = None
         assert self.kcdb.timeout is None
 
-        # make sure that requests.get(url, timeout=None) is okay
+        # make sure that get(url, timeout=None) is okay
         assert len(self.kcdb.domains()) == 3
 
         self.kcdb.timeout = -1
         assert self.kcdb.timeout is None
+
+        # Making the timeout value be very small causes a urllib.error.URLError
+        # instead of a TimeoutError
+        self.kcdb.timeout = 0.01
+        with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.01 seconds"):
+            self.kcdb.quick_search()
+
+        self.kcdb.timeout = original
 
     def test_to_label_raises(self) -> None:
         """Test KCDB._to_label() for an invalid object."""

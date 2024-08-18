@@ -1,5 +1,7 @@
 from datetime import date
 
+import pytest
+
 from msl.kcdb import ChemistryBiology
 
 
@@ -175,3 +177,15 @@ class TestChemBio:
         assert data.crm_uncertainty_mode.name == "ABSOLUTE"
         assert data.crm_uncertainty_mode.value == "Absolute"
         assert data.measurement_technique == ""
+
+    def test_timeout(self) -> None:
+        """Test timeout error message."""
+        original = self.chem_bio.timeout
+
+        # Making the timeout value be around 1 second causes a TimeoutError
+        # instead of a urllib.error.URLError if it is too small
+        self.chem_bio.timeout = 0.9
+        with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.9 seconds"):
+            self.chem_bio.search()
+
+        self.chem_bio.timeout = original

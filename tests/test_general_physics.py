@@ -1,5 +1,7 @@
 from datetime import date
 
+import pytest
+
 from msl.kcdb import ChemistryBiology, GeneralPhysics, IonizingRadiation
 from msl.kcdb.classes import Country
 
@@ -261,3 +263,15 @@ class TestGeneralPhysics:
         assert meter.service.physics_code == "2"
         assert meter.service.branch.id == 27
         assert meter.service.branch.metrology_area.id == 7
+
+    def test_timeout(self) -> None:
+        """Test timeout error message."""
+        original = self.physics.timeout
+
+        # Making the timeout value be around 1 second causes a TimeoutError
+        # instead of a urllib.error.URLError if it is too small
+        self.physics.timeout = 0.9
+        with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.9 seconds"):
+            self.physics.search("M")
+
+        self.physics.timeout = original

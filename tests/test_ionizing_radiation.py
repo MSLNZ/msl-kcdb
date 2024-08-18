@@ -1,5 +1,7 @@
 from datetime import date
 
+import pytest
+
 from msl.kcdb import ChemistryBiology, GeneralPhysics, IonizingRadiation
 from msl.kcdb.classes import Country
 
@@ -304,3 +306,15 @@ class TestIonizingRadiation:
         for branch in self.physics_branches:
             quantities = self.radiation.quantities(branch)
             assert not quantities
+
+    def test_timeout(self) -> None:
+        """Test timeout error message."""
+        original = self.radiation.timeout
+
+        # Making the timeout value be around 1 second causes a TimeoutError
+        # instead of a urllib.error.URLError if it is too small
+        self.radiation.timeout = 0.9
+        with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.9 seconds"):
+            self.radiation.search()
+
+        self.radiation.timeout = original
