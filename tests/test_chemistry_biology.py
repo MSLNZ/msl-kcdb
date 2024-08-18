@@ -174,4 +174,4 @@ class TestChemBio:
         assert data.crm_uncertainty_mode is not None
         assert data.crm_uncertainty_mode.name == "ABSOLUTE"
         assert data.crm_uncertainty_mode.value == "Absolute"
-        assert data.measurment_technique == ""
+        assert data.measurement_technique == ""

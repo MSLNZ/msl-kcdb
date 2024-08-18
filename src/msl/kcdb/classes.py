@@ -129,11 +129,11 @@ class Service(ReferenceData):
 
 @dataclass(frozen=True, order=True)
 class SubService(ReferenceData):
-    """A subservice of General Physics.
+    """A sub service of General Physics.
 
     Attributes:
-        physics_code: The physics code for this subservice. _Example:_ `"9.10"`
-        service: The service that the subservice belongs to.
+        physics_code: The physics code for this sub service. _Example:_ `"9.10"`
+        service: The service that the sub service belongs to.
     """
 
     physics_code: str
@@ -146,7 +146,7 @@ class IndividualService(ReferenceData):
 
     Attributes:
         physics_code: The physics code for this individual service. _Example:_ `"9.10.2"`
-        sub_service: The subservice that the individual service belongs to.
+        sub_service: The sub service that the individual service belongs to.
     """
 
     physics_code: str
@@ -191,7 +191,7 @@ class ResultAggregation:
 
     Attributes:
         name: Aggregation name. _Example:_ `"cmcCountries"`
-        values: Aggreation values. _Example:_ `["Kazakhstan", "Portugal", "Greece"]`
+        values: Aggregation values. _Example:_ `["Kazakhstan", "Portugal", "Greece"]`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
@@ -440,7 +440,7 @@ class ResultChemistryBiology(ResultCommon):
         crm_uncertainty_equation: CRM uncertainty equation.
         crm_uncertainty_mode: CRM uncertainty mode.
         crm_uncertainty_table: CRM uncertainty table.
-        measurment_technique: Measurment technique.
+        measurement_technique: Measurement technique.
             _Example:_ `"Liquid-solid extraction with SPE cleanup and bracketing LC-IDMS/MS"`
         mechanism: Mechanism. _Example:_ `"Customer service; GD-MS-200; delivery only to other NMIs"`
         sub_category_value: Sub category value. _Example:_ `"Metals"`
@@ -473,7 +473,8 @@ class ResultChemistryBiology(ResultCommon):
         k = kwargs.get("crmUncertaintyTable")
         self.crm_uncertainty_table: ResultTable | None = ResultTable(k) if k else None
 
-        self.measurment_technique: str = kwargs.get("measurmentTechnique") or ""
+        # Note spelling mistake in "measurmentTechnique" is what the KCDB API returns
+        self.measurement_technique: str = kwargs.get("measurmentTechnique") or ""
         self.mechanism: str = kwargs.get("mechanism") or ""
         self.sub_category_value: str = kwargs.get("subCategoryValue") or ""
 
@@ -497,7 +498,7 @@ class ResultGeneralPhysics(ResultCommon):
         international_standard: International standard. _Example:_ `"EURAMET Cg19, ISO 8655-6"`
         parameters: Parameters list with name and value.
         service_value: Service value. _Example:_ `"Radio frequency measurements"`
-        sub_service_value: Subservice value. _Example:_ `"Scattering parameters (vectors)"`
+        sub_service_value: Sub service value. _Example:_ `"Scattering parameters (vectors)"`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
@@ -652,7 +653,7 @@ class KCDB:
         self.timeout = timeout
 
     def __repr__(self) -> str:
-        """Reutn the object representation."""
+        """Return the object representation."""
         return f"{self.__class__.__name__}(code={self.DOMAIN.code!r}, name={self.DOMAIN.name!r})"
 
     @staticmethod

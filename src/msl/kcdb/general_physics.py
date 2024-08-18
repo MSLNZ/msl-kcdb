@@ -43,10 +43,10 @@ class GeneralPhysics(KCDB):
         return [Branch(metrology_area=metrology_area, **data) for data in response.json()["referenceData"]]
 
     def individual_services(self, sub_service: SubService) -> list[IndividualService]:
-        """Return all General Physics individual services for the specified subservice.
+        """Return all General Physics individual services for the specified sub service.
 
         Args:
-            sub_service: The subservice to return the individual services for.
+            sub_service: The sub service to return the individual services for.
 
         Returns:
             A list of [IndividualService][msl.kcdb.classes.IndividualService]s.
@@ -161,10 +161,10 @@ class GeneralPhysics(KCDB):
         return [Service(branch=branch, physics_code=data["label"], **data) for data in response.json()["referenceData"]]
 
     def sub_services(self, service: Service) -> list[SubService]:
-        """Return all General Physics subservices for the specified service.
+        """Return all General Physics sub services for the specified service.
 
         Args:
-            service: The service to return the subservices for.
+            service: The service to return the sub services for.
 
         Returns:
             A list of [SubService][msl.kcdb.classes.SubService]s.
