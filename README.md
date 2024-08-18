@@ -1,5 +1,7 @@
+# MSL-KCDB
+
 [![Tests Status](https://github.com/MSLNZ/msl-kcdb/actions/workflows/tests.yml/badge.svg)](https://github.com/MSLNZ/msl-kcdb/actions/workflows/tests.yml)
-[![Docs](https://github.com/MSLNZ/msl-kcdb/actions/workflows/docs.yml/badge.svg)](https://github.com/MSLNZ/msl-kcdb/actions/workflows/docs.yml)
+[![Docs Status](https://github.com/MSLNZ/msl-kcdb/actions/workflows/docs.yml/badge.svg)](https://github.com/MSLNZ/msl-kcdb/actions/workflows/docs.yml)
 
 ## Overview
 Search the key comparison database, [KCDB](https://www.bipm.org/kcdb/), that is provided by the International Bureau of Weights and Measures, [BIPM](https://www.bipm.org/en/).
