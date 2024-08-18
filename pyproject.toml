@@ -80,6 +80,7 @@ consider_namespace_packages = true
 strict = true
 implicit_reexport = true
 namespace_packages = true
+warn_unused_ignores = true
 
 [tool.ruff]
 line-length = 120
