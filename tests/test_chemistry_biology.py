@@ -1,4 +1,5 @@
 from datetime import date
+from http.client import HTTPException
 
 import pytest
 
@@ -50,6 +51,18 @@ class TestChemBio:
         assert chem_bio.value == "Chemistry and Biology"
         assert chem_bio.domain.code == "CHEM-BIO"
         assert chem_bio.domain.name == "Chemistry and Biology"
+
+    def test_raise_for_status(self) -> None:
+        """Test _Response.raise_for_status().
+
+        The KCDB returns a generic (and unhelpful) error message in the HTML body
+
+          "Apologies for the inconvenience (500). Please try again later!"
+
+        even though the client request is bad.
+        """
+        with pytest.raises(HTTPException, match=r"cmc/searchData/chemistryAndBiology"):
+            self.chem_bio.search(countries="Invalid")
 
     def test_repr(self) -> None:
         """Test string representation."""
