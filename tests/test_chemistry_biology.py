@@ -178,6 +178,19 @@ class TestChemBio:
         assert data.crm_uncertainty_mode.value == "Absolute"
         assert data.measurement_technique == ""
 
+    def test_search_measurement_technique(self) -> None:
+        """The KCDB has a spelling mistake in the key name "measurmentTechnique".
+
+        This tests that the correct key-value pair gets created in Python.
+        This test will fail if the key name has been updated by the KCDB
+        developers or if Finland changed the CMC metadata.
+        """
+        results = self.chem_bio.search(countries="FI", category="5", analyte="lead")
+        assert results.number_of_elements == 1
+        result = results.data[0]
+        assert result.nmi_code == "MIKES-SYKE"
+        assert result.measurement_technique == "Double ID-ICP-MS, Pycnometric density measurement"
+
     def test_timeout(self) -> None:
         """Test timeout error message."""
         original = self.chem_bio.timeout
