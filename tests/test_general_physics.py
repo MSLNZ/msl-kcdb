@@ -206,9 +206,7 @@ class TestGeneralPhysics:
         assert data.instrument == "Passive devices"
         assert data.instrument_method == "Vector Network Analyzer"
         assert len(data.parameters) == 2
-        assert (
-            str(data.parameters[0]) == "ResultParam(parameter_name='Frequency', parameter_value='1 MHz to 32 GHz')"
-        )
+        assert str(data.parameters[0]) == "ResultParam(parameter_name='Frequency', parameter_value='1 MHz to 32 GHz')"
         assert data.parameters[1].parameter_name == "Connector"
         assert data.parameters[1].parameter_value == "Type-N, PC3.5mm"
 
