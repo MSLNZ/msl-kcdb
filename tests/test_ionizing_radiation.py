@@ -140,10 +140,10 @@ class TestIonizingRadiation:
 
         assert str(radiation) == (
             "ResultsIonizingRadiation(number_of_elements=1, page_number=0, page_size=100, "
-            "total_elements=1, total_pages=1, version_api_kcdb='1.0.7')"
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.8')"
         )
 
-        assert radiation.version_api_kcdb == "1.0.7"
+        assert radiation.version_api_kcdb == "1.0.8"
         assert radiation.page_number == 0
         assert radiation.page_size == 100
         assert radiation.number_of_elements == 1
@@ -154,7 +154,7 @@ class TestIonizingRadiation:
         assert str(data) == "ResultIonizingRadiation(id=23054, nmi_code='NMIJ AIST', rmo='APMP')"
         assert data.id == 23054
         assert data.status == "Published"
-        assert data.status_date == "2019-10-17"
+        assert data.status_date == "2025-01-09"
         assert data.kcdb_code == "APMP-RI-JP-00000HSE-1"
         assert data.domain_code == "RADIATION"
         assert data.metrology_area_label == "RI"

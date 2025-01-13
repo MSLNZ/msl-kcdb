@@ -81,10 +81,10 @@ class TestChemBio:
 
         assert str(chem_bio) == (
             "ResultsChemistryBiology(number_of_elements=1, page_number=0, page_size=100, "
-            "total_elements=1, total_pages=1, version_api_kcdb='1.0.7')"
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.8')"
         )
 
-        assert chem_bio.version_api_kcdb == "1.0.7"
+        assert chem_bio.version_api_kcdb == "1.0.8"
         assert chem_bio.page_number == 0
         assert chem_bio.page_size == 100
         assert chem_bio.number_of_elements == 1
@@ -95,7 +95,7 @@ class TestChemBio:
         assert str(data) == "ResultChemistryBiology(id=32770, nmi_code='NMIJ AIST', rmo='APMP')"
         assert data.id == 32770
         assert data.status == "Published"
-        assert data.status_date == "2022-01-04"
+        assert data.status_date == "2025-01-09"
         assert data.kcdb_code == "APMP-QM-JP-000001GZ-2"
         assert data.domain_code == "CHEM-BIO"
         assert data.metrology_area_label == "QM"

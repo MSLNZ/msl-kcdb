@@ -98,12 +98,10 @@ class TestKCDB:
         for aggregation in quick.aggregations:
             if aggregation.name == "cmcRmo":
                 found_cmc_rmo = True
-                assert str(aggregation) == "ResultAggregation(name='cmcRmo', len(values)=5)"
+                assert str(aggregation) == "ResultAggregation(name='cmcRmo', len(values)=3)"
                 rmos = aggregation.values
                 assert "EURAMET" in rmos
-                assert "AFRIMETS" in rmos
                 assert "SIM" in rmos
-                assert "COOMET" in rmos
                 assert "APMP" in rmos
         assert found_cmc_rmo
 
