@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import http
+from . import https
 from .classes import KCDB, Branch, Domain, Medium, Nuclide, Quantity, ResultsIonizingRadiation, Source
 
 if TYPE_CHECKING:
@@ -33,7 +33,7 @@ class IonizingRadiation(KCDB):
             # ignore PHYSICS and CHEM-BIO
             return []
 
-        response = http.get(
+        response = https.get(
             f"{KCDB.BASE_URL}/referenceData/branch",
             params={"areaId": metrology_area.id},
             timeout=self._timeout,
@@ -55,7 +55,7 @@ class IonizingRadiation(KCDB):
         if branch.label not in ["RAD", "DOS", "NEU"]:
             return []
 
-        response = http.get(f"{KCDB.BASE_URL}/referenceData/radiationMedium", timeout=self._timeout)
+        response = https.get(f"{KCDB.BASE_URL}/referenceData/radiationMedium", timeout=self._timeout)
         response.raise_for_status()
         data = response.json()["referenceData"]
 
@@ -71,7 +71,7 @@ class IonizingRadiation(KCDB):
         Returns:
             A list of [Nuclide][msl.kcdb.classes.Nuclide]s.
         """
-        response = http.get(f"{KCDB.BASE_URL}/referenceData/nuclide", timeout=self._timeout)
+        response = https.get(f"{KCDB.BASE_URL}/referenceData/nuclide", timeout=self._timeout)
         response.raise_for_status()
         return [Nuclide(**data) for data in response.json()["referenceData"]]
 
@@ -91,7 +91,7 @@ class IonizingRadiation(KCDB):
         if branch.label not in ["RAD", "DOS", "NEU"]:
             return []
 
-        response = http.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
+        response = https.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
         response.raise_for_status()
         data = response.json()["referenceData"]
 
@@ -175,7 +175,7 @@ class IonizingRadiation(KCDB):
         if source:
             request["sourceLabel"] = self._to_label(source)
 
-        response = http.post(
+        response = https.post(
             f"{KCDB.BASE_URL}/cmc/searchData/radiation",
             json=request,
             timeout=self._timeout,
@@ -197,7 +197,7 @@ class IonizingRadiation(KCDB):
         if branch.label not in ["RAD", "DOS", "NEU"]:
             return []
 
-        response = http.get(f"{KCDB.BASE_URL}/referenceData/radiationSource", timeout=self._timeout)
+        response = https.get(f"{KCDB.BASE_URL}/referenceData/radiationSource", timeout=self._timeout)
         response.raise_for_status()
         data = response.json()["referenceData"]
 
