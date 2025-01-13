@@ -99,7 +99,7 @@ class TestKCDB:
             if aggregation.name == "cmcRmo":
                 found_cmc_rmo = True
                 assert str(aggregation) == "ResultAggregation(name='cmcRmo', len(values)=5)"
-                rmos = aggregation.values  # noqa: PD011
+                rmos = aggregation.values
                 assert "EURAMET" in rmos
                 assert "AFRIMETS" in rmos
                 assert "SIM" in rmos
