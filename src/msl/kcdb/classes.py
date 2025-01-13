@@ -22,8 +22,8 @@ class AbsoluteRelative(Enum):
         RELATIVE: `"Relative"`
     """
 
-    ABSOLUTE: str = "Absolute"
-    RELATIVE: str = "Relative"
+    ABSOLUTE = "Absolute"
+    RELATIVE = "Relative"
 
 
 class UncertaintyConvention(Enum):
@@ -34,8 +34,8 @@ class UncertaintyConvention(Enum):
         TWO: `"Two"`
     """
 
-    ONE: str = "One"
-    TWO: str = "Two"
+    ONE = "One"
+    TWO = "Two"
 
 
 @dataclass(frozen=True, order=True)
