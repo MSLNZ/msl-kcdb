@@ -84,6 +84,9 @@ plugins:
             # Signatures
             separate_signature: true
 
+            extensions:
+            - docs/inherit_attributes.py:InheritAttributes
+
 extra:
   social:
   - icon: fontawesome/brands/github
