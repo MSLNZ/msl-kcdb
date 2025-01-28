@@ -18,8 +18,8 @@ class AbsoluteRelative(Enum):
     """CRM uncertainty mode.
 
     Attributes:
-        ABSOLUTE: `"Absolute"`
-        RELATIVE: `"Relative"`
+        ABSOLUTE (str): `"Absolute"`
+        RELATIVE (str): `"Relative"`
     """
 
     ABSOLUTE = "Absolute"
@@ -30,8 +30,8 @@ class UncertaintyConvention(Enum):
     """Chemistry and Biology uncertainty convention.
 
     Attributes:
-        ONE: `"One"`
-        TWO: `"Two"`
+        ONE (str): `"One"`
+        TWO (str): `"Two"`
     """
 
     ONE = "One"
