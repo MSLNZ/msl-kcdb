@@ -67,28 +67,52 @@ class ReferenceData:
 
 
 class Analyte(ReferenceData):
-    """An analyte of Chemistry and Biology."""
+    """An analyte of Chemistry and Biology.
+
+    Attributes:
+        id: Analyte identity. _Example:_ 1
+        label: Analyte label. _Example:_ `"nitrogen"`
+        value: Analyte value. _Example:_ `"nitrogen"`
+    """
 
 
 class Category(ReferenceData):
-    """A category of Chemistry and Biology."""
+    """A category of Chemistry and Biology.
+
+    Attributes:
+        id: Category identity. _Example:_ 8
+        label: Category label. _Example:_ `"2"`
+        value: Category value. _Example:_ `"Inorganic solutions"`
+    """
 
 
 class Country(ReferenceData):
-    """Information about a country."""
+    """Information about a country.
+
+    Attributes:
+        id: Country identity. _Example:_ 58
+        label: Country label. _Example:_ `"NZ"`
+        value: Country value. _Example:_ `"New Zealand"`
+    """
 
 
 class Nuclide(ReferenceData):
-    """A nuclide of Ionizing Radiation."""
+    """A nuclide of Ionizing Radiation.
+
+    Attributes:
+        id: Nuclide identity. _Example:_ 1
+        label: Nuclide label. _Example:_ `"C-14"`
+        value: Nuclide value. _Example:_ `"C-14"`
+    """
 
 
 class NonIonizingQuantity(ReferenceData):
     """A quantity that is not Ionizing Radiation.
 
     Attributes:
-        id (int): Reference data identity. _Example:_ 109
-        label (str): Always an empty string. _Example:_ `""`
-        value (str): Reference data value. _Example:_ `"Absorbance, regular, spectral"`
+        id: Non-ionizing identity. _Example:_ 109
+        label: Always an empty string. _Example:_ `""`
+        value: Non-ionizing value. _Example:_ `"Absorbance, regular, spectral"`
     """
 
 
@@ -98,6 +122,9 @@ class MetrologyArea(ReferenceData):
 
     Attributes:
         domain: The domain that the metrology area belongs to.
+        id: Metrology area identity. _Example:_ 2
+        label: Metrology area label. _Example:_ `"EM"`
+        value: Metrology area value. _Example:_ `"Electricity and Magnetism"`
     """
 
     domain: Domain
@@ -108,7 +135,10 @@ class Branch(ReferenceData):
     """A branch of General Physics or Ionizing Radiation.
 
     Attributes:
+        id: Branch identity. _Example:_ 21
+        label: Branch label. _Example:_ `"PR/Fibre"`
         metrology_area: The metrology area that the branch belongs to.
+        value: Branch value. _Example:_ `"Fibre optics"`
     """
 
     metrology_area: MetrologyArea
@@ -120,7 +150,10 @@ class Service(ReferenceData):
 
     Attributes:
         branch: The branch that the service belongs to.
-        physics_code: The physics code for this service. _Example:_ `"9"`
+        id: Service identity. _Example:_ 16
+        label: Service label. _Example:_ `"6"`
+        physics_code: The physics code for this service. _Example:_ `"6"`
+        value: Service value. _Example:_ `"AC current"`
     """
 
     branch: Branch
@@ -132,8 +165,11 @@ class SubService(ReferenceData):
     """A sub service of General Physics.
 
     Attributes:
-        physics_code: The physics code for this sub service. _Example:_ `"9.10"`
+        id: Sub service identity. _Example:_ 33
+        label: Sub service label. _Example:_ `"1"`
+        physics_code: The physics code for this sub service. _Example:_ `"6.1"`
         service: The service that the sub service belongs to.
+        value: Sub service value. _Example:_ `"AC-DC current transfer"`
     """
 
     physics_code: str
@@ -145,8 +181,11 @@ class IndividualService(ReferenceData):
     """An individual service of General Physics.
 
     Attributes:
-        physics_code: The physics code for this individual service. _Example:_ `"9.10.2"`
+        id: Individual service identity. _Example:_ 225
+        label: Individual service label. _Example:_ `"1"`
+        physics_code: The physics code for this individual service. _Example:_ `"11.1.1"`
         sub_service: The sub service that the individual service belongs to.
+        value: Individual service value. _Example:_ `"Absolute power in coaxial line"`
     """
 
     physics_code: str
@@ -159,6 +198,9 @@ class Quantity(ReferenceData):
 
     Attributes:
         branch: The branch that the quantity belongs to.
+        id: Quantity identity. _Example:_ 1
+        label: Quantity label. _Example:_ `"1"`
+        value: Quantity value. _Example:_ `"Absorbed dose/rate to air"`
     """
 
     branch: Branch
@@ -170,6 +212,9 @@ class Medium(ReferenceData):
 
     Attributes:
         branch: The branch that the medium belongs to.
+        id: Medium identity. _Example:_ 5
+        label: Medium label. _Example:_ `"5"`
+        value: Medium value. _Example:_ `"Aerosol"`
     """
 
     branch: Branch
@@ -181,6 +226,9 @@ class Source(ReferenceData):
 
     Attributes:
         branch: The branch that the source belongs to.
+        id: Source identity. _Example:_ 3
+        label: Source label. _Example:_ `"3"`
+        value: Source value. _Example:_ `"Beta radiation"`
     """
 
     branch: Branch
@@ -363,7 +411,7 @@ class ResultCommon:
         coverage_factor:Coverage factor.
         domain_code: Domain code. _Example:_ `"CHEM-BIO"`
         group_identifier: Group identifier.
-        kcdb_code: Document kcdb code. _Example:_ `"APMP-QM-CN-00000JZR-1"`
+        kcdb_code: Document KCDB code. _Example:_ `"APMP-QM-CN-00000JZR-1"`
         metrology_area_label: Metrology area label. _Example:_ `"QM"`
         nmi_code: NMI code. _Example:_ `"NIM"`
         nmi_name: NMI name. _Example:_ `"National Institute of Metrology"`
@@ -712,8 +760,8 @@ class KCDB:
 
         Args:
             data: An iterable of a [ReferenceData][msl.kcdb.classes.ReferenceData] subclass.
-            pattern: A regular-expression pattern to use to filter results. Uses the `label`
-                and `value` attributes of each item in `data` to perform the filtering.
+            pattern: A [regular-expression](https://regexone.com/) pattern to use to filter results.
+                Uses the `label` and `value` attributes of each item in `data` to perform the filtering.
             flags: Pattern flags passed to [re.compile][].
 
         Returns:
@@ -803,7 +851,7 @@ class KCDB:
         """The timeout value, in seconds, to use for a KCDB request.
 
         Returns:
-            The maximum number of seconds to wait for a response from the KCDB server.
+            The maximum number of seconds to wait for a response from the KCDB server. If `None`, there is no timeout.
         """
         return self._timeout
 
