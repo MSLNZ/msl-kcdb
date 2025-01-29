@@ -27,7 +27,8 @@ def _inherit_attributes(obj: Object) -> None:  # noqa: C901
         if obj.docstring is not None:
             for section in obj.docstring.parsed:
                 if section.kind is DocstringSectionKind.attributes:
-                    section.value.extend(parent_attributes)
+                    section_names = [s.name for s in section.value]
+                    section.value.extend(pa for pa in parent_attributes if pa.name not in section_names)
                     section.value.sort(key=lambda x: x.name)
 
 
