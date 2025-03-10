@@ -13,6 +13,10 @@ __pycache__/
 /.mypy_cache/
 /.pytest_cache/
 /.ruff_cache/
+/.cache/
+
+# Root files
+/uv.lock
 
 # Project files
 /src/msl/kcdb/_version.py

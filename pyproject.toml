@@ -69,6 +69,7 @@ version-file = "src/msl/kcdb/_version.py"
 packages = ["src/msl"]
 
 [tool.pytest.ini_options]
+cache_dir = ".cache/pytest"
 addopts = [
   "--cov=src",
   "--cov-report=html",
@@ -82,6 +83,7 @@ strict = true
 implicit_reexport = true
 namespace_packages = true
 warn_unused_ignores = true
+cache_dir = ".cache/mypy"
 
 [tool.ruff]
 line-length = 120
@@ -136,7 +138,7 @@ convention = "google"
 
 [tool.coverage.run]
 branch = true
-data_file = ".coverage_html/.coverage"
+data_file = ".cache/coverage/.coverage"
 
 [tool.coverage.report]
 exclude_lines = [
@@ -147,5 +149,5 @@ exclude_lines = [
 include_namespace_packages = true
 
 [tool.coverage.html]
-directory = ".coverage_html"
+directory = ".cache/coverage"
 title = "MSL-KCDB coverage report"
