@@ -154,7 +154,7 @@ class TestIonizingRadiation:
         assert str(data) == "ResultIonizingRadiation(id=23054, nmi_code='NMIJ AIST', rmo='APMP')"
         assert data.id == 23054
         assert data.status == "Published"
-        assert data.status_date == "2025-01-09"
+        assert data.status_date == "2005-02-14"
         assert data.kcdb_code == "APMP-RI-JP-00000HSE-1"
         assert data.domain_code == "RADIATION"
         assert data.metrology_area_label == "RI"

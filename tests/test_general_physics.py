@@ -135,7 +135,7 @@ class TestGeneralPhysics:
         assert str(data) == "ResultGeneralPhysics(id=26707, nmi_code='INTI', rmo='SIM')"
         assert data.id == 26707
         assert data.status == "Published"
-        assert data.status_date == "2025-01-09"
+        assert data.status_date == "2020-04-16"
         assert data.kcdb_code == "SIM-EM-AR-00000K2C-1"
         assert data.domain_code == "PHYSICS"
         assert data.metrology_area_label == "EM"

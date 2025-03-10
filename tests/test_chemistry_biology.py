@@ -95,7 +95,7 @@ class TestChemBio:
         assert str(data) == "ResultChemistryBiology(id=32770, nmi_code='NMIJ AIST', rmo='APMP')"
         assert data.id == 32770
         assert data.status == "Published"
-        assert data.status_date == "2025-01-09"
+        assert data.status_date == "2021-01-12"
         assert data.kcdb_code == "APMP-QM-JP-000001GZ-2"
         assert data.domain_code == "CHEM-BIO"
         assert data.metrology_area_label == "QM"
