@@ -15,8 +15,5 @@ __pycache__/
 /.ruff_cache/
 /.cache/
 
-# Root files
-/uv.lock
-
 # Project files
 /src/msl/kcdb/_version.py
