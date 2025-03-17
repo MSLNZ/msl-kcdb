@@ -191,6 +191,7 @@ class TestChemBio:
         assert data.crm_uncertainty_mode.value == "Absolute"
         assert data.measurement_technique == ""
 
+    # cSpell:ignore measurment
     def test_search_measurement_technique(self) -> None:
         """The KCDB has a spelling mistake in the key name "measurmentTechnique".
 

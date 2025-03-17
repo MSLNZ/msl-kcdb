@@ -521,8 +521,8 @@ class ResultChemistryBiology(ResultCommon):
         k = kwargs.get("crmUncertaintyTable")
         self.crm_uncertainty_table: ResultTable | None = ResultTable(k) if k else None
 
-        # Note spelling mistake in "measurmentTechnique" is what the KCDB API returns
-        self.measurement_technique: str = kwargs.get("measurmentTechnique") or ""
+        # Note spelling mistake in "measurmentTechnique" is what the KCDB API returns cSpell:disable-line
+        self.measurement_technique: str = kwargs.get("measurmentTechnique") or ""  # cSpell:disable-line
         self.mechanism: str = kwargs.get("mechanism") or ""
         self.sub_category_value: str = kwargs.get("subCategoryValue") or ""
 

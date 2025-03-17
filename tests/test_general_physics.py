@@ -142,7 +142,7 @@ class TestGeneralPhysics:
         assert data.rmo == "SIM"
         assert data.country_value == "Argentina"
         assert data.nmi_code == "INTI"
-        assert data.nmi_name == "Instituto Nacional de Tecnologia Industrial"
+        assert data.nmi_name == "Instituto Nacional de Tecnologia Industrial"  # cSpell:disable-line
         assert data.nmi_service_code == ""
         assert data.nmi_service_link == ""
         assert data.quantity_value == "Scattering parameters: transmission coefficient (Sij) in coaxial line, phase"
