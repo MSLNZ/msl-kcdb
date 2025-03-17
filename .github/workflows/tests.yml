@@ -29,5 +29,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: false
+      - name: Install dependencies
+        run: uv sync --python ${{ matrix.python-version }} --no-dev --group test
       - name: Run tests
-        run: uv run --no-dev --group test pytest
+        run: uv run pytest
