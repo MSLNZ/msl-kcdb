@@ -71,28 +71,46 @@ packages = ["src/msl"]
 
 [tool.pytest.ini_options]
 cache_dir = ".cache/pytest"
+consider_namespace_packages = true
 addopts = [
   "--cov=src",
   "--cov-report=html",
   "--verbose",
   "--import-mode=importlib",
 ]
-consider_namespace_packages = true
 
 [tool.mypy]
-strict = true
-implicit_reexport = true
-namespace_packages = true
-warn_unused_ignores = true
 cache_dir = ".cache/mypy"
+strict = true
+strict_bytes = true
+
+# with the environment variable MYPYPATH=src defined, namespace_packages=true and
+# explicit_package_bases=true, the following error goes away
+#   Source file found twice under different module names: "kcdb" and "msl.kcdb"
+# https://mypy.readthedocs.io/en/stable/running_mypy.html#mapping-file-paths-to-modules
+namespace_packages = true
+explicit_package_bases = true
+
+allow_redefinition = false
+allow_untyped_globals = false
+disallow_any_decorated = true
+disallow_any_explicit = false  # true
+disallow_any_expr = false  # true
+disallow_any_unimported = true
+ignore_missing_imports = false
+implicit_optional = false
+local_partial_types = true
+scripts_are_modules = true
+warn_no_return = true
+warn_unreachable = true
 
 [tool.ruff]
+cache-dir = ".cache/ruff"
 line-length = 120
 exclude = [
+  ".cache",
   ".git",
-  ".mypy_cache",
-  ".pytest_cache",
-  ".ruff_cache",
+  ".github",
   ".venv",
   "build",
   "dist",
