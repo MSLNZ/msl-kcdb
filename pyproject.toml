@@ -54,8 +54,10 @@ doc = [
     "mkdocstrings-python>=1.11.1",
 ]
 dev = [
-    "mypy>=1.14.1",
+    "basedpyright>=1.28.1",
     "ipykernel>=6.29.5",
+    "mypy>=1.14.1",
+    "ruff>=0.11.0",
     {include-group = "doc"},
     {include-group = "test"},
 ]
@@ -103,6 +105,23 @@ local_partial_types = true
 scripts_are_modules = true
 warn_no_return = true
 warn_unreachable = true
+
+[tool.basedpyright]
+failOnWarnings = true
+typeCheckingMode = "recommended"
+reportAny = false
+reportDeprecated = false
+reportExplicitAny = false
+reportImplicitOverride = false
+reportImportCycles = false
+reportPrivateLocalImportUsage = false
+reportUnannotatedClassAttribute = false
+reportUninitializedInstanceVariable = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownLambdaType = false
+reportUnknownVariableType = false
+reportUnusedImport = false
 
 [tool.ruff]
 cache-dir = ".cache/ruff"
