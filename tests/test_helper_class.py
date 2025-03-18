@@ -52,7 +52,7 @@ def test_to_countries_raises() -> None:
     with pytest.raises(TypeError):
         _ = Helper.to_countries(None)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(AttributeError):
-        _ = Helper.to_countries([1, 2])  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        _ = Helper.to_countries([1, 2])  # type: ignore[list-item] # pyright: ignore[reportArgumentType]
 
 
 @pytest.mark.parametrize(

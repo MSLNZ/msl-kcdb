@@ -49,7 +49,7 @@ class TestIonizingRadiation:
 
     def test_domain(self) -> None:
         """Test IonizingRadiation.DOMAIN class attribute."""
-        chem_bio, phys, rad = sorted(self.radiation.domains())
+        _, _, rad = sorted(self.radiation.domains())
         assert rad == self.radiation.DOMAIN
         assert rad.code == "RADIATION"
         assert rad.name == "Ionizing radiation"
@@ -317,6 +317,6 @@ class TestIonizingRadiation:
         # instead of a urllib.error.URLError if it is too small
         self.radiation.timeout = 0.9
         with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.9 seconds"):
-            self.radiation.search()
+            _ = self.radiation.search()
 
         self.radiation.timeout = original

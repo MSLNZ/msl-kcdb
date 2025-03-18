@@ -37,7 +37,7 @@ class TestChemBio:
 
     def test_domain(self) -> None:
         """Test ChemistryBiology.DOMAIN class attribute."""
-        chem_bio, phys, rad = sorted(self.chem_bio.domains())
+        chem_bio, _, _ = sorted(self.chem_bio.domains())
         assert chem_bio == self.chem_bio.DOMAIN
         assert chem_bio.code == "CHEM-BIO"
         assert chem_bio.name == "Chemistry and Biology"
@@ -62,7 +62,7 @@ class TestChemBio:
         even though the client request is bad.
         """
         with pytest.raises(HTTPException, match=r"cmc/searchData/chemistryAndBiology"):
-            self.chem_bio.search(countries="Invalid")
+            _ = self.chem_bio.search(countries="Invalid")
 
     def test_repr(self) -> None:
         """Test string representation."""
@@ -210,6 +210,6 @@ class TestChemBio:
         # instead of a urllib.error.URLError if it is too small
         self.chem_bio.timeout = 0.9
         with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.9 seconds"):
-            self.chem_bio.search()
+            _ = self.chem_bio.search()
 
         self.chem_bio.timeout = original

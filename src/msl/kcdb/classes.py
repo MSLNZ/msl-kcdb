@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, TypeVar, override
 
 from . import https
 
@@ -247,6 +247,7 @@ class ResultAggregation:
         self.name: str = kwargs.get("name") or ""
         self.values: list[str] = kwargs.get("values", [])
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultAggregation(name={self.name!r}, len(values)={len(self.values)})"
@@ -265,6 +266,7 @@ class ResultEquation:
         self.equation: str = kwargs.get("equation") or ""
         self.equation_comment: str = kwargs.get("equationComment") or ""
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultEquation(equation={self.equation!r}, equation_comment={self.equation_comment!r})"
@@ -289,6 +291,7 @@ class ResultFilter:
         self.name: str = kwargs.get("name") or ""
         self.order: int = kwargs["order"]
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return (
@@ -310,6 +313,7 @@ class ResultParam:
         self.parameter_name: str = kwargs.get("parameterName") or ""
         self.parameter_value: str = kwargs.get("parameterValue") or ""
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultParam(parameter_name={self.parameter_name!r}, parameter_value={self.parameter_value!r})"
@@ -334,6 +338,7 @@ class ResultTable:
         self.table_comment: str = kwargs.get("tableComment") or ""
         self.table_contents: str = kwargs.get("tableContents") or ""
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return (
@@ -357,6 +362,7 @@ class ResultUnit:
         self.unit: str = kwargs.get("unit") or ""
         self.upper_limit: float | None = kwargs.get("upperLimit")
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultUnit(lower_limit={self.lower_limit}, unit={self.unit!r}, upper_limit={self.upper_limit})"
@@ -383,6 +389,7 @@ class Results:
         self.total_pages: int = kwargs["totalPages"]
         self.version_api_kcdb: str = kwargs.get("versionApiKcdb") or ""
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return (
@@ -529,6 +536,7 @@ class ResultChemistryBiology(ResultCommon):
         k = kwargs.get("uncertaintyConvention")
         self.uncertainty_convention: UncertaintyConvention | None = UncertaintyConvention(k) if k else None
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultChemistryBiology(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
@@ -561,6 +569,7 @@ class ResultGeneralPhysics(ResultCommon):
         self.service_value: str = kwargs.get("serviceValue") or ""
         self.sub_service_value: str = kwargs.get("subServiceValue") or ""
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultGeneralPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
@@ -597,6 +606,7 @@ class ResultIonizingRadiation(ResultCommon):
         self.reference_standard: str = kwargs.get("referenceStandard") or ""
         self.source_value: str = kwargs.get("sourceValue") or ""
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultIonizingRadiation(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
@@ -614,6 +624,7 @@ class ResultsChemistryBiology(Results):
         super().__init__(kwargs)
         self.data: list[ResultChemistryBiology] = [ResultChemistryBiology(d) for d in kwargs.get("data", [])]
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultsChemistryBiology({super().__repr__()})"
@@ -631,6 +642,7 @@ class ResultsGeneralPhysics(Results):
         super().__init__(kwargs)
         self.data: list[ResultGeneralPhysics] = [ResultGeneralPhysics(d) for d in kwargs.get("data", [])]
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultsGeneralPhysics({super().__repr__()})"
@@ -652,6 +664,7 @@ class ResultsQuickSearch(Results):
         self.data: list[Any] = kwargs.get("data", [])
         self.filters_list: list[ResultFilter] = [ResultFilter(d) for d in kwargs.get("filtersList", [])]
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return (
@@ -673,6 +686,7 @@ class ResultsIonizingRadiation(Results):
         super().__init__(kwargs)
         self.data: list[ResultIonizingRadiation] = [ResultIonizingRadiation(d) for d in kwargs.get("data", [])]
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"ResultsIonizingRadiation({super().__repr__()})"
@@ -700,6 +714,7 @@ class KCDB:
         """
         self.timeout = timeout
 
+    @override
     def __repr__(self) -> str:
         """Return the object representation."""
         return f"{self.__class__.__name__}(code={self.DOMAIN.code!r}, name={self.DOMAIN.name!r})"

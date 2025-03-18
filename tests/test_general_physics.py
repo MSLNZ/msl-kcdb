@@ -46,7 +46,7 @@ class TestGeneralPhysics:
 
     def test_domain(self) -> None:
         """Test GeneralPhysics.DOMAIN class attribute."""
-        chem_bio, phys, rad = sorted(self.physics.domains())
+        _, phys, _ = sorted(self.physics.domains())
         assert phys == self.physics.DOMAIN
         assert phys.code == "PHYSICS"
         assert phys.name == "General physics"
@@ -260,6 +260,6 @@ class TestGeneralPhysics:
         # instead of a urllib.error.URLError if it is too small
         self.physics.timeout = 0.9
         with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.9 seconds"):
-            self.physics.search("M")
+            _ = self.physics.search("M")
 
         self.physics.timeout = original

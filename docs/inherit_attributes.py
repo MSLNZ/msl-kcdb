@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast, override
 
-from griffe import DocstringSectionKind, Extension
+from griffe import Class, DocstringSectionKind, Extension
 
 if TYPE_CHECKING:
     from griffe import DocstringAttribute, GriffeLoader, Module, Object
@@ -14,11 +14,11 @@ def _inherit_attributes(obj: Object) -> None:  # noqa: C901
     if obj.is_module:
         for member in obj.members.values():
             if not member.is_alias:
-                _inherit_attributes(member)  # type: ignore[arg-type]
+                _inherit_attributes(cast("Object", member))
 
     if obj.is_class:
         parent_attributes: list[DocstringAttribute] = []
-        for parent in obj.mro():  # type: ignore[attr-defined]
+        for parent in cast("Class", obj).mro():
             if parent.docstring is not None:
                 for section in parent.docstring.parsed:
                     if section.kind is DocstringSectionKind.attributes:
@@ -35,6 +35,7 @@ def _inherit_attributes(obj: Object) -> None:  # noqa: C901
 class InheritAttributes(Extension):
     """Custom mkdocs extension to inherit the `Attributes:` section of the base class."""
 
-    def on_package_loaded(self, *, pkg: Module, loader: GriffeLoader, **kwargs: Any) -> None:  # noqa: ANN401, ARG002
+    @override
+    def on_package_loaded(self, *, pkg: Module, loader: GriffeLoader, **kwargs: Any) -> None:  # type: ignore[misc]
         """Inherit the Attributes section from parent classes after the whole package is loaded."""
         return _inherit_attributes(pkg)

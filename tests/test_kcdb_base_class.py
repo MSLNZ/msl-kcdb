@@ -36,12 +36,12 @@ class TestKCDB:
     def test_invalid_page_value(self) -> None:
         """Test page value invalid."""
         with pytest.raises(ValueError, match=r"Must be >= 0"):
-            self.kcdb.quick_search(page=-1)
+            _ = self.kcdb.quick_search(page=-1)
 
     def test_invalid_page_size_value(self) -> None:
         """Test page_size value invalid."""
         with pytest.raises(ValueError, match=r"Invalid page size"):
-            self.kcdb.quick_search(page_size=0)
+            _ = self.kcdb.quick_search(page_size=0)
 
     def test_non_ionizing_quantities(self) -> None:
         """Test KCDB.non_ionizing_quantities()."""
@@ -124,8 +124,8 @@ class TestKCDB:
 
         # Making the timeout value be very small causes a urllib.error.URLError
         # instead of a TimeoutError
-        self.kcdb.timeout = 0.01
+        self.kcdb.timeout = 0.01  # type: ignore[unreachable]
         with pytest.raises(TimeoutError, match=r"No reply from KCDB server after 0.01 seconds"):
-            self.kcdb.quick_search()
+            _ = self.kcdb.quick_search()
 
         self.kcdb.timeout = original
