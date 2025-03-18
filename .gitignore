@@ -5,15 +5,12 @@ __pycache__/
 *.py[codz]
 
 # Root directories
-/.venv/
-/venv/
+/.cache/
 /.idea/
 /.vscode/
-/.coverage_html/
-/.mypy_cache/
-/.pytest_cache/
-/.ruff_cache/
-/.cache/
+/.venv/
+/site/
+/venv/
 
 # Root files
 /uv.lock
