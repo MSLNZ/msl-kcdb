@@ -14,7 +14,7 @@
         "cacheFormat": "universal",
         "cacheLocation": ".cache/.cspellcache",
         "cacheStrategy": "content",
-        "useCache": false
+        "useCache": true
     },
     "ignorePaths": [
         "cspell.json",
