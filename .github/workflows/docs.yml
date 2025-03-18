@@ -22,4 +22,4 @@ jobs:
       - name: Install dependencies
         run: uv sync --only-group doc
       - name: Deploy to GitHub Pages
-        run: uv run mkdocs gh-deploy --force
+        run: uv run --only-group doc -- mkdocs gh-deploy --force
