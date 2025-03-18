@@ -140,10 +140,10 @@ class TestIonizingRadiation:
 
         assert str(radiation) == (
             "ResultsIonizingRadiation(number_of_elements=1, page_number=0, page_size=100, "
-            "total_elements=1, total_pages=1, version_api_kcdb='1.0.8')"
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.9')"
         )
 
-        assert radiation.version_api_kcdb == "1.0.8"
+        assert radiation.version_api_kcdb == "1.0.9"
         assert radiation.page_number == 0
         assert radiation.page_size == 100
         assert radiation.number_of_elements == 1
@@ -175,16 +175,18 @@ class TestIonizingRadiation:
         assert data.cmc_uncertainty.lower_limit == 4.0
         assert data.cmc_uncertainty.unit == "%"
         assert data.cmc_uncertainty.upper_limit == 4.0
-        assert data.cmc_base_unit is not None
-        assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=2000.0, unit='Bq', upper_limit=200000.0)"
-        assert data.cmc_base_unit.lower_limit == 2000.0
-        assert data.cmc_base_unit.unit == "Bq"
-        assert data.cmc_base_unit.upper_limit == 200000.0
-        assert data.cmc_uncertainty_base_unit is not None
-        assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=80.0, unit='Bq', upper_limit=8000.0)"
-        assert data.cmc_uncertainty_base_unit.lower_limit == 80.0
-        assert data.cmc_uncertainty_base_unit.unit == "Bq"
-        assert data.cmc_uncertainty_base_unit.upper_limit == 8000.0
+        assert data.cmc_base_unit is None
+        # assert data.cmc_base_unit is not None
+        # assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=2000.0, unit='Bq', upper_limit=200000.0)"  # noqa: E501, ERA001
+        # assert data.cmc_base_unit.lower_limit == 2000.0  # noqa: ERA001
+        # assert data.cmc_base_unit.unit == "Bq"  # noqa: ERA001
+        # assert data.cmc_base_unit.upper_limit == 200000.0  # noqa: ERA001
+        assert data.cmc_uncertainty_base_unit is None
+        # assert data.cmc_uncertainty_base_unit is not None
+        # assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=80.0, unit='Bq', upper_limit=8000.0)"  # noqa: E501, ERA001
+        # assert data.cmc_uncertainty_base_unit.lower_limit == 80.0  # noqa: ERA001
+        # assert data.cmc_uncertainty_base_unit.unit == "Bq"  # noqa: ERA001
+        # assert data.cmc_uncertainty_base_unit.upper_limit == 8000.0  # noqa: ERA001
         assert data.confidence_level == 95
         assert data.coverage_factor == 2
         assert data.uncertainty_equation is not None

@@ -81,10 +81,10 @@ class TestChemBio:
 
         assert str(chem_bio) == (
             "ResultsChemistryBiology(number_of_elements=1, page_number=0, page_size=100, "
-            "total_elements=1, total_pages=1, version_api_kcdb='1.0.8')"
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.9')"
         )
 
-        assert chem_bio.version_api_kcdb == "1.0.8"
+        assert chem_bio.version_api_kcdb == "1.0.9"
         assert chem_bio.page_number == 0
         assert chem_bio.page_size == 100
         assert chem_bio.number_of_elements == 1
@@ -116,21 +116,18 @@ class TestChemBio:
         assert data.cmc_uncertainty.lower_limit == 10.0
         assert data.cmc_uncertainty.unit == "%"
         assert data.cmc_uncertainty.upper_limit == 1.0
-        assert data.cmc_base_unit is not None
-        assert (
-            str(data.cmc_base_unit) == "ResultUnit(lower_limit=1.0000000000000002e-12, unit='kg/kg', upper_limit=1e-08)"
-        )
-        assert data.cmc_base_unit.lower_limit == 1.0000000000000002e-12
-        assert data.cmc_base_unit.unit == "kg/kg"
-        assert data.cmc_base_unit.upper_limit == 1e-8
-        assert data.cmc_uncertainty_base_unit is not None
-        assert (
-            str(data.cmc_uncertainty_base_unit)
-            == "ResultUnit(lower_limit=1.0000000000000003e-13, unit='dimension 1', upper_limit=1e-10)"
-        )
-        assert data.cmc_uncertainty_base_unit.lower_limit == 1.0000000000000003e-13
-        assert data.cmc_uncertainty_base_unit.unit == "dimension 1"
-        assert data.cmc_uncertainty_base_unit.upper_limit == 1e-10
+        assert data.cmc_base_unit is None
+        # assert data.cmc_base_unit is not None
+        # assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=1.0000000000000002e-12, unit='kg/kg', upper_limit=1e-08)"  # noqa: E501, ERA001
+        # assert data.cmc_base_unit.lower_limit == 1.0000000000000002e-12  # noqa: ERA001
+        # assert data.cmc_base_unit.unit == "kg/kg"  # noqa: ERA001
+        # assert data.cmc_base_unit.upper_limit == 1e-8  # noqa: ERA001
+        assert data.cmc_uncertainty_base_unit is None
+        # assert data.cmc_uncertainty_base_unit is not None
+        # assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=1.0000000000000003e-13, unit='dimension 1', upper_limit=1e-10)"  # noqa: E501, ERA001
+        # assert data.cmc_uncertainty_base_unit.lower_limit == 1.0000000000000003e-13  # noqa: ERA001
+        # assert data.cmc_uncertainty_base_unit.unit == "dimension 1"  # noqa: ERA001
+        # assert data.cmc_uncertainty_base_unit.upper_limit == 1e-10  # noqa: ERA001
         assert data.confidence_level == 95
         assert data.coverage_factor == 2
         assert data.uncertainty_equation is not None

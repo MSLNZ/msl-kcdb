@@ -121,10 +121,10 @@ class TestGeneralPhysics:
 
         assert str(physics) == (
             "ResultsGeneralPhysics(number_of_elements=1, page_number=0, page_size=100, "
-            "total_elements=1, total_pages=1, version_api_kcdb='1.0.8')"
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.9')"
         )
 
-        assert physics.version_api_kcdb == "1.0.8"
+        assert physics.version_api_kcdb == "1.0.9"
         assert physics.page_number == 0
         assert physics.page_size == 100
         assert physics.number_of_elements == 1
@@ -156,22 +156,18 @@ class TestGeneralPhysics:
         assert data.cmc_uncertainty.lower_limit == 0.2
         assert data.cmc_uncertainty.upper_limit == 8.9
         assert data.cmc_uncertainty.unit == "°"
-        assert data.cmc_base_unit is not None
-        assert (
-            str(data.cmc_base_unit)
-            == "ResultUnit(lower_limit=-3.141592653589794, unit='rad', upper_limit=3.141592653589794)"
-        )
-        assert data.cmc_base_unit.lower_limit == -3.141592653589794
-        assert data.cmc_base_unit.upper_limit == 3.141592653589794
-        assert data.cmc_base_unit.unit == "rad"
-        assert data.cmc_uncertainty_base_unit is not None
-        assert (
-            str(data.cmc_uncertainty_base_unit)
-            == "ResultUnit(lower_limit=0.0034906585039886605, unit='rad', upper_limit=0.15533430342749538)"
-        )
-        assert data.cmc_uncertainty_base_unit.lower_limit == 0.0034906585039886605
-        assert data.cmc_uncertainty_base_unit.upper_limit == 0.15533430342749538
-        assert data.cmc_uncertainty_base_unit.unit == "rad"
+        assert data.cmc_base_unit is None
+        # assert data.cmc_base_unit is not None
+        # assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=-3.141592653589794, unit='rad', upper_limit=3.141592653589794)"  # noqa: E501, ERA001
+        # assert data.cmc_base_unit.lower_limit == -3.141592653589794  # noqa: ERA001
+        # assert data.cmc_base_unit.upper_limit == 3.141592653589794  # noqa: ERA001
+        # assert data.cmc_base_unit.unit == "rad"  # noqa: ERA001
+        assert data.cmc_uncertainty_base_unit is None
+        # assert data.cmc_uncertainty_base_unit is not None
+        # assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=0.0034906585039886605, unit='rad', upper_limit=0.15533430342749538)"  # noqa: E501, ERA001
+        # assert data.cmc_uncertainty_base_unit.lower_limit == 0.0034906585039886605  # noqa: ERA001
+        # assert data.cmc_uncertainty_base_unit.upper_limit == 0.15533430342749538  # noqa: ERA001
+        # assert data.cmc_uncertainty_base_unit.unit == "rad"  # noqa: ERA001
         assert data.confidence_level == 95
         assert data.coverage_factor == 2
         assert data.uncertainty_equation is not None
