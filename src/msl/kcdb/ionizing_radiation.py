@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import https
-from .classes import KCDB, Branch, Domain, Medium, Nuclide, Quantity, ResultsIonizingRadiation, Source
+from .classes import Branch, Domain, Medium, Nuclide, Quantity, ResultsIonizingRadiation, Source
+from .kcdb import KCDB, check_page_info, to_countries, to_label
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -33,10 +33,9 @@ class IonizingRadiation(KCDB):
             # ignore PHYSICS and CHEM-BIO
             return []
 
-        response = https.get(
+        response = self.get(
             f"{KCDB.BASE_URL}/referenceData/branch",
             params={"areaId": metrology_area.id},
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return [Branch(metrology_area=metrology_area, **data) for data in response.json()["referenceData"]]
@@ -55,7 +54,7 @@ class IonizingRadiation(KCDB):
         if branch.label not in ["RAD", "DOS", "NEU"]:
             return []
 
-        response = https.get(f"{KCDB.BASE_URL}/referenceData/radiationMedium", timeout=self._timeout)
+        response = self.get(f"{KCDB.BASE_URL}/referenceData/radiationMedium")
         response.raise_for_status()
         data = response.json()["referenceData"]
 
@@ -71,7 +70,7 @@ class IonizingRadiation(KCDB):
         Returns:
             A list of [Nuclide][msl.kcdb.classes.Nuclide]s.
         """
-        response = https.get(f"{KCDB.BASE_URL}/referenceData/nuclide", timeout=self._timeout)
+        response = self.get(f"{KCDB.BASE_URL}/referenceData/nuclide")
         response.raise_for_status()
         return [Nuclide(**data) for data in response.json()["referenceData"]]
 
@@ -91,7 +90,7 @@ class IonizingRadiation(KCDB):
         if branch.label not in ["RAD", "DOS", "NEU"]:
             return []
 
-        response = https.get(f"{KCDB.BASE_URL}/referenceData/quantity", timeout=self._timeout)
+        response = self.get(f"{KCDB.BASE_URL}/referenceData/quantity")
         response.raise_for_status()
         data = response.json()["referenceData"]
 
@@ -138,7 +137,7 @@ class IonizingRadiation(KCDB):
         Returns:
             The CMC results for Ionizing Radiation.
         """
-        self._check_page_info(page, page_size)
+        check_page_info(page, page_size)
 
         request: dict[str, bool | int | str | list[str]] = {
             "page": page,
@@ -146,22 +145,22 @@ class IonizingRadiation(KCDB):
             "showTable": show_table,
         }
 
-        request["metrologyAreaLabel"] = self._to_label(metrology_area)
+        request["metrologyAreaLabel"] = to_label(metrology_area)
 
         if branch:
-            request["branchLabel"] = self._to_label(branch)
+            request["branchLabel"] = to_label(branch)
 
         if countries:
-            request["countries"] = self._to_countries(countries)
+            request["countries"] = to_countries(countries)
 
         if keywords:
             request["keywords"] = keywords
 
         if medium:
-            request["mediumLabel"] = self._to_label(medium)
+            request["mediumLabel"] = to_label(medium)
 
         if nuclide:
-            request["nuclideLabel"] = self._to_label(nuclide)
+            request["nuclideLabel"] = to_label(nuclide)
 
         if public_date_from:
             request["publicDateFrom"] = str(public_date_from)
@@ -170,15 +169,14 @@ class IonizingRadiation(KCDB):
             request["publicDateTo"] = str(public_date_to)
 
         if quantity:
-            request["quantityLabel"] = self._to_label(quantity)
+            request["quantityLabel"] = to_label(quantity)
 
         if source:
-            request["sourceLabel"] = self._to_label(source)
+            request["sourceLabel"] = to_label(source)
 
-        response = https.post(
+        response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/radiation",
             json=request,
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return ResultsIonizingRadiation(response.json())
@@ -197,7 +195,7 @@ class IonizingRadiation(KCDB):
         if branch.label not in ["RAD", "DOS", "NEU"]:
             return []
 
-        response = https.get(f"{KCDB.BASE_URL}/referenceData/radiationSource", timeout=self._timeout)
+        response = self.get(f"{KCDB.BASE_URL}/referenceData/radiationSource")
         response.raise_for_status()
         data = response.json()["referenceData"]
 

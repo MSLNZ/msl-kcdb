@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from msl.kcdb.classes import KCDB
+from msl.kcdb.kcdb import KCDB
 
 
 class TestKCDB:

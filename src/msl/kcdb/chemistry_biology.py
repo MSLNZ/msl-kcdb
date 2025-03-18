@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import https
-from .classes import KCDB, Analyte, Category, Domain, ResultsChemistryBiology
+from .classes import Analyte, Category, Domain, ResultsChemistryBiology
+from .kcdb import KCDB, check_page_info, to_countries, to_label
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -26,7 +26,7 @@ class ChemistryBiology(KCDB):
         Returns:
             A list of [Analyte][msl.kcdb.classes.Analyte]s
         """
-        response = https.get(f"{KCDB.BASE_URL}/referenceData/analyte", timeout=self._timeout)
+        response = self.get(f"{KCDB.BASE_URL}/referenceData/analyte")
         response.raise_for_status()
         return [Analyte(**data) for data in response.json()["referenceData"]]
 
@@ -36,7 +36,7 @@ class ChemistryBiology(KCDB):
         Returns:
             A list of [Category][msl.kcdb.classes.Category]'s
         """
-        response = https.get(f"{KCDB.BASE_URL}/referenceData/category", timeout=self._timeout)
+        response = self.get(f"{KCDB.BASE_URL}/referenceData/category")
         response.raise_for_status()
         return [Category(**data) for data in response.json()["referenceData"]]
 
@@ -71,7 +71,7 @@ class ChemistryBiology(KCDB):
         Returns:
             The CMC results for Chemistry and Biology.
         """
-        self._check_page_info(page, page_size)
+        check_page_info(page, page_size)
 
         request: dict[str, bool | int | str | list[str]] = {
             "page": page,
@@ -79,16 +79,16 @@ class ChemistryBiology(KCDB):
             "showTable": show_table,
         }
 
-        request["metrologyAreaLabel"] = self._to_label(metrology_area)
+        request["metrologyAreaLabel"] = to_label(metrology_area)
 
         if analyte is not None:
-            request["analyteLabel"] = self._to_label(analyte)
+            request["analyteLabel"] = to_label(analyte)
 
         if category:
-            request["categoryLabel"] = self._to_label(category)
+            request["categoryLabel"] = to_label(category)
 
         if countries:
-            request["countries"] = self._to_countries(countries)
+            request["countries"] = to_countries(countries)
 
         if keywords:
             request["keywords"] = keywords
@@ -99,10 +99,9 @@ class ChemistryBiology(KCDB):
         if public_date_to:
             request["publicDateTo"] = str(public_date_to)
 
-        response = https.post(
+        response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/chemistryAndBiology",
             json=request,
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return ResultsChemistryBiology(response.json())

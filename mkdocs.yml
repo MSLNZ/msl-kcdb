@@ -40,7 +40,8 @@ nav:
     - Chemistry and Biology: api/chemistry_biology.md
     - General Physics: api/general_physics.md
     - Ionizing Radiation: api/ionizing_radiation.md
-    - Classes: api/classes.md
+    - KCDB: api/kcdb.md
+    - Reference data and Results: api/classes.md
   - About:
     - Release Notes: about/release-notes.md
     - License: about/license.md

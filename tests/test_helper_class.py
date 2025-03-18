@@ -4,7 +4,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from msl.kcdb.classes import Country, Helper, ReferenceData, Service
+from msl.kcdb.classes import Country, ReferenceData, Service
+from msl.kcdb.kcdb import to_countries, to_label, to_physics_code
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 def test_to_label_raises() -> None:
     """Test to_label() for an invalid object."""
     with pytest.raises(AttributeError):
-        _ = Helper.to_label(8)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        _ = to_label(8)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 @pytest.mark.parametrize(
@@ -26,13 +27,13 @@ def test_to_label_raises() -> None:
 )
 def test_to_label(obj: str | ReferenceData, expected: str) -> None:
     """Test to_label() for a valid object."""
-    assert Helper.to_label(obj) == expected
+    assert to_label(obj) == expected
 
 
 def test_to_physics_code_raises() -> None:
     """Test to_physics_code() for an invalid object."""
     with pytest.raises(AttributeError):
-        _ = Helper.to_physics_code(None)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        _ = to_physics_code(None)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
 
 
 @pytest.mark.parametrize(
@@ -44,15 +45,15 @@ def test_to_physics_code_raises() -> None:
 )
 def test_to_physics_code(obj: str | Service, expected: str) -> None:
     """Test to_physics_code() for a valid object."""
-    assert Helper.to_physics_code(obj) == expected
+    assert to_physics_code(obj) == expected
 
 
 def test_to_countries_raises() -> None:
     """Test to_countries() for an invalid object."""
     with pytest.raises(TypeError):
-        _ = Helper.to_countries(None)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
+        _ = to_countries(None)  # type: ignore[arg-type] # pyright: ignore[reportArgumentType]
     with pytest.raises(AttributeError):
-        _ = Helper.to_countries([1, 2])  # type: ignore[list-item] # pyright: ignore[reportArgumentType]
+        _ = to_countries([1, 2])  # type: ignore[list-item] # pyright: ignore[reportArgumentType]
 
 
 @pytest.mark.parametrize(
@@ -67,4 +68,4 @@ def test_to_countries_raises() -> None:
 )
 def test_to_countries(value: str | Country | Iterable[str | Country], expected: list[str]) -> None:
     """Test to_countries() for a valid object."""
-    assert Helper.to_countries(value) == expected
+    assert to_countries(value) == expected

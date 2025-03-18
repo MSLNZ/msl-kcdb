@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import https
-from .classes import KCDB, Branch, Domain, Helper, IndividualService, ResultsGeneralPhysics, Service, SubService
+from .classes import Branch, Domain, IndividualService, ResultsGeneralPhysics, Service, SubService
+from .kcdb import KCDB, check_page_info, to_countries, to_label, to_physics_code
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -33,10 +33,9 @@ class GeneralPhysics(KCDB):
             # ignore CHEM-BIO and RADIATION
             return []
 
-        response = https.get(
+        response = self.get(
             f"{KCDB.BASE_URL}/referenceData/branch",
             params={"areaId": metrology_area.id},
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return [Branch(metrology_area=metrology_area, **data) for data in response.json()["referenceData"]]
@@ -50,10 +49,9 @@ class GeneralPhysics(KCDB):
         Returns:
             A list of [IndividualService][msl.kcdb.classes.IndividualService]s.
         """
-        response = https.get(
+        response = self.get(
             f"{KCDB.BASE_URL}/referenceData/individualService",
             params={"subServiceId": sub_service.id},
-            timeout=self._timeout,
         )
         if response.ok:
             return [
@@ -102,7 +100,7 @@ class GeneralPhysics(KCDB):
         Returns:
             The CMC results for General Physics.
         """
-        self._check_page_info(page, page_size)
+        check_page_info(page, page_size)
 
         request: dict[str, bool | int | str | list[str]] = {
             "page": page,
@@ -110,19 +108,19 @@ class GeneralPhysics(KCDB):
             "showTable": show_table,
         }
 
-        request["metrologyAreaLabel"] = Helper.to_label(metrology_area)
+        request["metrologyAreaLabel"] = to_label(metrology_area)
 
         if branch:
-            request["branchLabel"] = Helper.to_label(branch)
+            request["branchLabel"] = to_label(branch)
 
         if countries:
-            request["countries"] = Helper.to_countries(countries)
+            request["countries"] = to_countries(countries)
 
         if keywords:
             request["keywords"] = keywords
 
         if physics_code:
-            request["physicsCode"] = Helper.to_physics_code(physics_code)
+            request["physicsCode"] = to_physics_code(physics_code)
 
         if public_date_from:
             request["publicDateFrom"] = str(public_date_from)
@@ -130,10 +128,9 @@ class GeneralPhysics(KCDB):
         if public_date_to:
             request["publicDateTo"] = str(public_date_to)
 
-        response = https.post(
+        response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/physics",
             json=request,
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return ResultsGeneralPhysics(response.json())
@@ -151,10 +148,9 @@ class GeneralPhysics(KCDB):
             # Dosimetry(id=32), Radioactivity(id=33) and Neutron Measurements(id=34) do not have Services
             return []
 
-        response = https.get(
+        response = self.get(
             f"{KCDB.BASE_URL}/referenceData/service",
             params={"branchId": branch.id},
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return [Service(branch=branch, physics_code=data["label"], **data) for data in response.json()["referenceData"]]
@@ -168,10 +164,9 @@ class GeneralPhysics(KCDB):
         Returns:
             A list of [SubService][msl.kcdb.classes.SubService]s.
         """
-        response = https.get(
+        response = self.get(
             f"{KCDB.BASE_URL}/referenceData/subService",
             params={"serviceId": service.id},
-            timeout=self._timeout,
         )
         response.raise_for_status()
         return [

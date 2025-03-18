@@ -122,7 +122,6 @@ exclude = [
 ]
 reportAny = false
 reportExplicitAny = false
-reportImportCycles = false
 reportPrivateLocalImportUsage = false
 reportUnannotatedClassAttribute = false
 reportUninitializedInstanceVariable = false
