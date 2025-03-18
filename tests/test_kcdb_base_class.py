@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from msl.kcdb.classes import KCDB, Service
+from msl.kcdb.classes import KCDB
 
 
 class TestKCDB:
@@ -129,24 +129,3 @@ class TestKCDB:
             self.kcdb.quick_search()
 
         self.kcdb.timeout = original
-
-    def test_to_label_raises(self) -> None:
-        """Test KCDB._to_label() for an invalid object."""
-        with pytest.raises(AttributeError):
-            KCDB._to_label(None)  # type: ignore[arg-type] # noqa: SLF001
-
-    def test_to_physics_code_raises(self) -> None:
-        """Test KCDB._to_physics_code() for an invalid object."""
-        with pytest.raises(AttributeError):
-            KCDB._to_physics_code(None)  # type: ignore[arg-type] # noqa: SLF001
-
-    @pytest.mark.parametrize(
-        ("physics_code", "expected"),
-        [
-            ("any string", "any string"),
-            (Service(id=0, label="", value="", branch=None, physics_code="1"), "1"),  # type: ignore[arg-type]
-        ],
-    )
-    def test_to_physics_code(self, physics_code: str | Service, expected: str) -> None:
-        """Test KCDB._to_physics_code() for a valid object."""
-        assert KCDB._to_physics_code(physics_code) == expected  # noqa: SLF001

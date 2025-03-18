@@ -771,7 +771,7 @@ class KCDB:
         return [item for item in data if regex.search(item.value) or regex.search(item.label)]
 
     def metrology_areas(self) -> list[MetrologyArea]:
-        """Return all metrology areas for this domain.
+        """Return all metrology areas.
 
         Returns:
             A list of [MetrologyArea][msl.kcdb.classes.MetrologyArea]s.
@@ -821,7 +821,7 @@ class KCDB:
         Returns:
             The CMC quick-search results.
         """
-        self._check_page_info(page, page_size)
+        Helper.check_page_info(page, page_size)
 
         request: dict[str, bool | str | int | list[str]] = {
             "page": page,
@@ -861,3 +861,41 @@ class KCDB:
             self._timeout = None
         else:
             self._timeout = float(value)
+
+
+class Helper:
+    """Common helper functions."""
+
+    @staticmethod
+    def check_page_info(page: int, page_size: int) -> None:
+        """Check that the page information for a request is valid."""
+        if page < 0:
+            msg = f"Invalid page value, {page}. Must be >= 0"
+            raise ValueError(msg)
+
+        if page_size < 1 or page_size > KCDB.MAX_PAGE_SIZE:
+            msg = f"Invalid page size, {page_size}. Must be in the range [1, {KCDB.MAX_PAGE_SIZE}]"
+            raise ValueError(msg)
+
+    @staticmethod
+    def to_countries(countries: str | Country | Iterable[str | Country]) -> list[str]:
+        """Convert the input into a list of countries."""
+        if isinstance(countries, str):
+            return [countries]
+        if isinstance(countries, Country):
+            return [countries.label]
+        return [c if isinstance(c, str) else c.label for c in countries]
+
+    @staticmethod
+    def to_label(obj: str | ReferenceData) -> str:
+        """Convert the input into a string."""
+        if isinstance(obj, str):
+            return obj
+        return obj.label
+
+    @staticmethod
+    def to_physics_code(obj: str | Service | SubService | IndividualService) -> str:
+        """Convert the input into a string."""
+        if isinstance(obj, str):
+            return obj
+        return obj.physics_code

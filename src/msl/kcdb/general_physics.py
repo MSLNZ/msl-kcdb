@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import https
-from .classes import KCDB, Branch, Domain, IndividualService, ResultsGeneralPhysics, Service, SubService
+from .classes import KCDB, Branch, Domain, Helper, IndividualService, ResultsGeneralPhysics, Service, SubService
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -110,19 +110,19 @@ class GeneralPhysics(KCDB):
             "showTable": show_table,
         }
 
-        request["metrologyAreaLabel"] = self._to_label(metrology_area)
+        request["metrologyAreaLabel"] = Helper.to_label(metrology_area)
 
         if branch:
-            request["branchLabel"] = self._to_label(branch)
+            request["branchLabel"] = Helper.to_label(branch)
 
         if countries:
-            request["countries"] = self._to_countries(countries)
+            request["countries"] = Helper.to_countries(countries)
 
         if keywords:
             request["keywords"] = keywords
 
         if physics_code:
-            request["physicsCode"] = self._to_physics_code(physics_code)
+            request["physicsCode"] = Helper.to_physics_code(physics_code)
 
         if public_date_from:
             request["publicDateFrom"] = str(public_date_from)
