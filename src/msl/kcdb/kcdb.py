@@ -122,10 +122,15 @@ class Response:
         Args:
             response: The server's response to an HTTP request.
         """
-        self._url = response.url
-        self._code = 0 if response.status is None else response.status
-        self._reason = response.reason
-        self._data = response.read()
+        self._url: str = response.url
+        self._code: int = 0 if response.status is None else response.status
+        self._reason: str = response.reason
+        self._data: bytes = response.read()
+
+    @property
+    def data(self) -> bytes:
+        """The response body from the server."""
+        return self._data
 
     def json(self) -> Any:  # noqa: ANN401
         """The JSON response body from the server."""
@@ -163,7 +168,7 @@ class KCDB:
     MAX_PAGE_SIZE: int = 10_000
     """The maximum number of elements that can be returned in a single KCDB request."""
 
-    DOMAIN: Domain
+    DOMAIN: Domain = Domain(code="UNKNOWN", name="UNKNOWN")
 
     def __init__(self, timeout: float | None = 30) -> None:
         """Initialise the KCDB base class.
@@ -171,6 +176,7 @@ class KCDB:
         Args:
             timeout: The maximum number of seconds to wait for a response from the KCDB server.
         """
+        self._timeout: float | None
         self.timeout = timeout
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]

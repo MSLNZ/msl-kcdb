@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 class GeneralPhysics(KCDB):
     """General Physics class."""
 
-    DOMAIN = Domain(code="PHYSICS", name="General physics")
+    DOMAIN: Domain = Domain(code="PHYSICS", name="General physics")
     """The General Physics domain."""
 
     def branches(self, metrology_area: MetrologyArea) -> list[Branch]:

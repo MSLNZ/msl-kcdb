@@ -5,13 +5,15 @@ import pytest
 
 from msl.kcdb import ChemistryBiology
 
+# pyright: reportUninitializedInstanceVariable=false
+
 
 class TestChemBio:
     """Test the ChemistryBiology class."""
 
     def setup_class(self) -> None:
         """Create ChemistryBiology instance."""
-        self.chem_bio = ChemistryBiology()
+        self.chem_bio: ChemistryBiology = ChemistryBiology()
 
     def test_analytes(self) -> None:
         """Test ChemistryBiology.analytes()."""

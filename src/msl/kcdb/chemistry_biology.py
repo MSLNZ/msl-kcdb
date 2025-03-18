@@ -17,14 +17,14 @@ if TYPE_CHECKING:
 class ChemistryBiology(KCDB):
     """Chemistry and Biology class."""
 
-    DOMAIN = Domain(code="CHEM-BIO", name="Chemistry and Biology")
+    DOMAIN: Domain = Domain(code="CHEM-BIO", name="Chemistry and Biology")
     """The Chemistry and Biology domain."""
 
     def analytes(self) -> list[Analyte]:
         """Return all Chemistry and Biology analytes.
 
         Returns:
-            A list of [Analyte][msl.kcdb.classes.Analyte]s
+            A list of [Analyte][msl.kcdb.classes.Analyte]s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/analyte")
         response.raise_for_status()
@@ -34,7 +34,7 @@ class ChemistryBiology(KCDB):
         """Return all Chemistry and Biology categories.
 
         Returns:
-            A list of [Category][msl.kcdb.classes.Category]'s
+            A list of [Category][msl.kcdb.classes.Category]'s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/category")
         response.raise_for_status()

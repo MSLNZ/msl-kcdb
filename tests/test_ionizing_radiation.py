@@ -3,7 +3,9 @@ from datetime import date
 import pytest
 
 from msl.kcdb import ChemistryBiology, GeneralPhysics, IonizingRadiation
-from msl.kcdb.classes import Country
+from msl.kcdb.classes import Branch, Country, MetrologyArea
+
+# pyright: reportUninitializedInstanceVariable=false
 
 
 class TestIonizingRadiation:
@@ -11,13 +13,13 @@ class TestIonizingRadiation:
 
     def setup_class(self) -> None:
         """Create IonizingRadiation instance."""
-        self.radiation = IonizingRadiation()
-        self.metrology_areas = self.radiation.metrology_areas()
+        self.radiation: IonizingRadiation = IonizingRadiation()
+        self.metrology_areas: list[MetrologyArea] = self.radiation.metrology_areas()
         assert len(self.metrology_areas) == 1
-        self.branches = self.radiation.branches(self.metrology_areas[0])
+        self.branches: list[Branch] = self.radiation.branches(self.metrology_areas[0])
 
-        p = GeneralPhysics()
-        self.physics_branches = [b for a in p.metrology_areas() for b in p.branches(a)]
+        p: GeneralPhysics = GeneralPhysics()
+        self.physics_branches: list[Branch] = [b for a in p.metrology_areas() for b in p.branches(a)]
         assert len(self.physics_branches) == 32
 
     def test_branches(self) -> None:

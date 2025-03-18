@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 class IonizingRadiation(KCDB):
     """Ionizing Radiation class."""
 
-    DOMAIN = Domain(code="RADIATION", name="Ionizing radiation")
+    DOMAIN: Domain = Domain(code="RADIATION", name="Ionizing radiation")
     """The Ionizing Radiation domain."""
 
     def branches(self, metrology_area: MetrologyArea) -> list[Branch]:

@@ -122,13 +122,6 @@ exclude = [
 ]
 reportAny = false
 reportExplicitAny = false
-reportPrivateLocalImportUsage = false
-reportUnannotatedClassAttribute = false
-reportUninitializedInstanceVariable = false
-reportUnknownMemberType = false
-reportUnknownArgumentType = false
-reportUnknownLambdaType = false
-reportUnknownVariableType = false
 
 [tool.ruff]
 cache-dir = ".cache/ruff"

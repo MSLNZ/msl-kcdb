@@ -4,13 +4,15 @@ import pytest
 
 from msl.kcdb.kcdb import KCDB
 
+# pyright: reportUninitializedInstanceVariable=false
+
 
 class TestKCDB:
     """Test the KCDB base class."""
 
     def setup_class(self) -> None:
         """Create KCDB instance."""
-        self.kcdb = KCDB()
+        self.kcdb: KCDB = KCDB()
 
     def test_countries(self) -> None:
         """Test KCDB.countries()."""
