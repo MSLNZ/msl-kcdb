@@ -62,7 +62,7 @@ plugins:
       handlers:
         python:
           paths: [src]
-          import:
+          inventories:
             - url: https://docs.python.org/3/objects.inv
               domains: [std, py]
           options:
