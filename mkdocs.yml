@@ -18,6 +18,15 @@ theme:
     - search.highlight
     - search.suggest
   palette:
+    # Palette toggle for automatic mode
+    - media: '(prefers-color-scheme)'
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: indigo
@@ -25,13 +34,15 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to dark mode
+
+    # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: black
       accent: deep orange
       toggle:
         icon: material/weather-night
-        name: Switch to light mode
+        name: Switch to system preference
 
 watch: [src/msl/kcdb, includes]
 
