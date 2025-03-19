@@ -2,11 +2,16 @@ name: Docs
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+    tags:
+      - '*'
+  pull_request:
+    branches: ['main']
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
@@ -19,7 +24,17 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: false
-      - name: Install dependencies
-        run: uv sync --only-group doc
-      - name: Deploy to GitHub Pages
-        run: uv run --only-group doc -- mkdocs gh-deploy --force
+      - name: Configure Git for GitHub Actions bot
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Validate docs
+        run: uv run --only-group doc -- mkdocs build --strict
+      - name: Deploy dev docs
+        if: github.ref == 'refs/heads/main'
+        run: uv run --only-group doc -- mike deploy --push --update-aliases dev
+      - name: Deploy release docs
+        if: github.ref_type == 'tag'
+        run: |
+          uv run --only-group doc -- mike deploy --push --update-aliases ${{ github.ref_name }} latest
+          uv run --only-group doc -- mike set-default --push latest

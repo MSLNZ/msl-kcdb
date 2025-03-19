@@ -45,6 +45,7 @@ Source = "https://github.com/MSLNZ/msl-kcdb"
 [dependency-groups]
 doc = [
     "black>=24.8.0",
+    "mike>=2.1.3",
     "mkdocs>=1.6.1",
     "mkdocs-material>=9.6.7",
     "mkdocstrings-python>=1.11.1",

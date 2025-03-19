@@ -1,7 +1,8 @@
 site_name: MSL KCDB
 site_description: Search the BIPM key comparison database (KCDB)
 copyright: Copyright &copy; 2025 Measurement Standards Laboratory of New Zealand
-repo_url: https://github.com/MSLNZ/msl-kcdb
+repo_url: https://github.com/MSLNZ/msl-kcdb/
+site_url: https://github.com/MSLNZ/msl-kcdb/
 
 theme:
   name: material
@@ -89,6 +90,8 @@ plugins:
             - docs/inherit_attributes.py:InheritAttributes
 
 extra:
+  version:
+    provider: mike
   social:
   - icon: fontawesome/brands/github
     link: https://github.com/MSLNZ/msl-kcdb
