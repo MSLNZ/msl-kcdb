@@ -40,6 +40,6 @@ class InheritAttributes(Extension):
     """Custom mkdocs extension to inherit the `Attributes:` section of the base class."""
 
     @override
-    def on_package_loaded(self, *, pkg: Module, loader: GriffeLoader, **kwargs: Any) -> None:  # type: ignore[misc]
+    def on_package_loaded(self, *, pkg: Module, loader: GriffeLoader, **kwargs: Any) -> None:
         """Inherit the Attributes section from parent classes after the whole package is loaded."""
         return _inherit_attributes(pkg)
