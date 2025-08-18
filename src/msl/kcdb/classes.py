@@ -534,26 +534,31 @@ class ResultGeneralPhysics(ResultCommon):
     """General Physics result.
 
     Attributes:
-        branch_value: Branch value. _Example:_ `"Radio frequency measurements"`
-        individual_service_value: Individual service value.
-            _Example:_ `"Transmission coefficient in coaxial line (real and imaginary)"`
-        instrument: Instrument. _Example:_ `"Passive device"`
-        instrument_method: Instrument method. _Example:_ `"Vector network analyser"`
+        branch_label: Branch label. _Example:_ `"PR/Photo"`
+        branch_value: Branch value. _Example:_ `"Photometry"`
+        individual_service_value: Individual service value. _Example:_ `"Tungsten source"`
+        instrument: Instrument. _Example:_ `"Illuminance meter"`
+        instrument_method: Instrument method. _Example:_ `"Standard lamp"`
         international_standard: International standard. _Example:_ `"EURAMET Cg19, ISO 8655-6"`
+        kcdb_service_category: KCDB service category. _Example:_ `"PR/Photo/1.2.1"`
         parameters: Parameters list with name and value.
-        service_value: Service value. _Example:_ `"Radio frequency measurements"`
-        sub_service_value: Sub service value. _Example:_ `"Scattering parameters (vectors)"`
+        physics_code: Physics code. _Example:_ `"1.2.1"`
+        service_value: Service value. _Example:_ `"Photometry"`
+        sub_service_value: Sub service value. _Example:_ `"Illuminance responsivity"`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """General Physics result."""
         super().__init__(kwargs)
+        self.branch_label: str = kwargs.get("branchLabel", "")
         self.branch_value: str = kwargs.get("branchValue") or ""
         self.individual_service_value: str = kwargs.get("individualServiceValue") or ""
         self.instrument: str = kwargs.get("instrument") or ""
         self.instrument_method: str = kwargs.get("instrumentMethod") or ""
         self.international_standard: str = kwargs.get("internationalStandard") or ""
+        self.kcdb_service_category: str = kwargs.get("kcdbServiceCategory", "")
         self.parameters: list[ResultParam] = [ResultParam(p) for p in kwargs.get("parameters", [])]
+        self.physics_code: str = kwargs.get("physicsCode", "")
         self.service_value: str = kwargs.get("serviceValue") or ""
         self.sub_service_value: str = kwargs.get("subServiceValue") or ""
 

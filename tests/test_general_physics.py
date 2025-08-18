@@ -111,13 +111,12 @@ class TestGeneralPhysics:
     def test_search(self) -> None:  # noqa: PLR0915
         """Test GeneralPhysics.search()."""
         physics = self.physics.search(
-            "EM",
-            branch="EM/RF",
-            physics_code="11.3.3",
-            keywords="phase OR multichannel OR water",
-            countries=["CH", Country(id=29, label="FR", value="France"), "JP", "AR"],
-            public_date_from=date(2005, 1, 31),
-            public_date_to="2024-06-30",
+            "PR",
+            branch="PR/Photo",
+            keywords="Illuminance AND meter",
+            countries=["CH", Country(id=29, label="FR", value="France"), "JP", "NZ"],
+            public_date_from=date(2002, 1, 31),
+            public_date_to="2020-06-30",
             show_table=True,
         )
 
@@ -134,44 +133,34 @@ class TestGeneralPhysics:
         assert physics.total_pages == 1
         assert len(physics.data) == 1
         data = physics.data[0]
-        assert str(data) == "ResultGeneralPhysics(id=26707, nmi_code='INTI', rmo='SIM')"
-        assert data.id == 26707
+        assert str(data) == "ResultGeneralPhysics(id=7852, nmi_code='MSL', rmo='APMP')"
+        assert data.id == 7852
         assert data.status == "Published"
-        assert data.status_date == "2020-04-16"
-        assert data.kcdb_code == "SIM-EM-AR-00000K2C-1"
+        assert data.status_date == "2012-11-29"
+        assert data.kcdb_code == "APMP-PR-NZ-00000624-1"
         assert data.domain_code == "PHYSICS"
-        assert data.metrology_area_label == "EM"
-        assert data.rmo == "SIM"
-        assert data.country_value == "Argentina"
-        assert data.nmi_code == "INTI"
-        assert data.nmi_name == "Instituto Nacional de Tecnologia Industrial"  # cSpell:disable-line
-        assert data.nmi_service_code == ""
+        assert data.metrology_area_label == "PR"
+        assert data.rmo == "APMP"
+        assert data.country_value == "New Zealand"
+        assert data.nmi_code == "MSL"
+        assert data.nmi_name == "Measurement Standards Laboratory"
+        assert data.nmi_service_code == "MSLT.O.001, MSLT.O.016"  # cSpell: disable-line
         assert data.nmi_service_link == ""
-        assert data.quantity_value == "Scattering parameters: transmission coefficient (Sij) in coaxial line, phase"
+        assert data.quantity_value == "Illuminance responsivity, tungsten source"
         assert data.cmc is not None
-        assert str(data.cmc) == "ResultUnit(lower_limit=-180.0, unit='°', upper_limit=180.0)"
-        assert data.cmc.lower_limit == -180.0
-        assert data.cmc.upper_limit == 180.0
-        assert data.cmc.unit == "°"
+        assert str(data.cmc) == "ResultUnit(lower_limit=None, unit='A/lx, V/lx, reading/lx', upper_limit=None)"
+        assert data.cmc.lower_limit is None
+        assert data.cmc.upper_limit is None
+        assert data.cmc.unit == "A/lx, V/lx, reading/lx"
         assert data.cmc_uncertainty is not None
-        assert str(data.cmc_uncertainty) == "ResultUnit(lower_limit=0.2, unit='°', upper_limit=8.9)"
-        assert data.cmc_uncertainty.lower_limit == 0.2
-        assert data.cmc_uncertainty.upper_limit == 8.9
-        assert data.cmc_uncertainty.unit == "°"
+        assert str(data.cmc_uncertainty) == "ResultUnit(lower_limit=3.0, unit='%', upper_limit=3.0)"
+        assert data.cmc_uncertainty.lower_limit == 3.0
+        assert data.cmc_uncertainty.upper_limit == 3.0
+        assert data.cmc_uncertainty.unit == "%"
         assert data.cmc_base_unit is None
-        # assert data.cmc_base_unit is not None
-        # assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=-3.141592653589794, unit='rad', upper_limit=3.141592653589794)"  # noqa: E501, ERA001
-        # assert data.cmc_base_unit.lower_limit == -3.141592653589794  # noqa: ERA001
-        # assert data.cmc_base_unit.upper_limit == 3.141592653589794  # noqa: ERA001
-        # assert data.cmc_base_unit.unit == "rad"  # noqa: ERA001
         assert data.cmc_uncertainty_base_unit is None
-        # assert data.cmc_uncertainty_base_unit is not None
-        # assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=0.0034906585039886605, unit='rad', upper_limit=0.15533430342749538)"  # noqa: E501, ERA001
-        # assert data.cmc_uncertainty_base_unit.lower_limit == 0.0034906585039886605  # noqa: ERA001
-        # assert data.cmc_uncertainty_base_unit.upper_limit == 0.15533430342749538  # noqa: ERA001
-        # assert data.cmc_uncertainty_base_unit.unit == "rad"  # noqa: ERA001
         assert data.confidence_level == 95
-        assert data.coverage_factor == 2
+        assert data.coverage_factor == 2.3
         assert data.uncertainty_equation is not None
         assert str(data.uncertainty_equation) == "ResultEquation(equation='', equation_comment='')"
         assert data.uncertainty_equation.equation == ""
@@ -179,34 +168,32 @@ class TestGeneralPhysics:
         assert data.uncertainty_table is not None
         assert (
             str(data.uncertainty_table)
-            == "ResultTable(table_rows=21, table_cols=7, table_name='Matrix 5', table_comment='')"
-        )
-        assert data.uncertainty_table.table_name == "Matrix 5"
-        assert data.uncertainty_table.table_rows == 21
-        assert data.uncertainty_table.table_cols == 7
-        assert data.uncertainty_table.table_comment == ""
-        assert data.uncertainty_table.table_contents.startswith(
-            '{"row_1": {"col_1":"<div Style=\\"FONT-FAMILY: Calibri;FONT-SIZE:'
+            == "ResultTable(table_rows=0, table_cols=0, table_name='', table_comment='')"
         )
         assert data.uncertainty_mode is not None
-        assert data.uncertainty_mode.name == "ABSOLUTE"
-        assert data.uncertainty_mode.value == "Absolute"
-        assert data.traceability_source == "INTI"
+        assert data.uncertainty_mode.name == "RELATIVE"
+        assert data.uncertainty_mode.value == "Relative"
+        assert data.traceability_source == ""
         assert data.comments == ""
         assert data.group_identifier == ""
-        assert data.publication_date == "2020-04-16"
-        assert data.approval_date == "2019-10-15"
+        assert data.publication_date == "2012-11-29"
+        assert data.approval_date == "2012-11-29"
         assert data.international_standard == ""
-        assert data.branch_value == "Radio frequency measurements"
-        assert data.service_value == "Radio frequency measurements"
-        assert data.sub_service_value == "Scattering parameters (vectors)"
-        assert data.individual_service_value == "Transmission coefficient in coaxial line (real and imaginary)"
-        assert data.instrument == "Passive devices"
-        assert data.instrument_method == "Vector Network Analyzer"
+        assert data.branch_value == "Photometry"
+        assert data.branch_label == "PR/Photo"
+        assert data.service_value == "Photometry"
+        assert data.sub_service_value == "Illuminance responsivity"
+        assert data.individual_service_value == "Tungsten source"
+        assert data.physics_code == "1.2.1"
+        assert data.kcdb_service_category == "PR/Photo/1.2.1"
+        assert data.instrument == "Illuminance meter"
+        assert data.instrument_method == "Standard lamp"
         assert len(data.parameters) == 2
-        assert str(data.parameters[0]) == "ResultParam(parameter_name='Frequency', parameter_value='1 MHz to 32 GHz')"
-        assert data.parameters[1].parameter_name == "Connector"
-        assert data.parameters[1].parameter_value == "Type-N, PC3.5mm"
+        assert str(data.parameters[0]) == (
+            "ResultParam(parameter_name='Illuminance', parameter_value='0.005 lx to 10 lx')"
+        )
+        assert data.parameters[1].parameter_name == "Correlated colour temperature"
+        assert data.parameters[1].parameter_value == "2700 K to 3000 K"
 
     def test_services(self) -> None:
         """Test GeneralPhysics.services()."""
