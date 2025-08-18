@@ -1,7 +1,7 @@
 """Send a request to the KCDB server.
 
 The [ChemistryBiology][msl.kcdb.chemistry_biology.ChemistryBiology],
-[GeneralPhysics][msl.kcdb.general_physics.GeneralPhysics] and
+[Physics][msl.kcdb.general_physics.Physics] and
 [IonizingRadiation][msl.kcdb.ionizing_radiation.IonizingRadiation] classes all
 inherit from the [KCDB][msl.kcdb.kcdb.KCDB] class so, typically, there should
 be no reason to instantiate the [KCDB][msl.kcdb.kcdb.KCDB] class directly.

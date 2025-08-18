@@ -12,7 +12,7 @@ pip install msl-kcdb
 Three classes are available to search the three metrology domains
 
 * [`ChemistryBiology`][msl.kcdb.chemistry_biology.ChemistryBiology] &ndash; Search the Chemistry and Biology database
-* [`GeneralPhysics`][msl.kcdb.general_physics.GeneralPhysics] &ndash; Search the General Physics database
+* [`Physics`][msl.kcdb.general_physics.Physics] &ndash; Search the General Physics database
 * [`IonizingRadiation`][msl.kcdb.ionizing_radiation.IonizingRadiation] &ndash; Search the Ionizing Radiation database
 
 Examples on how to use the classes are available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/src/msl/examples/kcdb){:target="_blank"} and these examples are also included with the `msl-kcdb` installation in the `../site-packages/msl/examples/kcdb` directory of your Python interpreter.
