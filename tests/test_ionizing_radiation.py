@@ -2,10 +2,8 @@ from datetime import date
 
 import pytest
 
-from msl.kcdb import ChemistryBiology, GeneralPhysics, IonizingRadiation
+from msl.kcdb import ChemistryBiology, IonizingRadiation, Physics
 from msl.kcdb.classes import Branch, Country, MetrologyArea
-
-# pyright: reportUninitializedInstanceVariable=false
 
 
 class TestIonizingRadiation:
@@ -13,13 +11,13 @@ class TestIonizingRadiation:
 
     def setup_class(self) -> None:
         """Create IonizingRadiation instance."""
-        self.radiation: IonizingRadiation = IonizingRadiation()
-        self.metrology_areas: list[MetrologyArea] = self.radiation.metrology_areas()
+        self.radiation: IonizingRadiation = IonizingRadiation()  # pyright: ignore[reportUninitializedInstanceVariable]
+        self.metrology_areas: list[MetrologyArea] = self.radiation.metrology_areas()  # pyright: ignore[reportUninitializedInstanceVariable]
         assert len(self.metrology_areas) == 1
-        self.branches: list[Branch] = self.radiation.branches(self.metrology_areas[0])
+        self.branches: list[Branch] = self.radiation.branches(self.metrology_areas[0])  # pyright: ignore[reportUninitializedInstanceVariable]
 
-        p: GeneralPhysics = GeneralPhysics()
-        self.physics_branches: list[Branch] = [b for a in p.metrology_areas() for b in p.branches(a)]
+        p: Physics = Physics()
+        self.physics_branches: list[Branch] = [b for a in p.metrology_areas() for b in p.branches(a)]  # pyright: ignore[reportUninitializedInstanceVariable]
         assert len(self.physics_branches) == 32
 
     def test_branches(self) -> None:
@@ -44,7 +42,7 @@ class TestIonizingRadiation:
 
     def test_branches_physics_areas(self) -> None:
         """Test IonizingRadiation.branches() for General Physics areas."""
-        physics = GeneralPhysics()
+        physics = Physics()
         for area in physics.metrology_areas():
             branches = self.radiation.branches(area)
             assert not branches

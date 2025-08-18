@@ -530,7 +530,7 @@ class ResultChemistryBiology(ResultCommon):
         return f"ResultChemistryBiology(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
-class ResultGeneralPhysics(ResultCommon):
+class ResultPhysics(ResultCommon):
     """General Physics result.
 
     Attributes:
@@ -564,7 +564,7 @@ class ResultGeneralPhysics(ResultCommon):
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
-        return f"ResultGeneralPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
+        return f"ResultPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
 class ResultIonizingRadiation(ResultCommon):
@@ -620,7 +620,7 @@ class ResultsChemistryBiology(Results):
         return f"ResultsChemistryBiology({super().__repr__()})"
 
 
-class ResultsGeneralPhysics(Results):
+class ResultsPhysics(Results):
     """General Physics search results.
 
     Attributes:
@@ -630,11 +630,11 @@ class ResultsGeneralPhysics(Results):
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """General Physics search results."""
         super().__init__(kwargs)
-        self.data: list[ResultGeneralPhysics] = [ResultGeneralPhysics(d) for d in kwargs.get("data", [])]
+        self.data: list[ResultPhysics] = [ResultPhysics(d) for d in kwargs.get("data", [])]
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
-        return f"ResultsGeneralPhysics({super().__repr__()})"
+        return f"ResultsPhysics({super().__repr__()})"
 
 
 class ResultsQuickSearch(Results):

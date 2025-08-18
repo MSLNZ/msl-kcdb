@@ -2,22 +2,20 @@ from datetime import date
 
 import pytest
 
-from msl.kcdb import ChemistryBiology, GeneralPhysics, IonizingRadiation
+from msl.kcdb import ChemistryBiology, IonizingRadiation, Physics
 from msl.kcdb.classes import Country, MetrologyArea
 
-# pyright: reportUninitializedInstanceVariable=false
 
-
-class TestGeneralPhysics:
-    """Test the GeneralPhysics class."""
+class TestPhysics:
+    """Test the Physics class."""
 
     def setup_class(self) -> None:
-        """Create GeneralPhysics instance."""
-        self.physics: GeneralPhysics = GeneralPhysics()
-        self.metrology_areas: list[MetrologyArea] = self.physics.metrology_areas()
+        """Create Physics instance."""
+        self.physics: Physics = Physics()  # pyright: ignore[reportUninitializedInstanceVariable]
+        self.metrology_areas: list[MetrologyArea] = self.physics.metrology_areas()  # pyright: ignore[reportUninitializedInstanceVariable]
 
     def test_branches(self) -> None:
-        """Test GeneralPhysics.branches()."""
+        """Test Physics.branches()."""
         areas = self.physics.filter(self.metrology_areas, "TF")
         assert len(areas) == 1
         branches = self.physics.branches(areas[0])
@@ -33,28 +31,28 @@ class TestGeneralPhysics:
         assert t.metrology_area.value == "Time and Frequency"
 
     def test_branches_chem_bio(self) -> None:
-        """Test GeneralPhysics.branches() for Chemistry and Biology areas."""
+        """Test Physics.branches() for Chemistry and Biology areas."""
         chem_bio = ChemistryBiology()
         for area in chem_bio.metrology_areas():
             branches = self.physics.branches(area)
             assert not branches
 
     def test_branches_radiation(self) -> None:
-        """Test GeneralPhysics.branches() for Ionizing Radiation areas."""
+        """Test Physics.branches() for Ionizing Radiation areas."""
         rad = IonizingRadiation()
         for area in rad.metrology_areas():
             branches = self.physics.branches(area)
             assert not branches
 
     def test_domain(self) -> None:
-        """Test GeneralPhysics.DOMAIN class attribute."""
+        """Test Physics.DOMAIN class attribute."""
         _, phys, _ = sorted(self.physics.domains())
         assert phys == self.physics.DOMAIN
         assert phys.code == "PHYSICS"
         assert phys.name == "General physics"
 
     def test_individual_services(self) -> None:
-        """Test GeneralPhysics.individual_services()."""
+        """Test Physics.individual_services()."""
         areas = self.physics.filter(self.metrology_areas, "TF")
         assert len(areas) == 1
         branches = self.physics.filter(self.physics.branches(areas[0]), r"TF/F")
@@ -80,7 +78,7 @@ class TestGeneralPhysics:
         assert counter.sub_service.service.branch.metrology_area.id == 7
 
     def test_individual_services_no_http_404_error(self) -> None:
-        """Test GeneralPhysics.individual_services() for HTTP 404 error."""
+        """Test Physics.individual_services() for HTTP 404 error."""
         areas = self.physics.filter(self.metrology_areas, "L")
         assert len(areas) == 1
         branches = self.physics.filter(self.physics.branches(areas[0]), r"L/DimMet")
@@ -94,7 +92,7 @@ class TestGeneralPhysics:
         assert not individual_services
 
     def test_metrology_area(self) -> None:
-        """Test GeneralPhysics.metrology_areas()."""
+        """Test Physics.metrology_areas()."""
         assert len(self.metrology_areas) == 7
         therm, *rest = self.physics.filter(self.metrology_areas, "Thermometry")
         assert not rest
@@ -106,10 +104,10 @@ class TestGeneralPhysics:
 
     def test_repr(self) -> None:
         """Test string representation."""
-        assert str(self.physics) == "GeneralPhysics(code='PHYSICS', name='General physics')"
+        assert str(self.physics) == "Physics(code='PHYSICS', name='General physics')"
 
     def test_search(self) -> None:  # noqa: PLR0915
-        """Test GeneralPhysics.search()."""
+        """Test Physics.search()."""
         physics = self.physics.search(
             "PR",
             branch="PR/Photo",
@@ -121,7 +119,7 @@ class TestGeneralPhysics:
         )
 
         assert str(physics) == (
-            "ResultsGeneralPhysics(number_of_elements=1, page_number=0, page_size=100, "
+            "ResultsPhysics(number_of_elements=1, page_number=0, page_size=100, "
             "total_elements=1, total_pages=1, version_api_kcdb='1.0.9')"
         )
 
@@ -133,7 +131,7 @@ class TestGeneralPhysics:
         assert physics.total_pages == 1
         assert len(physics.data) == 1
         data = physics.data[0]
-        assert str(data) == "ResultGeneralPhysics(id=7852, nmi_code='MSL', rmo='APMP')"
+        assert str(data) == "ResultPhysics(id=7852, nmi_code='MSL', rmo='APMP')"
         assert data.id == 7852
         assert data.status == "Published"
         assert data.status_date == "2012-11-29"
@@ -166,10 +164,7 @@ class TestGeneralPhysics:
         assert data.uncertainty_equation.equation == ""
         assert data.uncertainty_equation.equation_comment == ""
         assert data.uncertainty_table is not None
-        assert (
-            str(data.uncertainty_table)
-            == "ResultTable(table_rows=0, table_cols=0, table_name='', table_comment='')"
-        )
+        assert str(data.uncertainty_table) == "ResultTable(table_rows=0, table_cols=0, table_name='', table_comment='')"
         assert data.uncertainty_mode is not None
         assert data.uncertainty_mode.name == "RELATIVE"
         assert data.uncertainty_mode.value == "Relative"
@@ -196,7 +191,7 @@ class TestGeneralPhysics:
         assert data.parameters[1].parameter_value == "2700 K to 3000 K"
 
     def test_services(self) -> None:
-        """Test GeneralPhysics.services()."""
+        """Test Physics.services()."""
         areas = self.physics.filter(self.metrology_areas, "TF")
         assert len(areas) == 1
         branches = self.physics.filter(self.physics.branches(areas[0]), r"TF/F")
@@ -213,14 +208,14 @@ class TestGeneralPhysics:
         assert service.branch.metrology_area.id == 7
 
     def test_services_radiation_branches(self) -> None:
-        """Test GeneralPhysics.services() for Ionizing Radiation branches."""
+        """Test Physics.services() for Ionizing Radiation branches."""
         radiation = IonizingRadiation()
         for area in radiation.metrology_areas():
             for branch in radiation.branches(area):
                 assert not self.physics.services(branch)
 
     def test_sub_services(self) -> None:
-        """Test GeneralPhysics.sub_services()."""
+        """Test Physics.sub_services()."""
         areas = self.physics.filter(self.metrology_areas, "TF")
         assert len(areas) == 1
         branches = self.physics.filter(self.physics.branches(areas[0]), r"TF/F")

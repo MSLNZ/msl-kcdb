@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .classes import Branch, Domain, IndividualService, ResultsGeneralPhysics, Service, SubService
+from .classes import Branch, Domain, IndividualService, ResultsPhysics, Service, SubService
 from .kcdb import KCDB, check_page_info, to_countries, to_label, to_physics_code
 
 if TYPE_CHECKING:
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from .classes import Country, MetrologyArea
 
 
-class GeneralPhysics(KCDB):
+class Physics(KCDB):
     """General Physics class."""
 
     DOMAIN: Domain = Domain(code="PHYSICS", name="General physics")
@@ -81,7 +81,7 @@ class GeneralPhysics(KCDB):
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
-    ) -> ResultsGeneralPhysics:
+    ) -> ResultsPhysics:
         """Perform a General Physics search.
 
         Args:
@@ -133,7 +133,7 @@ class GeneralPhysics(KCDB):
             json=request,
         )
         response.raise_for_status()
-        return ResultsGeneralPhysics(response.json())
+        return ResultsPhysics(response.json())
 
     def services(self, branch: Branch) -> list[Service]:
         """Return all General Physics services for the specified branch.
