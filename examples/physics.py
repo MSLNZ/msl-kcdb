@@ -1,6 +1,14 @@
 """Search the "General Physics" metrology area of the KCDB."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from msl.kcdb import Physics
+
+if TYPE_CHECKING:
+    from msl.kcdb.classes import ResultPhysics
+
 
 physics = Physics()
 
@@ -17,7 +25,7 @@ print(f"  There are {len(branches)} branches")
 # Search the "General Physics" database for NMIs that are capable of performing
 # fibre-optic measurements and print some information about each NMI
 #
-results = []
+results: list[ResultPhysics] = []
 for branch in physics.filter(branches, "Fibre optics"):
     page = 0
     while True:
