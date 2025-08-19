@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .classes import Branch, Domain, Medium, Nuclide, Quantity, ResultsIonizingRadiation, Source
+from .classes import Branch, Domain, Medium, Nuclide, Quantity, ResultsRadiation, Source
 from .kcdb import KCDB, check_page_info, to_countries, to_label
 
 if TYPE_CHECKING:
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from .classes import Country, MetrologyArea
 
 
-class IonizingRadiation(KCDB):
+class Radiation(KCDB):
     """Ionizing Radiation class."""
 
     DOMAIN: Domain = Domain(code="RADIATION", name="Ionizing radiation")
@@ -116,7 +116,7 @@ class IonizingRadiation(KCDB):
         quantity: str | Quantity | None = None,
         show_table: bool = False,
         source: str | Source | None = None,
-    ) -> ResultsIonizingRadiation:
+    ) -> ResultsRadiation:
         """Perform an Ionizing Radiation search.
 
         Args:
@@ -179,7 +179,7 @@ class IonizingRadiation(KCDB):
             json=request,
         )
         response.raise_for_status()
-        return ResultsIonizingRadiation(response.json())
+        return ResultsRadiation(response.json())
 
     def sources(self, branch: Branch) -> list[Source]:
         """Return all Ionizing Radiation sources for the specified branch.

@@ -1,6 +1,6 @@
 # Ionizing Radiation
 
-Example script showing how to use the [IonizingRadiation][msl.kcdb.ionizing_radiation.IonizingRadiation] class to extract information from the KCDB.
+Example script showing how to use the [Radiation][msl.kcdb.ionizing_radiation.Radiation] class to extract information from the KCDB.
 
 ## Script
 

@@ -574,7 +574,7 @@ class ResultPhysics(ResultCommon):
         return f"ResultPhysics(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
-class ResultIonizingRadiation(ResultCommon):
+class ResultRadiation(ResultCommon):
     """Ionizing Radiation result.
 
     Attributes:
@@ -611,7 +611,7 @@ class ResultIonizingRadiation(ResultCommon):
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
-        return f"ResultIonizingRadiation(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
+        return f"ResultRadiation(id={self.id}, nmi_code={self.nmi_code!r}, rmo={self.rmo!r})"
 
 
 class ResultsChemistryBiology(Results):
@@ -673,7 +673,7 @@ class ResultsQuickSearch(Results):
         )
 
 
-class ResultsIonizingRadiation(Results):
+class ResultsRadiation(Results):
     """Ionizing Radiation search results.
 
     Attributes:
@@ -683,8 +683,8 @@ class ResultsIonizingRadiation(Results):
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Ionizing Radiation search results."""
         super().__init__(kwargs)
-        self.data: list[ResultIonizingRadiation] = [ResultIonizingRadiation(d) for d in kwargs.get("data", [])]
+        self.data: list[ResultRadiation] = [ResultRadiation(d) for d in kwargs.get("data", [])]
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
-        return f"ResultsIonizingRadiation({super().__repr__()})"
+        return f"ResultsRadiation({super().__repr__()})"

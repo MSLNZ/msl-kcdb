@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from msl.kcdb import ChemistryBiology, IonizingRadiation, Physics
+from msl.kcdb import ChemistryBiology, Physics, Radiation
 from msl.kcdb.classes import Country, MetrologyArea
 
 
@@ -39,7 +39,7 @@ class TestPhysics:
 
     def test_branches_radiation(self) -> None:
         """Test Physics.branches() for Ionizing Radiation areas."""
-        rad = IonizingRadiation()
+        rad = Radiation()
         for area in rad.metrology_areas():
             branches = self.physics.branches(area)
             assert not branches
@@ -209,7 +209,7 @@ class TestPhysics:
 
     def test_services_radiation_branches(self) -> None:
         """Test Physics.services() for Ionizing Radiation branches."""
-        radiation = IonizingRadiation()
+        radiation = Radiation()
         for area in radiation.metrology_areas():
             for branch in radiation.branches(area):
                 assert not self.physics.services(branch)

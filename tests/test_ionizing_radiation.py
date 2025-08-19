@@ -2,16 +2,16 @@ from datetime import date
 
 import pytest
 
-from msl.kcdb import ChemistryBiology, IonizingRadiation, Physics
+from msl.kcdb import ChemistryBiology, Physics, Radiation
 from msl.kcdb.classes import Branch, Country, MetrologyArea
 
 
-class TestIonizingRadiation:
-    """Test the IonizingRadiation class."""
+class TestRadiation:
+    """Test the Radiation class."""
 
     def setup_class(self) -> None:
-        """Create IonizingRadiation instance."""
-        self.radiation: IonizingRadiation = IonizingRadiation()  # pyright: ignore[reportUninitializedInstanceVariable]
+        """Create Radiation instance."""
+        self.radiation: Radiation = Radiation()  # pyright: ignore[reportUninitializedInstanceVariable]
         self.metrology_areas: list[MetrologyArea] = self.radiation.metrology_areas()  # pyright: ignore[reportUninitializedInstanceVariable]
         assert len(self.metrology_areas) == 1
         self.branches: list[Branch] = self.radiation.branches(self.metrology_areas[0])  # pyright: ignore[reportUninitializedInstanceVariable]
@@ -21,7 +21,7 @@ class TestIonizingRadiation:
         assert len(self.physics_branches) == 32
 
     def test_branches(self) -> None:
-        """Test IonizingRadiation.branches()."""
+        """Test Radiation.branches()."""
         assert len(self.branches) == 3
 
         neu, *rest = self.radiation.filter(self.branches, "NEU")
@@ -34,28 +34,28 @@ class TestIonizingRadiation:
         assert neu.metrology_area.value == "Ionizing Radiation"
 
     def test_branches_chem_bio_areas(self) -> None:
-        """Test IonizingRadiation.branches() for Chemistry and Biology areas."""
+        """Test Radiation.branches() for Chemistry and Biology areas."""
         chem_bio = ChemistryBiology()
         for area in chem_bio.metrology_areas():
             branches = self.radiation.branches(area)
             assert not branches
 
     def test_branches_physics_areas(self) -> None:
-        """Test IonizingRadiation.branches() for General Physics areas."""
+        """Test Radiation.branches() for General Physics areas."""
         physics = Physics()
         for area in physics.metrology_areas():
             branches = self.radiation.branches(area)
             assert not branches
 
     def test_domain(self) -> None:
-        """Test IonizingRadiation.DOMAIN class attribute."""
+        """Test Radiation.DOMAIN class attribute."""
         _, _, rad = sorted(self.radiation.domains())
         assert rad == self.radiation.DOMAIN
         assert rad.code == "RADIATION"
         assert rad.name == "Ionizing radiation"
 
     def test_mediums_dosimetry(self) -> None:
-        """Test IonizingRadiation.mediums() for Dosimetry branch."""
+        """Test Radiation.mediums() for Dosimetry branch."""
         branches = self.radiation.filter(self.branches, "Dosimetry")
         assert len(branches) == 1
         mediums = self.radiation.mediums(branches[0])
@@ -68,7 +68,7 @@ class TestIonizingRadiation:
         assert medium.value == "Graphite"
 
     def test_mediums_neutron(self) -> None:
-        """Test IonizingRadiation.mediums() for Neutron Measurement branch."""
+        """Test Radiation.mediums() for Neutron Measurement branch."""
         branches = self.radiation.filter(self.branches, "Neutron")
         assert len(branches) == 1
         mediums = self.radiation.mediums(branches[0])
@@ -81,7 +81,7 @@ class TestIonizingRadiation:
         assert medium.value == "Tissue"
 
     def test_mediums_radioactivity(self) -> None:
-        """Test IonizingRadiation.mediums() for Radioactivity branch."""
+        """Test Radiation.mediums() for Radioactivity branch."""
         branches = self.radiation.filter(self.branches, "Radioactivity")
         assert len(branches) == 1
         mediums = self.radiation.mediums(branches[0])
@@ -94,13 +94,13 @@ class TestIonizingRadiation:
         assert medium.value == "Aerosol"
 
     def test_mediums_physics_branches(self) -> None:
-        """Test IonizingRadiation.mediums() for General Physics branches."""
+        """Test Radiation.mediums() for General Physics branches."""
         for branch in self.physics_branches:
             mediums = self.radiation.mediums(branch)
             assert not mediums
 
     def test_metrology_area(self) -> None:
-        """Test IonizingRadiation.metrology_areas()."""
+        """Test Radiation.metrology_areas()."""
         assert len(self.metrology_areas) == 1
         radiation = self.metrology_areas[0]
         assert radiation.id == 9
@@ -110,7 +110,7 @@ class TestIonizingRadiation:
         assert radiation.domain.name == "Ionizing radiation"
 
     def test_nuclides(self) -> None:
-        """Test IonizingRadiation.nuclides()."""
+        """Test Radiation.nuclides()."""
         nuclides = self.radiation.nuclides()
         assert len(nuclides) > 100
 
@@ -122,10 +122,10 @@ class TestIonizingRadiation:
 
     def test_repr(self) -> None:
         """Test string representation."""
-        assert str(self.radiation) == "IonizingRadiation(code='RADIATION', name='Ionizing radiation')"
+        assert str(self.radiation) == "Radiation(code='RADIATION', name='Ionizing radiation')"
 
     def test_search(self) -> None:  # noqa: PLR0915
-        """Test IonizingRadiation.search()."""
+        """Test Radiation.search()."""
         radiation = self.radiation.search(
             branch="RAD",
             quantity="1",
@@ -139,7 +139,7 @@ class TestIonizingRadiation:
         )
 
         assert str(radiation) == (
-            "ResultsIonizingRadiation(number_of_elements=1, page_number=0, page_size=100, "
+            "ResultsRadiation(number_of_elements=1, page_number=0, page_size=100, "
             "total_elements=1, total_pages=1, version_api_kcdb='1.0.9')"
         )
 
@@ -151,7 +151,7 @@ class TestIonizingRadiation:
         assert radiation.total_pages == 1
         assert len(radiation.data) == 1
         data = radiation.data[0]
-        assert str(data) == "ResultIonizingRadiation(id=23054, nmi_code='NMIJ AIST', rmo='APMP')"
+        assert str(data) == "ResultRadiation(id=23054, nmi_code='NMIJ AIST', rmo='APMP')"
         assert data.id == 23054
         assert data.status == "Published"
         assert data.status_date == "2005-02-14"
@@ -222,7 +222,7 @@ class TestIonizingRadiation:
         assert data.radiation_code == "2.1.3.2"
 
     def test_sources_dosimetry(self) -> None:
-        """Test IonizingRadiation.sources() for Dosimetry branch."""
+        """Test Radiation.sources() for Dosimetry branch."""
         branches = self.radiation.filter(self.branches, "Dosimetry")
         assert len(branches) == 1
         sources = self.radiation.sources(branches[0])
@@ -235,7 +235,7 @@ class TestIonizingRadiation:
         assert source.value == "Photons, high energy"
 
     def test_sources_neutron(self) -> None:
-        """Test IonizingRadiation.sources() for Neutron Measurement branch."""
+        """Test Radiation.sources() for Neutron Measurement branch."""
         branches = self.radiation.filter(self.branches, "Neutron")
         assert len(branches) == 1
         sources = self.radiation.sources(branches[0])
@@ -248,7 +248,7 @@ class TestIonizingRadiation:
         assert source.value == "Mono-energetic neutrons"
 
     def test_sources_radioactivity(self) -> None:
-        """Test IonizingRadiation.sources() for Radioactivity branch."""
+        """Test Radiation.sources() for Radioactivity branch."""
         branches = self.radiation.filter(self.branches, "Radioactivity")
         assert len(branches) == 1
         sources = self.radiation.sources(branches[0])
@@ -261,13 +261,13 @@ class TestIonizingRadiation:
         assert source.value == "K x-rays"
 
     def test_sources_physics_branches(self) -> None:
-        """Test IonizingRadiation.sources() for General Physics branches."""
+        """Test Radiation.sources() for General Physics branches."""
         for branch in self.physics_branches:
             sources = self.radiation.sources(branch)
             assert not sources
 
     def test_quantities_dosimetry(self) -> None:
-        """Test IonizingRadiation.quantities() for Dosimetry branch."""
+        """Test Radiation.quantities() for Dosimetry branch."""
         branches = self.radiation.filter(self.branches, "Dosimetry")
         assert len(branches) == 1
         quantities = self.radiation.quantities(branches[0])
@@ -280,7 +280,7 @@ class TestIonizingRadiation:
         assert quantity.value == "X-ray tube voltage"
 
     def test_quantities_neutron(self) -> None:
-        """Test IonizingRadiation.quantities() for Neutron Measurement branch."""
+        """Test Radiation.quantities() for Neutron Measurement branch."""
         branches = self.radiation.filter(self.branches, "Neutron")
         assert len(branches) == 1
         quantities = self.radiation.quantities(branches[0])
@@ -293,7 +293,7 @@ class TestIonizingRadiation:
         assert quantity.value == "Fluence"
 
     def test_quantities_radioactivity(self) -> None:
-        """Test IonizingRadiation.quantities() for Radioactivity branch."""
+        """Test Radiation.quantities() for Radioactivity branch."""
         branches = self.radiation.filter(self.branches, "Radioactivity")
         assert len(branches) == 1
         quantities = self.radiation.quantities(branches[0])
@@ -306,7 +306,7 @@ class TestIonizingRadiation:
         assert quantity.value == "Activity per unit area"
 
     def test_quantities_physics_branches(self) -> None:
-        """Test IonizingRadiation.quantities() for General Physics branches."""
+        """Test Radiation.quantities() for General Physics branches."""
         for branch in self.physics_branches:
             quantities = self.radiation.quantities(branch)
             assert not quantities

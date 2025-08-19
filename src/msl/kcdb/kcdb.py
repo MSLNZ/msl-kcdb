@@ -2,7 +2,7 @@
 
 The [ChemistryBiology][msl.kcdb.chemistry_biology.ChemistryBiology],
 [Physics][msl.kcdb.general_physics.Physics] and
-[IonizingRadiation][msl.kcdb.ionizing_radiation.IonizingRadiation] classes all
+[Radiation][msl.kcdb.ionizing_radiation.Radiation] classes all
 inherit from the [KCDB][msl.kcdb.kcdb.KCDB] class so, typically, there should
 be no reason to instantiate the [KCDB][msl.kcdb.kcdb.KCDB] class directly.
 """

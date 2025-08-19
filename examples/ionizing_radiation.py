@@ -1,8 +1,8 @@
 """Search the "Ionizing Radiation" metrology area of the KCDB."""
 
-from msl.kcdb import IonizingRadiation
+from msl.kcdb import Radiation
 
-ir = IonizingRadiation()
+ir = Radiation()
 
 #
 # Get all reference data for the "Ionizing Radiation" metrology area
