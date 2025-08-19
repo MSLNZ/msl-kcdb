@@ -367,7 +367,7 @@ class Results:
         page_size: The page size that was requested.
         total_elements: Total number of elements available (in all pages).
         total_pages: Total number of pages.
-        version_api_kcdb: KCDB API version. _Example:_ `"1.0.7"`
+        version_api_kcdb: KCDB API version. _Example:_ `"1.0.9"`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
