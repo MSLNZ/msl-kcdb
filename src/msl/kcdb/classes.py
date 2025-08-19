@@ -240,7 +240,7 @@ class ResultAggregation:
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an aggregation."""
-        self.name: str = kwargs.get("name", "")
+        self.name: str = kwargs.get("name") or ""
         self.values: list[str] = kwargs.get("values", [])
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
@@ -258,8 +258,8 @@ class ResultEquation:
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of an equation."""
-        self.equation: str = kwargs.get("equation", "")
-        self.equation_comment: str = kwargs.get("equationComment", "")
+        self.equation: str = kwargs.get("equation") or ""
+        self.equation_comment: str = kwargs.get("equationComment") or ""
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
@@ -280,9 +280,9 @@ class ResultFilter:
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a filter."""
         self.children: list[ResultFilter] = [ResultFilter(c) for c in kwargs.get("children", [])]
-        self.code: str = kwargs.get("code", "")
+        self.code: str = kwargs.get("code") or ""
         self.count: int = kwargs["count"]
-        self.name: str = kwargs.get("name", "")
+        self.name: str = kwargs.get("name") or ""
         self.order: int = kwargs["order"]
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
@@ -303,8 +303,8 @@ class ResultParam:
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Representation of a parameter."""
-        self.parameter_name: str = kwargs.get("parameterName", "")
-        self.parameter_value: str = kwargs.get("parameterValue", "")
+        self.parameter_name: str = kwargs.get("parameterName") or ""
+        self.parameter_value: str = kwargs.get("parameterValue") or ""
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
@@ -326,9 +326,9 @@ class ResultTable:
         """Representation of a table."""
         self.table_rows: int = kwargs["tableRows"]
         self.table_cols: int = kwargs["tableCols"]
-        self.table_name: str = kwargs.get("tableName", "")
-        self.table_comment: str = kwargs.get("tableComment", "")
-        self.table_contents: str = kwargs.get("tableContents", "")
+        self.table_name: str = kwargs.get("tableName") or ""
+        self.table_comment: str = kwargs.get("tableComment") or ""
+        self.table_contents: str = kwargs.get("tableContents") or ""
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
@@ -350,7 +350,7 @@ class ResultUnit:
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Units object definition."""
         self.lower_limit: float | None = kwargs.get("lowerLimit")
-        self.unit: str = kwargs.get("unit", "")
+        self.unit: str = kwargs.get("unit") or ""
         self.upper_limit: float | None = kwargs.get("upperLimit")
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
@@ -377,7 +377,7 @@ class Results:
         self.page_size: int = kwargs["pageSize"]
         self.total_elements: int = kwargs["totalElements"]
         self.total_pages: int = kwargs["totalPages"]
-        self.version_api_kcdb: str = kwargs.get("versionApiKcdb", "")
+        self.version_api_kcdb: str = kwargs.get("versionApiKcdb") or ""
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
@@ -427,7 +427,7 @@ class ResultCommon:
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Attributes for advanced search results that are common."""
         self.id: int = kwargs["id"]
-        self.approval_date: str = kwargs.get("approvalDate", "")
+        self.approval_date: str = kwargs.get("approvalDate") or ""
 
         k = kwargs.get("cmc")
         self.cmc: ResultUnit | None = ResultUnit(k) if k else None
@@ -441,24 +441,24 @@ class ResultCommon:
         k = kwargs.get("cmcUncertaintyBaseUnit")
         self.cmc_uncertainty_base_unit: ResultUnit | None = ResultUnit(k) if k else None
 
-        self.comments: str = kwargs.get("comments", "")
+        self.comments: str = kwargs.get("comments") or ""
         self.confidence_level: float | None = kwargs.get("confidenceLevel")
-        self.country_value: str = kwargs.get("countryValue", "")
+        self.country_value: str = kwargs.get("countryValue") or ""
         self.coverage_factor: float | None = kwargs.get("coverageFactor")
-        self.domain_code: str = kwargs.get("domainCode", "")
-        self.group_identifier: str = kwargs.get("groupIdentifier", "")
-        self.kcdb_code: str = kwargs.get("kcdbCode", "")
-        self.metrology_area_label: str = kwargs.get("metrologyAreaLabel", "")
-        self.nmi_code: str = kwargs.get("nmiCode", "")
-        self.nmi_name: str = kwargs.get("nmiName", "")
-        self.nmi_service_code: str = kwargs.get("nmiServiceCode", "")
-        self.nmi_service_link: str = kwargs.get("nmiServiceLink", "")
-        self.publication_date: str = kwargs.get("publicationDate", "")
-        self.quantity_value: str = kwargs.get("quantityValue", "")
-        self.rmo: str = kwargs.get("rmo", "")
-        self.status: str = kwargs.get("status", "")
-        self.status_date: str = kwargs.get("statusDate", "")
-        self.traceability_source: str = kwargs.get("traceabilitySource", "")
+        self.domain_code: str = kwargs.get("domainCode") or ""
+        self.group_identifier: str = kwargs.get("groupIdentifier") or ""
+        self.kcdb_code: str = kwargs.get("kcdbCode") or ""
+        self.metrology_area_label: str = kwargs.get("metrologyAreaLabel") or ""
+        self.nmi_code: str = kwargs.get("nmiCode") or ""
+        self.nmi_name: str = kwargs.get("nmiName") or ""
+        self.nmi_service_code: str = kwargs.get("nmiServiceCode") or ""
+        self.nmi_service_link: str = kwargs.get("nmiServiceLink") or ""
+        self.publication_date: str = kwargs.get("publicationDate") or ""
+        self.quantity_value: str = kwargs.get("quantityValue") or ""
+        self.rmo: str = kwargs.get("rmo") or ""
+        self.status: str = kwargs.get("status") or ""
+        self.status_date: str = kwargs.get("statusDate") or ""
+        self.traceability_source: str = kwargs.get("traceabilitySource") or ""
 
         k = kwargs.get("uncertaintyEquation")
         self.uncertainty_equation: ResultEquation | None = ResultEquation(k) if k else None
@@ -495,9 +495,9 @@ class ResultChemistryBiology(ResultCommon):
         """Chemistry and Biology result."""
         super().__init__(kwargs)
 
-        self.analyte_matrix: str = kwargs.get("analyteMatrix", "")
-        self.analyte_value: str = kwargs.get("analyteValue", "")
-        self.category_value: str = kwargs.get("categoryValue", "")
+        self.analyte_matrix: str = kwargs.get("analyteMatrix") or ""
+        self.analyte_value: str = kwargs.get("analyteValue") or ""
+        self.category_value: str = kwargs.get("categoryValue") or ""
 
         k = kwargs.get("crm")
         self.crm: ResultUnit | None = ResultUnit(k) if k else None
@@ -518,9 +518,9 @@ class ResultChemistryBiology(ResultCommon):
         self.crm_uncertainty_table: ResultTable | None = ResultTable(k) if k else None
 
         # Note spelling mistake in "measurmentTechnique" is what the KCDB API returns cSpell:disable-line
-        self.measurement_technique: str = kwargs.get("measurmentTechnique", "")  # cSpell:disable-line
-        self.mechanism: str = kwargs.get("mechanism", "")
-        self.sub_category_value: str = kwargs.get("subCategoryValue", "")
+        self.measurement_technique: str = kwargs.get("measurmentTechnique") or ""  # cSpell:disable-line
+        self.mechanism: str = kwargs.get("mechanism") or ""
+        self.sub_category_value: str = kwargs.get("subCategoryValue") or ""
 
         k = kwargs.get("uncertaintyConvention")
         self.uncertainty_convention: UncertaintyConvention | None = UncertaintyConvention(k) if k else None
@@ -550,17 +550,17 @@ class ResultPhysics(ResultCommon):
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """General Physics result."""
         super().__init__(kwargs)
-        self.branch_label: str = kwargs.get("branchLabel", "")
-        self.branch_value: str = kwargs.get("branchValue", "")
-        self.individual_service_value: str = kwargs.get("individualServiceValue", "")
-        self.instrument: str = kwargs.get("instrument", "")
-        self.instrument_method: str = kwargs.get("instrumentMethod", "")
-        self.international_standard: str = kwargs.get("internationalStandard", "")
-        self.kcdb_service_category: str = kwargs.get("kcdbServiceCategory", "")
+        self.branch_label: str = kwargs.get("branchLabel") or ""
+        self.branch_value: str = kwargs.get("branchValue") or ""
+        self.individual_service_value: str = kwargs.get("individualServiceValue") or ""
+        self.instrument: str = kwargs.get("instrument") or ""
+        self.instrument_method: str = kwargs.get("instrumentMethod") or ""
+        self.international_standard: str = kwargs.get("internationalStandard") or ""
+        self.kcdb_service_category: str = kwargs.get("kcdbServiceCategory") or ""
         self.parameters: list[ResultParam] = [ResultParam(p) for p in kwargs.get("parameters", [])]
-        self.physics_code: str = kwargs.get("physicsCode", "")
-        self.service_value: str = kwargs.get("serviceValue", "")
-        self.sub_service_value: str = kwargs.get("subServiceValue", "")
+        self.physics_code: str = kwargs.get("physicsCode") or ""
+        self.service_value: str = kwargs.get("serviceValue") or ""
+        self.sub_service_value: str = kwargs.get("subServiceValue") or ""
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
@@ -587,16 +587,16 @@ class ResultIonizingRadiation(ResultCommon):
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Ionizing Radiation result."""
         super().__init__(kwargs)
-        self.branch_value: str = kwargs.get("branchValue", "")
-        self.instrument: str = kwargs.get("instrument", "")
-        self.instrument_method: str = kwargs.get("instrumentMethod", "")
-        self.international_standard: str = kwargs.get("internationalStandard", "")
-        self.medium_value: str = kwargs.get("mediumValue", "")
-        self.nuclide_value: str = kwargs.get("nuclideValue", "")
-        self.radiation_code: str = kwargs.get("radiationCode", "")
-        self.radiation_specification: str = kwargs.get("radiationSpecification", "")
-        self.reference_standard: str = kwargs.get("referenceStandard", "")
-        self.source_value: str = kwargs.get("sourceValue", "")
+        self.branch_value: str = kwargs.get("branchValue") or ""
+        self.instrument: str = kwargs.get("instrument") or ""
+        self.instrument_method: str = kwargs.get("instrumentMethod") or ""
+        self.international_standard: str = kwargs.get("internationalStandard") or ""
+        self.medium_value: str = kwargs.get("mediumValue") or ""
+        self.nuclide_value: str = kwargs.get("nuclideValue") or ""
+        self.radiation_code: str = kwargs.get("radiationCode") or ""
+        self.radiation_specification: str = kwargs.get("radiationSpecification") or ""
+        self.reference_standard: str = kwargs.get("referenceStandard") or ""
+        self.source_value: str = kwargs.get("sourceValue") or ""
 
     def __repr__(self) -> str:  # pyright: ignore[reportImplicitOverride]
         """Return the object representation."""
