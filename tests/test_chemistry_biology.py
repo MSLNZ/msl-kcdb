@@ -152,8 +152,11 @@ class TestChemBio:
         assert data.uncertainty_convention is not None
         assert data.uncertainty_convention.name == "TWO"
         assert data.uncertainty_convention.value == "Two"
+        assert data.category_label == 5
         assert data.category_value == "Water"
+        assert data.sub_category_label == 1
         assert data.sub_category_value == "Fresh water"
+        assert data.kcdb_service_category == "QM-5.1"
         assert data.analyte_matrix == "river water and drinking water"
         assert data.analyte_value == "antimony"
         assert data.crm is not None

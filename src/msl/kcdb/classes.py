@@ -476,6 +476,7 @@ class ResultChemistryBiology(ResultCommon):
     Attributes:
         analyte_matrix: Analyte matrix. _Example:_ `"high purity antimony"`
         analyte_value: Analyte value. _Example:_ `"antimony"`
+        category_label: Category identifier. _Example:_ `1`
         category_value: Category value. _Example:_ `"High purity chemicals"`
         crm: CRM unit.
         crm_confidence_level: CRM confidence level.
@@ -484,10 +485,12 @@ class ResultChemistryBiology(ResultCommon):
         crm_uncertainty_equation: CRM uncertainty equation.
         crm_uncertainty_mode: CRM uncertainty mode.
         crm_uncertainty_table: CRM uncertainty table.
+        kcdb_service_category: KCDB service category. _Example:_ `"QM-5.1"`
         measurement_technique: Measurement technique.
             _Example:_ `"Liquid-solid extraction with SPE cleanup and bracketing LC-IDMS/MS"`
         mechanism: Mechanism. _Example:_ `"Customer service; GD-MS-200; delivery only to other NMIs"`
-        sub_category_value: Sub category value. _Example:_ `"Metals"`
+        sub_category_label: Sub category identifier. _Example:_ `1`
+        sub_category_value: Sub category value. _Example:_ `"Fresh water"`
         uncertainty_convention: Uncertainty convention.
     """
 
@@ -497,6 +500,7 @@ class ResultChemistryBiology(ResultCommon):
 
         self.analyte_matrix: str = kwargs.get("analyteMatrix") or ""
         self.analyte_value: str = kwargs.get("analyteValue") or ""
+        self.category_label: int = kwargs.get("categoryLabel", -1)
         self.category_value: str = kwargs.get("categoryValue") or ""
 
         k = kwargs.get("crm")
@@ -517,9 +521,12 @@ class ResultChemistryBiology(ResultCommon):
         k = kwargs.get("crmUncertaintyTable")
         self.crm_uncertainty_table: ResultTable | None = ResultTable(k) if k else None
 
+        self.kcdb_service_category: str = kwargs.get("kcdbServiceCategory") or ""
+
         # Note spelling mistake in "measurmentTechnique" is what the KCDB API returns cSpell:disable-line
         self.measurement_technique: str = kwargs.get("measurmentTechnique") or ""  # cSpell:disable-line
         self.mechanism: str = kwargs.get("mechanism") or ""
+        self.sub_category_label: int = kwargs.get("subCategoryLabel", -1)
         self.sub_category_value: str = kwargs.get("subCategoryValue") or ""
 
         k = kwargs.get("uncertaintyConvention")
@@ -571,10 +578,12 @@ class ResultIonizingRadiation(ResultCommon):
     """Ionizing Radiation result.
 
     Attributes:
+        branch_label: Branch label. _Example:_ `"RAD"`
         branch_value: Branch value. _Example:_ `"Radioactivity"`
         instrument: Instrument. _Example:_ `"Multiple nuclide source, solution"`
         instrument_method: Instrument method. _Example:_ `"Ge detector, multichannel analyzer"`
         international_standard: International standard. _Example:_ `"EURAMET Cg19, ISO 8655-6"`
+        kcdb_service_category: KCDB service category. _Example:_ `"RI/RAD-1.3.2"`
         medium_value: Medium value. _Example:_ `"Liquid"`
         nuclide_value: Nuclide value. _Example:_ `"Cr-51"`
         radiation_code: Radiation code separated by a dot for branch, quantity, source, medium. _Example:_ `"2.1.3.2"`
@@ -587,10 +596,12 @@ class ResultIonizingRadiation(ResultCommon):
     def __init__(self, kwargs: dict[str, Any]) -> None:
         """Ionizing Radiation result."""
         super().__init__(kwargs)
+        self.branch_label: str = kwargs.get("branchLabel") or ""
         self.branch_value: str = kwargs.get("branchValue") or ""
         self.instrument: str = kwargs.get("instrument") or ""
         self.instrument_method: str = kwargs.get("instrumentMethod") or ""
         self.international_standard: str = kwargs.get("internationalStandard") or ""
+        self.kcdb_service_category: str = kwargs.get("kcdbServiceCategory") or ""
         self.medium_value: str = kwargs.get("mediumValue") or ""
         self.nuclide_value: str = kwargs.get("nuclideValue") or ""
         self.radiation_code: str = kwargs.get("radiationCode") or ""
