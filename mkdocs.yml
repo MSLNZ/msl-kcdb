@@ -10,10 +10,10 @@ theme:
   favicon: assets/images/favicon.ico
   features:
     - content.code.copy
-    - navigation.expand
     - navigation.footer
     - navigation.indexes
-    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.top
     - search.highlight
     - search.suggest
@@ -44,19 +44,24 @@ theme:
         icon: material/weather-night
         name: Switch to system preference
 
-watch: [src/msl/kcdb, includes]
+watch: [src, includes, examples, CHANGELOG.md]
 
 nav:
-  - Overview: index.md
+  - Overview:
+    - index.md
+    - release-notes.md
+    - license.md
+  - Examples:
+    - examples/index.md
+    - examples/chemistry_biology.md
+    - examples/ionizing_radiation.md
+    - examples/physics.md
   - API:
     - Chemistry and Biology: api/chemistry_biology.md
-    - General Physics: api/general_physics.md
     - Ionizing Radiation: api/ionizing_radiation.md
+    - Physics: api/general_physics.md
     - KCDB: api/kcdb.md
-    - Reference data and Results: api/classes.md
-  - About:
-    - Release Notes: about/release-notes.md
-    - License: about/license.md
+    - Reference Data and Results: api/classes.md
 
 markdown_extensions:
   - abbr
@@ -65,6 +70,8 @@ markdown_extensions:
       check_paths: true
       auto_append:
         - includes/abbreviations.md
+  - pymdownx.highlight
+  - pymdownx.superfences
   - toc:
       permalink: "¤"
 
@@ -84,6 +91,8 @@ plugins:
 
             # Headings
             show_root_toc_entry: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
 
             # Members
             filters: ["!^_"]

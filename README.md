@@ -19,12 +19,10 @@ pip install msl-kcdb
 Three classes are available to search the three metrology domains
 
 * [`ChemistryBiology`](https://mslnz.github.io/msl-kcdb/latest/api/chemistry_biology/) &ndash; Search the Chemistry and Biology database
-* [`Physics`](https://mslnz.github.io/msl-kcdb/latest/api/general_physics/) &ndash; Search the General Physics database
 * [`IonizingRadiation`](https://mslnz.github.io/msl-kcdb/latest/api/ionizing_radiation/) &ndash; Search the Ionizing Radiation database
+* [`Physics`](https://mslnz.github.io/msl-kcdb/latest/api/general_physics/) &ndash; Search the General Physics database
 
-Examples on how to use the classes are available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/src/msl/examples/kcdb) and these examples are also included with the `msl-kcdb` installation in the `../site-packages/msl/examples/kcdb` directory of your Python interpreter.
-
-The examples are provided as [Jupyter](https://jupyter.org/) notebooks. Follow [these instructions](https://jupyter.org/install) to learn how to install and launch a Jupyter notebook.
+See the [examples](https://mslnz.github.io/msl-kcdb/latest/examples/) on how to use each of these classes to extract information from the KCDB. The example scripts are also available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/examples){:target="_blank"}.
 
 ## Documentation
 The documentation for `msl-kcdb` is available [here](https://mslnz.github.io/msl-kcdb/).
