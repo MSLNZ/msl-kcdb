@@ -1,6 +1,6 @@
 # MSL-KCDB
 
-[![Tests Status](https://github.com/MSLNZ/msl-kcdb/actions/workflows/tests.yml/badge.svg)](https://github.com/MSLNZ/msl-kcdb/actions/workflows/tests.yml)
+[![Tests Status](https://github.com/MSLNZ/msl-kcdb/actions/workflows/ci.yml/badge.svg)](https://github.com/MSLNZ/msl-kcdb/actions/workflows/ci.yml)
 [![Docs Status](https://github.com/MSLNZ/msl-kcdb/actions/workflows/docs.yml/badge.svg)](https://github.com/MSLNZ/msl-kcdb/actions/workflows/docs.yml)
 [![PyPI - Version](https://img.shields.io/pypi/v/msl-kcdb?logo=pypi&logoColor=gold&label=PyPI&color=blue)](https://pypi.org/project/msl-kcdb/)
 [![PyPI - Python Versions](https://img.shields.io/pypi/pyversions/msl-kcdb.svg?logo=python&label=Python&logoColor=gold)](https://pypi.org/project/msl-kcdb/)
