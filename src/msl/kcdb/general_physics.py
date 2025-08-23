@@ -4,14 +4,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .classes import Branch, Domain, IndividualService, ResultsPhysics, Service, SubService
 from .kcdb import KCDB, check_page_info, to_countries, to_label, to_physics_code
+from .types import Branch, Domain, IndividualService, ResultsPhysics, Service, SubService
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from datetime import date
 
-    from .classes import Country, MetrologyArea
+    from .types import Country, MetrologyArea
 
 
 class Physics(KCDB):
@@ -27,7 +27,7 @@ class Physics(KCDB):
             metrology_area: The metrology area to return the branches for.
 
         Returns:
-            A list of [Branch][msl.kcdb.classes.Branch]es.
+            A list of [Branch][msl.kcdb.types.Branch]es.
         """
         if metrology_area.label in ["QM", "RI"]:
             # ignore CHEM-BIO and RADIATION
@@ -47,7 +47,7 @@ class Physics(KCDB):
             sub_service: The sub service to return the individual services for.
 
         Returns:
-            A list of [IndividualService][msl.kcdb.classes.IndividualService]s.
+            A list of [IndividualService][msl.kcdb.types.IndividualService]s.
         """
         response = self.get(
             f"{KCDB.BASE_URL}/referenceData/individualService",
@@ -142,7 +142,7 @@ class Physics(KCDB):
             branch: The branch to return the services for.
 
         Returns:
-            A list of [Service][msl.kcdb.classes.Service]s.
+            A list of [Service][msl.kcdb.types.Service]s.
         """
         if branch.id in [32, 33, 34]:
             # Dosimetry(id=32), Radioactivity(id=33) and Neutron Measurements(id=34) do not have Services
@@ -162,7 +162,7 @@ class Physics(KCDB):
             service: The service to return the sub services for.
 
         Returns:
-            A list of [SubService][msl.kcdb.classes.SubService]s.
+            A list of [SubService][msl.kcdb.types.SubService]s.
         """
         response = self.get(
             f"{KCDB.BASE_URL}/referenceData/subService",

@@ -21,7 +21,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from ._version import __version__
-from .classes import (
+from .types import (
     Country,
     Domain,
     IndividualService,
@@ -187,7 +187,7 @@ class KCDB:
         """Return all countries.
 
         Returns:
-            A list of [Country][msl.kcdb.classes.Country]'s.
+            A list of [Country][msl.kcdb.types.Country]'s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/country")
         response.raise_for_status()
@@ -197,7 +197,7 @@ class KCDB:
         """Return all KCDB domains.
 
         Returns:
-            A list of [Domain][msl.kcdb.classes.Domain]s.
+            A list of [Domain][msl.kcdb.types.Domain]s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/domain")
         response.raise_for_status()
@@ -208,7 +208,7 @@ class KCDB:
         """Filter the reference data based on a pattern search.
 
         Args:
-            data: An iterable of a [ReferenceData][msl.kcdb.classes.ReferenceData] subclass.
+            data: An iterable of a [ReferenceData][msl.kcdb.types.ReferenceData] subclass.
             pattern: A [regular-expression](https://regexone.com/) pattern to use to filter results.
                 Uses the `label` and `value` attributes of each item in `data` to perform the filtering.
             flags: Pattern flags passed to [re.compile][].
@@ -242,7 +242,7 @@ class KCDB:
         """Return all metrology areas.
 
         Returns:
-            A list of [MetrologyArea][msl.kcdb.classes.MetrologyArea]s.
+            A list of [MetrologyArea][msl.kcdb.types.MetrologyArea]s.
         """
         response = self.get(
             f"{KCDB.BASE_URL}/referenceData/metrologyArea",
@@ -255,7 +255,7 @@ class KCDB:
         """Return all non-Ionizing Radiation quantities.
 
         Returns:
-            A list of [NonIonizingQuantity][msl.kcdb.classes.NonIonizingQuantity]'s.
+            A list of [NonIonizingQuantity][msl.kcdb.types.NonIonizingQuantity]'s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/quantity")
         response.raise_for_status()

@@ -4,14 +4,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .classes import Branch, Domain, Medium, Nuclide, Quantity, ResultsRadiation, Source
 from .kcdb import KCDB, check_page_info, to_countries, to_label
+from .types import Branch, Domain, Medium, Nuclide, Quantity, ResultsRadiation, Source
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from datetime import date
 
-    from .classes import Country, MetrologyArea
+    from .types import Country, MetrologyArea
 
 
 class Radiation(KCDB):
@@ -27,7 +27,7 @@ class Radiation(KCDB):
             metrology_area: The metrology area to return the branches for.
 
         Returns:
-            A list of [Branch][msl.kcdb.classes.Branch]es.
+            A list of [Branch][msl.kcdb.types.Branch]es.
         """
         if metrology_area.id < 9:  # noqa: PLR2004
             # ignore PHYSICS and CHEM-BIO
@@ -47,7 +47,7 @@ class Radiation(KCDB):
             branch: The branch to return the mediums for.
 
         Returns:
-            A list of [Medium][msl.kcdb.classes.Medium]s.
+            A list of [Medium][msl.kcdb.types.Medium]s.
         """
         # The /radiationMedium endpoint does not accept parameters, so we need to filter the mediums
         # based on the Branch that is specified
@@ -68,7 +68,7 @@ class Radiation(KCDB):
         """Return all Ionizing Radiation nuclides.
 
         Returns:
-            A list of [Nuclide][msl.kcdb.classes.Nuclide]s.
+            A list of [Nuclide][msl.kcdb.types.Nuclide]s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/nuclide")
         response.raise_for_status()
@@ -81,7 +81,7 @@ class Radiation(KCDB):
             branch: The branch to return the quantities for.
 
         Returns:
-            A list of [Quantity][msl.kcdb.classes.Quantity]'s.
+            A list of [Quantity][msl.kcdb.types.Quantity]'s.
         """
         # The /quantity endpoint does not accept parameters, so we need to filter the quantities
         # based on the Branch that is specified. There are many more quantities after id=78, but
@@ -188,7 +188,7 @@ class Radiation(KCDB):
             branch: The branch to return the mediums for.
 
         Returns:
-            A list of [Source][msl.kcdb.classes.Source]s.
+            A list of [Source][msl.kcdb.types.Source]s.
         """
         # The /radiationSource endpoint does not accept parameters, so we need to filter the sources
         # based on the Branch that is specified

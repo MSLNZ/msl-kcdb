@@ -61,7 +61,7 @@ nav:
     - Ionizing Radiation: api/ionizing_radiation.md
     - Physics: api/general_physics.md
     - KCDB: api/kcdb.md
-    - Reference Data and Results: api/classes.md
+    - Reference Data and Results: api/types.md
 
 markdown_extensions:
   - abbr

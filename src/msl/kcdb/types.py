@@ -1,4 +1,8 @@
-"""Reference data and Results classes for the KCDB API."""
+"""Reference data and Results classes for the KCDB API.
+
+These classes represent the `xs:complexType` and `xs:simpleType` definitions in the
+[KCDB XSD Schema](https://www.bipm.org/api/kcdb/cmc/searchData/xsdSchema){:target="_blank"}.
+"""
 
 from __future__ import annotations
 

@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from msl.kcdb import ChemistryBiology, Physics, Radiation
-from msl.kcdb.classes import Country, MetrologyArea
+from msl.kcdb.types import Country, MetrologyArea
 
 
 class TestPhysics:

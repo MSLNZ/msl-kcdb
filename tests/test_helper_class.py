@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from msl.kcdb.classes import Country, ReferenceData, Service
 from msl.kcdb.kcdb import to_countries, to_label, to_physics_code
+from msl.kcdb.types import Country, ReferenceData, Service
 
 if TYPE_CHECKING:
     from collections.abc import Iterable

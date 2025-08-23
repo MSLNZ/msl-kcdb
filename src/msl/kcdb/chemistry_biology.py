@@ -4,14 +4,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .classes import Analyte, Category, Domain, ResultsChemistryBiology
 from .kcdb import KCDB, check_page_info, to_countries, to_label
+from .types import Analyte, Category, Domain, ResultsChemistryBiology
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from datetime import date
 
-    from .classes import Country, MetrologyArea
+    from .types import Country, MetrologyArea
 
 
 class ChemistryBiology(KCDB):
@@ -24,7 +24,7 @@ class ChemistryBiology(KCDB):
         """Return all Chemistry and Biology analytes.
 
         Returns:
-            A list of [Analyte][msl.kcdb.classes.Analyte]s.
+            A list of [Analyte][msl.kcdb.types.Analyte]s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/analyte")
         response.raise_for_status()
@@ -34,7 +34,7 @@ class ChemistryBiology(KCDB):
         """Return all Chemistry and Biology categories.
 
         Returns:
-            A list of [Category][msl.kcdb.classes.Category]'s.
+            A list of [Category][msl.kcdb.types.Category]'s.
         """
         response = self.get(f"{KCDB.BASE_URL}/referenceData/category")
         response.raise_for_status()

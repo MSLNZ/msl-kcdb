@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from msl.kcdb import Physics
 
 if TYPE_CHECKING:
-    from msl.kcdb.classes import ResultPhysics
+    from msl.kcdb.types import ResultPhysics
 
 
 physics = Physics()
