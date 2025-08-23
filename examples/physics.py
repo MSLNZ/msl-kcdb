@@ -22,8 +22,7 @@ branches = [b for ma in metrology_areas for b in physics.branches(ma)]
 print(f"  There are {len(branches)} branches")
 
 #
-# Search the "General Physics" database for NMIs that are capable of performing
-# fibre-optic measurements and print some information about each NMI
+# Search the "General Physics" database for NMIs that are capable of performing fibre-optic measurements
 #
 results: list[ResultPhysics] = []
 for branch in physics.filter(branches, "Fibre optics"):
@@ -38,6 +37,9 @@ for branch in physics.filter(branches, "Fibre optics"):
         results.extend(result.data)
         page += 1
 
-print(f"There are {len(results)} NMIs with fibre-optic capabilities...")
+#
+# Print the results using the `nmi_code` attribute of each result as the sorting parameter
+#
+print(f"There are {len(results)} results from NMIs with fibre-optic capabilities...")
 for r in sorted(results, key=lambda r: r.nmi_code):
     print(f"  {r.nmi_code}: {r.kcdb_code}, {r.individual_service_value}")
