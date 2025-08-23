@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
@@ -816,7 +816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/classes/" class="md-nav__link">
+      <a href="../../api/types/" class="md-nav__link">
         
   
   
@@ -914,7 +914,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">msl.kcdb</span><span class="w"> </span><span class="kn">import</span> <span class="n">Physics</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">msl.kcdb.classes</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResultPhysics</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">msl.kcdb.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResultPhysics</span>
 
 
 <span class="n">physics</span> <span class="o">=</span> <span class="n">Physics</span><span class="p">()</span>
@@ -929,8 +929,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">branches</span><span class="p">)</span><span class="si">}</span><span class="s2"> branches&quot;</span><span class="p">)</span>
 
 <span class="c1">#</span>
-<span class="c1"># Search the &quot;General Physics&quot; database for NMIs that are capable of performing</span>
-<span class="c1"># fibre-optic measurements and print some information about each NMI</span>
+<span class="c1"># Search the &quot;General Physics&quot; database for NMIs that are capable of performing fibre-optic measurements</span>
 <span class="c1">#</span>
 <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ResultPhysics</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="n">physics</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">branches</span><span class="p">,</span> <span class="s2">&quot;Fibre optics&quot;</span><span class="p">):</span>
@@ -945,7 +944,10 @@
         <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="n">page</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> NMIs with fibre-optic capabilities...&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1"># Print the results using the `nmi_code` attribute of each result as the sorting parameter</span>
+<span class="c1">#</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> results from NMIs with fibre-optic capabilities...&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">nmi_code</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">nmi_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">kcdb_code</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">individual_service_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -954,7 +956,7 @@
 <div class="highlight"><pre><span></span><code>Get some reference data for General physics...
   There are 7 metrology areas
   There are 32 branches
-There are 122 NMIs with fibre-optic capabilities...
+There are 122 results from NMIs with fibre-optic capabilities...
   BelGIM: COOMET-PR-BY-000007P6-1, Fibre optic power meter
   BelGIM: COOMET-PR-BY-000007P5-1, Fibre optic power meter
   CENAM: SIM-PR-MX-00000GET-1, Fibre optic power meter
@@ -1164,7 +1166,8 @@ There are 122 NMIs with fibre-optic capabilities...
   
 </div>
       
-        <div class="md-social">
+        
+<div class="md-social">
   
     
     
