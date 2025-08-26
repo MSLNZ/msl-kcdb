@@ -905,7 +905,7 @@
 <h1 id="physics">Physics<a class="headerlink" href="#physics" title="Permanent link">¤</a></h1>
 <p>Example script showing how to use the <a class="autorefs autorefs-internal" title="            Physics" href="../../api/general_physics/#msl.kcdb.general_physics.Physics">Physics</a> class to extract information from the <abbr title="Key Comparison Database">KCDB</abbr>.</p>
 <h2 id="script">Script<a class="headerlink" href="#script" title="Permanent link">¤</a></h2>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Search the &quot;General Physics&quot; metrology area of the KCDB.&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Search the &quot;General Physics&quot; metrology domain of the KCDB.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
@@ -920,7 +920,7 @@
 <span class="n">physics</span> <span class="o">=</span> <span class="n">Physics</span><span class="p">()</span>
 
 <span class="c1">#</span>
-<span class="c1"># Generate a list of all possible branches for the &quot;General Physics&quot; metrology area</span>
+<span class="c1"># Generate a list of all possible branches for the &quot;General Physics&quot; metrology domain</span>
 <span class="c1">#</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Get some reference data for </span><span class="si">{</span><span class="n">physics</span><span class="o">.</span><span class="n">DOMAIN</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 <span class="n">metrology_areas</span> <span class="o">=</span> <span class="n">physics</span><span class="o">.</span><span class="n">metrology_areas</span><span class="p">()</span>
