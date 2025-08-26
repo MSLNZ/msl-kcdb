@@ -15,6 +15,6 @@ Three classes are available to search the three metrology domains
 * [Physics][msl.kcdb.general_physics.Physics] &mdash; Search the General Physics database
 * [Radiation][msl.kcdb.ionizing_radiation.Radiation] &mdash; Search the Ionizing Radiation database
 
-See the [examples][] on how to use each of these classes to extract information from the KCDB. The example scripts are also available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/examples){:target="_blank"}.
+See the [examples][] on how to use each of these classes to extract information from the KCDB. Example scripts are also available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/examples){:target="_blank"}.
 
 The classes are based on version `1.0.9` of the [KCDB XSD Schema](https://www.bipm.org/api/kcdb/cmc/searchData/xsdSchema){:target="_blank"}. Should the KCDB API change, please open an [issue](https://github.com/MSLNZ/msl-kcdb/issues){:target="_blank"}.

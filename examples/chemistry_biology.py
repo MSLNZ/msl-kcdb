@@ -1,11 +1,11 @@
-"""Search the "Chemistry and Biology" metrology area of the KCDB."""
+"""Search the "Chemistry and Biology" metrology domain of the KCDB."""
 
 from msl.kcdb import ChemistryBiology
 
 chem_bio = ChemistryBiology()
 
 #
-# Get all reference data for the "Chemistry and Biology" metrology area
+# Get all reference data for the "Chemistry and Biology" metrology domain
 #
 print(f"Getting all reference data for {chem_bio.DOMAIN.name}...")
 countries = chem_bio.countries()

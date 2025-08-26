@@ -1,11 +1,11 @@
-"""Search the "Ionizing Radiation" metrology area of the KCDB."""
+"""Search the "Ionizing Radiation" metrology domain of the KCDB."""
 
 from msl.kcdb import Radiation
 
 radiation = Radiation()
 
 #
-# Get all reference data for the "Ionizing Radiation" metrology area
+# Get all reference data for the "Ionizing Radiation" metrology domain
 #
 print(f"Getting all reference data for {radiation.DOMAIN.name}...")
 metrology_areas = radiation.metrology_areas()

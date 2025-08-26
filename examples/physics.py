@@ -1,4 +1,4 @@
-"""Search the "General Physics" metrology area of the KCDB."""
+"""Search the "General Physics" metrology domain of the KCDB."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 physics = Physics()
 
 #
-# Generate a list of all possible branches for the "General Physics" metrology area
+# Generate a list of all possible branches for the "General Physics" metrology domain
 #
 print(f"Get some reference data for {physics.DOMAIN.name}...")
 metrology_areas = physics.metrology_areas()
