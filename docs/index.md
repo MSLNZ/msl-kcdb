@@ -2,11 +2,27 @@
 Search the key comparison database, [KCDB](https://www.bipm.org/kcdb/cmc/advanced-search){:target="_blank"}, that is provided by the International Bureau of Weights and Measures, [BIPM](https://www.bipm.org/en/){:target="_blank"}.
 
 ## Install
-`msl-kcdb` is available for installation via the [Python Package Index](https://pypi.org/){:target="_blank"} and may be installed with [pip](https://pip.pypa.io/en/stable/){:target="_blank"}
+`msl-kcdb` is available at the [Python Package Index](https://pypi.org/project/msl-kcdb/){:target="_blank"}. It can be installed using a variety of package managers
 
-```console
-pip install msl-kcdb
-```
+=== "pip"
+    ```console
+    pip install msl-kcdb
+    ```
+
+=== "uv"
+    ```console
+    uv add msl-kcdb
+    ```
+
+=== "poetry"
+    ```console
+    poetry add msl-kcdb
+    ```
+
+=== "pdm"
+    ```console
+    pdm add msl-kcdb
+    ```
 
 ## User Guide
 Three classes are available to search the three metrology domains

@@ -64,6 +64,7 @@ nav:
     - Reference Data and Results: api/types.md
 
 markdown_extensions:
+  - admonition
   - abbr
   - attr_list  # enables: [link](url){:target="_blank"}
   - pymdownx.snippets:  # enables: --8<--
@@ -72,6 +73,8 @@ markdown_extensions:
         - includes/abbreviations.md
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true  # tabs look better on narrower screen sizes (like mobile)
   - toc:
       permalink: "¤"
 
