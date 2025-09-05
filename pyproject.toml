@@ -36,7 +36,7 @@ classifiers = [
 ]
 
 [project.urls]
-Changelog = "https://mslnz.github.io/msl-kcdb/about/release-notes/"
+Changelog = "https://mslnz.github.io/msl-kcdb/dev/release-notes/"
 Documentation = "https://mslnz.github.io/msl-kcdb/"
 Homepage = "https://mslnz.github.io/msl-kcdb/"
 Issues = "https://github.com/MSLNZ/msl-kcdb/issues"
