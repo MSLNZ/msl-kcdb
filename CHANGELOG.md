@@ -1,3 +1,7 @@
 # Release Notes
 
-## 0.1.0 (in development)
+---
+
+## 1.0.0 (2025-09-05)
+
+Initial release.
