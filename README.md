@@ -9,7 +9,7 @@
 Search the key comparison database, [KCDB](https://www.bipm.org/kcdb/), that is provided by the International Bureau of Weights and Measures, [BIPM](https://www.bipm.org/en/).
 
 ## Install
-`msl-kcdb` is available for installation via the [Python Package Index](https://pypi.org/) and may be installed with [pip](https://pip.pypa.io/en/stable/)
+`msl-kcdb` is available at the [Python Package Index](https://pypi.org/project/msl-kcdb/) and can be installed with `pip`
 
 ```console
 pip install msl-kcdb
