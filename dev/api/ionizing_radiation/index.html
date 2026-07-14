@@ -2476,7 +2476,8 @@ Uses the <code>label</code> and <code>value</code> attributes of each item in <c
     <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">page</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">page_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">show_table</span><span class="o">=</span><span class="kc">False</span>
+    <span class="n">show_table</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="n">Status</span><span class="o">.</span><span class="n">PUBLISHED</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -2592,6 +2593,22 @@ Uses the <code>label</code> and <code>value</code> attributes of each item in <c
                   <code>False</code>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>status</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | <a class="autorefs autorefs-internal" title="            Status (msl.kcdb.types.Status)" href="../types/#msl.kcdb.types.Status">Status</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><abbr title="Calibration and Measurement Capabilities">CMC</abbr> status.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="msl.kcdb.types.Status.PUBLISHED">PUBLISHED</span></code>
+            </td>
+          </tr>
       </tbody>
     </table>
 
@@ -2645,7 +2662,8 @@ Uses the <code>label</code> and <code>value</code> attributes of each item in <c
     <span class="n">public_date_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">show_table</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">source</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -2907,6 +2925,22 @@ Uses the <code>label</code> and <code>value</code> attributes of each item in <c
             <td>
               <div class="doc-md-description">
                 <p>Source label. <em>Example:</em> <code>"2"</code></p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>status</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | <a class="autorefs autorefs-internal" title="            Status (msl.kcdb.types.Status)" href="../types/#msl.kcdb.types.Status">Status</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p><abbr title="Calibration and Measurement Capabilities">CMC</abbr> status.</p>
               </div>
             </td>
             <td>
