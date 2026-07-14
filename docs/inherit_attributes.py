@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, cast, override
+from typing import TYPE_CHECKING, cast, override
 
 from griffe import Class, DocstringSectionKind, Extension
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from griffe import DocstringAttribute, GriffeLoader, Module, Object
 
 
@@ -40,6 +42,6 @@ class InheritAttributes(Extension):
     """Custom mkdocs extension to inherit the `Attributes:` section of the base class."""
 
     @override
-    def on_package_loaded(self, *, pkg: Module, loader: GriffeLoader, **kwargs: Any) -> None:
+    def on_package(self, *, pkg: Module, loader: GriffeLoader, **kwargs: Any) -> None:
         """Inherit the Attributes section from parent classes after the whole package is loaded."""
         return _inherit_attributes(pkg)
