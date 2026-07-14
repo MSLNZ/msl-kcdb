@@ -371,7 +371,7 @@ class Results:
         page_size: The page size that was requested.
         total_elements: Total number of elements available (in all pages).
         total_pages: Total number of pages.
-        version_api_kcdb: KCDB API version. _Example:_ `"1.0.9"`
+        version_api_kcdb: KCDB API version. _Example:_ `"1.0.13"`
     """
 
     def __init__(self, kwargs: dict[str, Any]) -> None:
@@ -551,7 +551,7 @@ class ResultPhysics(ResultCommon):
         instrument: Instrument. _Example:_ `"Illuminance meter"`
         instrument_method: Instrument method. _Example:_ `"Standard lamp"`
         international_standard: International standard. _Example:_ `"EURAMET Cg19, ISO 8655-6"`
-        kcdb_service_category: KCDB service category. _Example:_ `"PR/Photo/1.2.1"`
+        kcdb_service_category: KCDB service category. _Example:_ `"PR/Photo-1.2.1"`
         parameters: Parameters list with name and value.
         physics_code: Physics code. _Example:_ `"1.2.1"`
         service_value: Service value. _Example:_ `"Photometry"`

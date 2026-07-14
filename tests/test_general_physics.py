@@ -120,10 +120,10 @@ class TestPhysics:
 
         assert str(physics) == (
             "ResultsPhysics(number_of_elements=1, page_number=0, page_size=100, "
-            "total_elements=1, total_pages=1, version_api_kcdb='1.0.9')"
+            "total_elements=1, total_pages=1, version_api_kcdb='1.0.13')"
         )
 
-        assert physics.version_api_kcdb == "1.0.9"
+        assert physics.version_api_kcdb == "1.0.13"
         assert physics.page_number == 0
         assert physics.page_size == 100
         assert physics.number_of_elements == 1
@@ -155,8 +155,16 @@ class TestPhysics:
         assert data.cmc_uncertainty.lower_limit == 3.0
         assert data.cmc_uncertainty.upper_limit == 3.0
         assert data.cmc_uncertainty.unit == "%"
-        assert data.cmc_base_unit is None
-        assert data.cmc_uncertainty_base_unit is None
+        assert data.cmc_base_unit is not None
+        assert str(data.cmc_base_unit) == "ResultUnit(lower_limit=None, unit='X/lx', upper_limit=None)"
+        assert data.cmc_base_unit.lower_limit is None
+        assert data.cmc_base_unit.unit == "X/lx"
+        assert data.cmc_base_unit.upper_limit is None
+        assert data.cmc_uncertainty_base_unit is not None
+        assert str(data.cmc_uncertainty_base_unit) == "ResultUnit(lower_limit=None, unit='X/lx', upper_limit=None)"
+        assert data.cmc_uncertainty_base_unit.lower_limit is None
+        assert data.cmc_uncertainty_base_unit.unit == "X/lx"
+        assert data.cmc_uncertainty_base_unit.upper_limit is None
         assert data.confidence_level == 95
         assert data.coverage_factor == 2.3
         assert data.uncertainty_equation is not None
@@ -180,7 +188,7 @@ class TestPhysics:
         assert data.sub_service_value == "Illuminance responsivity"
         assert data.individual_service_value == "Tungsten source"
         assert data.physics_code == "1.2.1"
-        assert data.kcdb_service_category == "PR/Photo/1.2.1"
+        assert data.kcdb_service_category == "PR/Photo-1.2.1"
         assert data.instrument == "Illuminance meter"
         assert data.instrument_method == "Standard lamp"
         assert len(data.parameters) == 2
