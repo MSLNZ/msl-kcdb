@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from msl.kcdb.kcdb import KCDB
@@ -32,6 +34,19 @@ class TestKCDB:
         assert phys.name == "General physics"
         assert rad.code == "RADIATION"
         assert rad.name == "Ionizing radiation"
+
+    def test_domain_response(self) -> None:
+        """The the Response object for the 'referenceData/domain' request."""
+        response = self.kcdb.get(f"{KCDB.BASE_URL}/referenceData/domain")
+        response.raise_for_status()
+        assert response.status_code == 200
+        assert json.loads(response.data) == {
+            "domains": [
+                {"code": "CHEM-BIO", "name": "Chemistry and Biology"},
+                {"code": "PHYSICS", "name": "General physics"},
+                {"code": "RADIATION", "name": "Ionizing radiation"},
+            ]
+        }
 
     def test_invalid_page_value(self) -> None:
         """Test page value invalid."""
