@@ -4,11 +4,13 @@ from .__about__ import __version__, version_tuple
 from .chemistry_biology import ChemistryBiology
 from .general_physics import Physics
 from .ionizing_radiation import Radiation
+from .types import Status
 
 __all__ = (
     "ChemistryBiology",
     "Physics",
     "Radiation",
+    "Status",
     "__version__",
     "version_tuple",
 )

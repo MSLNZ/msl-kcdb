@@ -30,6 +30,7 @@ from .types import (
     ReferenceData,
     ResultsQuickSearch,
     Service,
+    Status,
     SubService,
 )
 
@@ -293,6 +294,7 @@ class KCDB:
         page: int = 0,
         page_size: int = 100,
         show_table: bool = False,
+        status: str | Status = Status.PUBLISHED,
     ) -> ResultsQuickSearch:
         """Perform a quick search.
 
@@ -303,6 +305,7 @@ class KCDB:
             page: Page number requested (0 means first page).
             page_size: Maximum number of elements in a page (maximum value is 10000).
             show_table: Set to `True` to return table data.
+            status: CMC status.
 
         Returns:
             The CMC quick-search results.
@@ -313,6 +316,7 @@ class KCDB:
             "page": page,
             "pageSize": page_size,
             "showTable": show_table,
+            "status": status.value if isinstance(status, Status) else status,
         }
 
         if excluded_filters:

@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from .kcdb import KCDB, check_page_info, to_countries, to_label
-from .types import Branch, Domain, Medium, Nuclide, Quantity, ResultsRadiation, Source
+from .types import Branch, Domain, Medium, Nuclide, Quantity, ResultsRadiation, Source, Status
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -100,7 +100,7 @@ class Radiation(KCDB):
             return [Quantity(branch=branch, **d) for d in data if 32 <= d["id"] < 47]  # noqa: PLR2004
         return [Quantity(branch=branch, **d) for d in data if 47 <= d["id"] < 78]  # noqa: PLR2004
 
-    def search(
+    def search(  # noqa: C901, PLR0913
         self,
         *,
         branch: str | Branch | None = None,
@@ -116,6 +116,7 @@ class Radiation(KCDB):
         quantity: str | Quantity | None = None,
         show_table: bool = False,
         source: str | Source | None = None,
+        status: str | Status | None = None,
     ) -> ResultsRadiation:
         """Perform an Ionizing Radiation search.
 
@@ -133,6 +134,7 @@ class Radiation(KCDB):
             quantity: Quantity label. _Example:_ `"1"`
             show_table: Set to `True` to return table data.
             source: Source label. _Example:_ `"2"`
+            status: CMC status.
 
         Returns:
             The CMC results for Ionizing Radiation.
@@ -173,6 +175,9 @@ class Radiation(KCDB):
 
         if source:
             request["sourceLabel"] = to_label(source)
+
+        if status:
+            request["status"] = status.value if isinstance(status, Status) else status
 
         response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/radiation",

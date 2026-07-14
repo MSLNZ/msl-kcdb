@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from msl.kcdb import ChemistryBiology, Physics, Radiation
+from msl.kcdb import ChemistryBiology, Physics, Radiation, Status
 from msl.kcdb.types import Country, MetrologyArea
 
 
@@ -116,6 +116,11 @@ class TestPhysics:
             public_date_from=date(2002, 1, 31),
             public_date_to="2020-06-30",
             show_table=True,
+            status=Status.PUBLISHED,
+            physics_code="1.2.1",
+            service="1",
+            sub_service="2",
+            individual_service="1",
         )
 
         assert str(physics) == (
@@ -141,9 +146,12 @@ class TestPhysics:
         assert data.rmo == "APMP"
         assert data.country_value == "New Zealand"
         assert data.nmi_code == "MSL"
+        assert data.nmi_identifier == 117
         assert data.nmi_name == "Measurement Standards Laboratory"
+        assert data.nmi_ror_identifier == "04022gq47"
         assert data.nmi_service_code == "MSLT.O.001, MSLT.O.016"  # cSpell: disable-line
         assert data.nmi_service_link == ""
+        assert data.nmi_wiki_data_identifier == "Q111449920"
         assert data.quantity_value == "Illuminance responsivity, tungsten source"
         assert data.cmc is not None
         assert str(data.cmc) == "ResultUnit(lower_limit=None, unit='A/lx, V/lx, reading/lx', upper_limit=None)"

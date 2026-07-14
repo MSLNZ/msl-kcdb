@@ -3,7 +3,7 @@ from http.client import HTTPException
 
 import pytest
 
-from msl.kcdb import ChemistryBiology
+from msl.kcdb import ChemistryBiology, Status
 
 
 class TestChemBio:
@@ -77,6 +77,7 @@ class TestChemBio:
             countries="JP",
             public_date_from="2005-01-31",
             public_date_to=date(2024, 6, 30),
+            status=Status.PUBLISHED,
         )
 
         assert str(chem_bio) == (
@@ -102,9 +103,12 @@ class TestChemBio:
         assert data.rmo == "APMP"
         assert data.country_value == "Japan"
         assert data.nmi_code == "NMIJ AIST"
+        assert data.nmi_identifier == 129
         assert data.nmi_name == "National Metrology Institute of Japan"
+        assert data.nmi_ror_identifier == "01703db54"
         assert data.nmi_service_code == "5-01-02"
         assert data.nmi_service_link == ""
+        assert data.nmi_wiki_data_identifier == "Q1076542"
         assert data.quantity_value == "Mass fraction"
         assert data.cmc is not None
         assert str(data.cmc) == "ResultUnit(lower_limit=0.001, unit='µg/kg', upper_limit=10.0)"

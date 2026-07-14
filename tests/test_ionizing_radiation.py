@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from msl.kcdb import ChemistryBiology, Physics, Radiation
+from msl.kcdb import ChemistryBiology, Physics, Radiation, Status
 from msl.kcdb.types import Branch, Country, MetrologyArea
 
 
@@ -136,6 +136,7 @@ class TestRadiation:
             countries=Country(id=1, label="JP", value="Japan"),
             public_date_from=date(2005, 1, 31),
             public_date_to="2024-06-30",
+            status=Status.PUBLISHED,
         )
 
         assert str(radiation) == (
@@ -161,9 +162,12 @@ class TestRadiation:
         assert data.rmo == "APMP"
         assert data.country_value == "Japan"
         assert data.nmi_code == "NMIJ AIST"
+        assert data.nmi_identifier == 129
         assert data.nmi_name == "National Metrology Institute of Japan"
+        assert data.nmi_ror_identifier == "01703db54"
         assert data.nmi_service_code == "APM-RAD-NMIJ/AIST-2144"
         assert data.nmi_service_link == ""
+        assert data.nmi_wiki_data_identifier == "Q1076542"
         assert data.quantity_value == "Activity"
         assert data.cmc is not None
         assert str(data.cmc) == "ResultUnit(lower_limit=2000.0, unit='Bq', upper_limit=200000.0)"

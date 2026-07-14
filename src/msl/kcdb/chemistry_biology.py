@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from .kcdb import KCDB, check_page_info, to_countries, to_label
-from .types import Analyte, Category, Domain, ResultsChemistryBiology
+from .types import Analyte, Category, Domain, ResultsChemistryBiology, Status
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -53,6 +53,7 @@ class ChemistryBiology(KCDB):
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
+        status: str | Status | None = None,
     ) -> ResultsChemistryBiology:
         """Perform a Chemistry and Biology search.
 
@@ -67,6 +68,7 @@ class ChemistryBiology(KCDB):
             public_date_from: Minimal publication date. _Example:_ `"2005-01-31"`
             public_date_to: Maximal publication date. _Example:_ `"2020-06-30"`
             show_table: Set to `True` to return table data.
+            status: CMC status.
 
         Returns:
             The CMC results for Chemistry and Biology.
@@ -98,6 +100,9 @@ class ChemistryBiology(KCDB):
 
         if public_date_to:
             request["publicDateTo"] = str(public_date_to)
+
+        if status:
+            request["status"] = status.value if isinstance(status, Status) else status
 
         response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/chemistryAndBiology",
