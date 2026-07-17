@@ -68,7 +68,7 @@ class Physics(KCDB):
         assert sub_service.id in [104, 151]  # noqa: S101
         return []
 
-    def search(  # noqa: C901, PLR0913
+    def search(  # noqa: PLR0913
         self,
         metrology_area: str | MetrologyArea,
         *,
@@ -83,7 +83,7 @@ class Physics(KCDB):
         public_date_to: str | date | None = None,
         service: str | Service | None = None,
         show_table: bool = False,
-        status: str | Status | None = None,
+        status: str | Status = Status.PUBLISHED,
         sub_service: str | SubService | None = None,
     ) -> ResultsPhysics:
         """Perform a General Physics search.
@@ -114,6 +114,7 @@ class Physics(KCDB):
             "page": page,
             "pageSize": page_size,
             "showTable": show_table,
+            "status": status.value if isinstance(status, Status) else status,
         }
 
         request["metrologyAreaLabel"] = to_label(metrology_area)
@@ -141,9 +142,6 @@ class Physics(KCDB):
 
         if service:
             request["serviceLabel"] = to_label(service)
-
-        if status:
-            request["status"] = status.value if isinstance(status, Status) else status
 
         if sub_service:
             request["subServiceLabel"] = to_label(sub_service)

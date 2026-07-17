@@ -100,7 +100,7 @@ class Radiation(KCDB):
             return [Quantity(branch=branch, **d) for d in data if 32 <= d["id"] < 47]  # noqa: PLR2004
         return [Quantity(branch=branch, **d) for d in data if 47 <= d["id"] < 78]  # noqa: PLR2004
 
-    def search(  # noqa: C901, PLR0913
+    def search(  # noqa: PLR0913
         self,
         *,
         branch: str | Branch | None = None,
@@ -116,7 +116,7 @@ class Radiation(KCDB):
         quantity: str | Quantity | None = None,
         show_table: bool = False,
         source: str | Source | None = None,
-        status: str | Status | None = None,
+        status: str | Status = Status.PUBLISHED,
     ) -> ResultsRadiation:
         """Perform an Ionizing Radiation search.
 
@@ -145,6 +145,7 @@ class Radiation(KCDB):
             "page": page,
             "pageSize": page_size,
             "showTable": show_table,
+            "status": status.value if isinstance(status, Status) else status,
         }
 
         request["metrologyAreaLabel"] = to_label(metrology_area)
@@ -175,9 +176,6 @@ class Radiation(KCDB):
 
         if source:
             request["sourceLabel"] = to_label(source)
-
-        if status:
-            request["status"] = status.value if isinstance(status, Status) else status
 
         response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/radiation",

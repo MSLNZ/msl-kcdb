@@ -53,7 +53,7 @@ class ChemistryBiology(KCDB):
         public_date_from: str | date | None = None,
         public_date_to: str | date | None = None,
         show_table: bool = False,
-        status: str | Status | None = None,
+        status: str | Status = Status.PUBLISHED,
     ) -> ResultsChemistryBiology:
         """Perform a Chemistry and Biology search.
 
@@ -79,6 +79,7 @@ class ChemistryBiology(KCDB):
             "page": page,
             "pageSize": page_size,
             "showTable": show_table,
+            "status": status.value if isinstance(status, Status) else status,
         }
 
         request["metrologyAreaLabel"] = to_label(metrology_area)
@@ -100,9 +101,6 @@ class ChemistryBiology(KCDB):
 
         if public_date_to:
             request["publicDateTo"] = str(public_date_to)
-
-        if status:
-            request["status"] = status.value if isinstance(status, Status) else status
 
         response = self.post(
             f"{KCDB.BASE_URL}/cmc/searchData/chemistryAndBiology",
