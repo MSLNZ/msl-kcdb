@@ -14,6 +14,7 @@ __pycache__/
 
 # Root files
 /uv.lock
+/compare.json
 
 # Auto-generated during builds
 /src/msl/kcdb/_version.py

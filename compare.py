@@ -1,12 +1,7 @@
-"""Download the XML schema and compare with the definitions in this package."""
+"""Download the JSON schema and compare with the definitions in this package."""
 
 # cSpell: ignore annotationlib
 from __future__ import annotations
-
-import json
-import re
-from typing import Any
-from urllib.request import urlopen
 
 try:
     from annotationlib import get_annotations
@@ -14,15 +9,27 @@ except ModuleNotFoundError:
     msg = "Requires the annotationlib module which was added in Python 3.14"
     raise ModuleNotFoundError(msg) from None
 
+import json
+import re
+from pathlib import Path
+from typing import Any
+from urllib.request import urlopen
+
 from msl.kcdb import ChemistryBiology, Physics, Radiation, types
 from msl.kcdb.kcdb import KCDB
 
-response = urlopen("https://www.bipm.org/api/kcdb/v3/api-docs", timeout=10)
-if response.status != 200:  # noqa: PLR2004
-    msg = "Did not return HTTP 200 status code"
-    raise RuntimeError(msg)
+path = Path("compare.json")
+if path.exists():
+    data = path.read_bytes()
+else:
+    response = urlopen("https://www.bipm.org/api/kcdb/v3/api-docs", timeout=10)
+    if response.status != 200:  # noqa: PLR2004
+        msg = "Did not return HTTP 200 status code"
+        raise RuntimeError(msg)
+    data = response.read()
+    _ = path.write_bytes(data)
 
-api = json.loads(response.read())
+api = json.loads(data)
 schemas = api["components"]["schemas"]
 
 renamed_map = {
@@ -109,9 +116,10 @@ for k, v in schemas.items():
         assert v["properties"]["referenceData"]["items"]["$ref"] == "#/components/schemas/ReferenceData", v  # noqa: S101
         continue
 
+    msl: dict[str, str]
     if k in search_map:
         api = {k.removesuffix("_label"): v for k, v in convert_properties(v["properties"]).items()}
-        ours = {
+        msl = {
             k: v.removesuffix(" | None")
             .removesuffix(" | Analyte")
             .removesuffix(" | Category")
@@ -131,22 +139,20 @@ for k, v in schemas.items():
             for k, v in search_map[k].__annotations__.items()
             if k != "return"
         }
-        ours = dict(sorted(ours.items()))
-        if api != ours:
-            msg = f"Different for {k!r}\n\nAPI={api}\n\nMSL={ours}"
+        msl = dict(sorted(msl.items()))
+        if api != msl:
+            msg = f"Different for {k!r}\n\nAPI={api}\n\nMSL={msl}"
             raise RuntimeError(msg)
         continue
 
     cls = renamed_map[k] if k in renamed_map else getattr(types, k)
-
-    api = convert_properties(v["properties"])
-
-    msl: dict[str, str] = {}
+    msl = {}
     for obj in cls.__mro__[:-1]:
         msl.update(get_annotations(obj))
     msl = dict(sorted(msl.items()))
     msl = {k: v.removesuffix(" | None") for k, v in msl.items()}
 
+    api = convert_properties(v["properties"])
     if api != msl:
         msg = f"Different for {k!r}\n\nAPI={api}\n\nMSL={msl}\n\n"
         for key, val in api.items():
