@@ -14,6 +14,7 @@ be no reason to instantiate the [KCDB][msl.kcdb.kcdb.KCDB] class directly.
 from __future__ import annotations
 
 import json as _json
+import logging
 import re
 from http.client import HTTPException
 from typing import TYPE_CHECKING, TypeVar
@@ -46,7 +47,9 @@ HEADERS: dict[str, str] = {
 }
 
 
-T = TypeVar("T", bound=ReferenceData)
+T = TypeVar("T", bound="ReferenceData")
+
+logger = logging.getLogger("msl.kcdb")
 
 
 def check_page_info(page: int, page_size: int) -> None:
@@ -100,6 +103,7 @@ def _request(
         url += "?" + "&".join(f"{key}={value}" for key, value in params.items())
 
     data = _json.dumps(json).encode("utf-8") if json else None
+    logger.debug("%s %s %s", method, url, data or "")
 
     try:
         with urlopen(Request(url, headers=HEADERS, data=data, method=method), timeout=timeout) as response:  # noqa: S310
