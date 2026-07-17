@@ -16,7 +16,7 @@ Running this script outputs the following, although, some values may change from
 Getting all reference data for Ionizing radiation...
   There are 1 metrology areas
   There are 3 branches
-  There are 171 nuclides
+  There are 174 nuclides
   There are 45 quantities
   There are 25 mediums
   There are 33 sources

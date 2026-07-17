@@ -16,7 +16,7 @@ Running this script outputs the following, although, some values may change from
 Get some reference data for General physics...
   There are 7 metrology areas
   There are 32 branches
-There are 122 results from NMIs with fibre-optic capabilities...
+There are 123 results from NMIs with fibre-optic capabilities...
   BelGIM: COOMET-PR-BY-000007P6-1, Fibre optic power meter
   BelGIM: COOMET-PR-BY-000007P5-1, Fibre optic power meter
   CENAM: SIM-PR-MX-00000GET-1, Fibre optic power meter
@@ -25,21 +25,21 @@ There are 122 results from NMIs with fibre-optic capabilities...
   CMI: EURAMET-PR-CZ-000008P7-1, Fibre optic source
   CMI: EURAMET-PR-CZ-000008P8-1, Optical spectrum analyser
   CMI: EURAMET-PR-CZ-000008P9-1, Wavelength meter
-  CMS: APMP-PR-TW-00000LD2-1, Fibre optic power meter
-  CMS: APMP-PR-TW-00000LD1-1, Fibre optic power meter
+  CMS (became CMS/ITRI): APMP-PR-TW-00000LD2-1, Fibre optic power meter
+  CMS (became CMS/ITRI): APMP-PR-TW-00000LD1-1, Fibre optic power meter
   DFM: EURAMET-PR-DK-000004ZP-1, Fibre optic source
+  DFM: EURAMET-PR-DK-000004ZO-1, Fibre optic source
   DFM: EURAMET-PR-DK-000004ZQ-1, Optical spectrum analyser
   DFM: EURAMET-PR-DK-000004ZR-1, Optical spectrum analyser
   DFM: EURAMET-PR-DK-000004ZV-1, Fibre optic power meter
-  DFM: EURAMET-PR-DK-000004ZO-1, Fibre optic source
   IO-CSIC: EURAMET-PR-ES-00000BZ0-1, Fibre optic power meter
   IO-CSIC: EURAMET-PR-ES-00000BYR-2, Dispersion slope, optical fibre
   IO-CSIC: EURAMET-PR-ES-00000BYE-4, Dispersion, optical fibre
+  IO-CSIC: EURAMET-PR-ES-00000BYB-5, Fibre optic source
   IO-CSIC: EURAMET-PR-ES-00000BYC-2, Optical spectrum analyser
   IO-CSIC: EURAMET-PR-ES-00000BYF-3, Zero dispersion wavelength, optical fibre
   IO-CSIC: EURAMET-PR-ES-00000BYQ-3, Dispersion, optical fibre
   IO-CSIC: EURAMET-PR-ES-00000BZK-1, Fibre optic power meter
-  IO-CSIC: EURAMET-PR-ES-00000BYB-4, Fibre optic source
   IO-CSIC: EURAMET-PR-ES-00000BYD-2, Optical spectrum analyser
   KRISS: APMP-PR-KR-000009CO-3, Optical spectrum analyser
   KRISS: APMP-PR-KR-000009DE-3, Length, optical fibre
@@ -54,10 +54,10 @@ There are 122 results from NMIs with fibre-optic capabilities...
   LAMETRO-ICE: SIM-PR-CR-00000NG1-2, Location offset, OTDR
   LAMETRO-ICE: SIM-PR-CR-00000NG2-2, Fibre optic power meter
   LAMETRO-ICE: SIM-PR-CR-00000NFV-2, Fibre optic source
-  LNE: EURAMET-PR-FR-00000CLU-2, Fibre optic power meter
   LNE: EURAMET-PR-FR-00000CLA-3, Optical spectrum analyser
-  LNE: EURAMET-PR-FR-00000CLS-2, Fibre optic power meter
-  LNE: EURAMET-PR-FR-00000CLT-2, Fibre optic power meter
+  LNE: EURAMET-PR-FR-00000CLS-3, Fibre optic power meter
+  LNE: EURAMET-PR-FR-00000CLT-3, Fibre optic power meter
+  LNE: EURAMET-PR-FR-00000CLU-4, Fibre optic power meter
   LNE: EURAMET-PR-FR-00000CL9-3, Fibre optic source
   METAS: EURAMET-PR-CH-00000DQA-1, Fibre optic source
   METAS: EURAMET-PR-CH-00000DQB-1, Fibre optic source
@@ -83,6 +83,7 @@ There are 122 results from NMIs with fibre-optic capabilities...
   MIKES-Aalto: EURAMET-PR-FI-000005L9-1, Fibre optic power meter
   NIM: APMP-PR-CN-00000KAZ-1, Fibre optic power meter
   NIM: APMP-PR-CN-00000KB1-1, Fibre optic source
+  NIM: APMP-PR-CN-00000NFA-1, Optical spectrum analyser
   NIM: APMP-PR-CN-00000KB0-2, Fibre optic power meter
   NIM: APMP-PR-CN-00000KB2-1, Optical spectrum analyser
   NIM: APMP-PR-CN-00000KB3-1, Optical spectrum analyser
@@ -93,15 +94,15 @@ There are 122 results from NMIs with fibre-optic capabilities...
   NIST: SIM-PR-US-00000A2N-2, Fibre optic power meter
   NMC, A*STAR: APMP-PR-SG-0000098Y-1, Optical spectrum analyser
   NMC, A*STAR: APMP-PR-SG-0000099P-1, Fibre optic power meter
-  NMC, A*STAR: APMP-PR-SG-0000098Z-1, Optical spectrum analyser
   NMC, A*STAR: APMP-PR-SG-0000099Q-1, Fibre optic power meter
+  NMC, A*STAR: APMP-PR-SG-0000098Z-1, Optical spectrum analyser
   NMC, A*STAR: APMP-PR-SG-0000099R-1, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005SY-1, Fibre optic power meter
+  NMIJ AIST: APMP-PR-JP-000005T0-1, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005SU-2, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005SV-2, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005SX-2, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005SZ-1, Fibre optic power meter
-  NMIJ AIST: APMP-PR-JP-000005T0-1, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005ST-2, Fibre optic power meter
   NMIJ AIST: APMP-PR-JP-000005SW-2, Fibre optic power meter
   NMIM: APMP-PR-MY-00000830-1, Fibre optic power meter
@@ -120,10 +121,10 @@ There are 122 results from NMIs with fibre-optic capabilities...
   RISE: EURAMET-PR-SE-00000AZ2-1, Fibre optic source
   RISE: EURAMET-PR-SE-00000AZN-1, Fibre optic power meter
   RISE: EURAMET-PR-SE-00000AZO-1, Fibre optic power meter
-  RISE: EURAMET-PR-SE-00000AZ1-1, Fibre optic source
-  RISE: EURAMET-PR-SE-00000AZP-1, Fibre optic power meter
   RISE: EURAMET-PR-SE-00000AYX-1, Fibre optic source
   RISE: EURAMET-PR-SE-00000AZ0-1, Optical spectrum analyser
+  RISE: EURAMET-PR-SE-00000AZ1-1, Fibre optic source
+  RISE: EURAMET-PR-SE-00000AZP-1, Fibre optic power meter
   SMU: EURAMET-PR-SK-0000054W-1, Fibre optic source
   SMU: EURAMET-PR-SK-0000054X-1, Optical spectrum analyser
   VNIIOFI: COOMET-PR-RU-00000DLD-1, Dispersion, optical fibre
