@@ -4,9 +4,11 @@ Example script showing how to use the [Physics][msl.kcdb.general_physics.Physics
 
 ## Script
 
+<!-- fmt: off -->
 ```python
 --8<-- "examples/physics.py"
 ```
+<!-- fmt: on -->
 
 ## Output
 

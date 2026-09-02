@@ -4,9 +4,11 @@ Example script showing how to use the [Radiation][msl.kcdb.ionizing_radiation.Ra
 
 ## Script
 
+<!-- fmt: off -->
 ```python
 --8<-- "examples/ionizing_radiation.py"
 ```
+<!-- fmt: on -->
 
 ## Output
 

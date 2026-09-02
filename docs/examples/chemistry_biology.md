@@ -4,9 +4,11 @@ Example script showing how to use the [ChemistryBiology][msl.kcdb.chemistry_biol
 
 ## Script
 
+<!-- fmt: off -->
 ```python
 --8<-- "examples/chemistry_biology.py"
 ```
+<!-- fmt: on -->
 
 ## Output
 
