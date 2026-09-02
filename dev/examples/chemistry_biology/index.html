@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -998,51 +998,54 @@
 <h1 id="chemistry-and-biology">Chemistry and Biology<a class="headerlink" href="#chemistry-and-biology" title="Permanent link">¤</a></h1>
 <p>Example script showing how to use the <a class="autorefs autorefs-internal" title="            ChemistryBiology" href="../../api/chemistry_biology/#msl.kcdb.chemistry_biology.ChemistryBiology">ChemistryBiology</a> class to extract information from the <abbr title="Key Comparison Database">KCDB</abbr>.</p>
 <h2 id="script">Script<a class="headerlink" href="#script" title="Permanent link">¤</a></h2>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Search the &quot;Chemistry and Biology&quot; metrology domain of the KCDB.&quot;&quot;&quot;</span>
+<!-- fmt: off -->
+<div class="highlight"><pre><span></span><code><span class="sd">"""Search the "Chemistry and Biology" metrology domain of the KCDB."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">msl.kcdb</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChemistryBiology</span>
 
 <span class="n">chem_bio</span> <span class="o">=</span> <span class="n">ChemistryBiology</span><span class="p">()</span>
 
 <span class="c1">#</span>
-<span class="c1"># Get all reference data for the &quot;Chemistry and Biology&quot; metrology domain</span>
+<span class="c1"># Get all reference data for the "Chemistry and Biology" metrology domain</span>
 <span class="c1">#</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting all reference data for </span><span class="si">{</span><span class="n">chem_bio</span><span class="o">.</span><span class="n">DOMAIN</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Getting all reference data for </span><span class="si">{</span><span class="n">chem_bio</span><span class="o">.</span><span class="n">DOMAIN</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
 <span class="n">countries</span> <span class="o">=</span> <span class="n">chem_bio</span><span class="o">.</span><span class="n">countries</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)</span><span class="si">}</span><span class="s2"> countries&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)</span><span class="si">}</span><span class="s2"> countries"</span><span class="p">)</span>
 <span class="n">analytes</span> <span class="o">=</span> <span class="n">chem_bio</span><span class="o">.</span><span class="n">analytes</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">analytes</span><span class="p">)</span><span class="si">}</span><span class="s2"> analytes&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">analytes</span><span class="p">)</span><span class="si">}</span><span class="s2"> analytes"</span><span class="p">)</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="n">chem_bio</span><span class="o">.</span><span class="n">categories</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span><span class="si">}</span><span class="s2"> categories&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  There are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span><span class="si">}</span><span class="s2"> categories"</span><span class="p">)</span>
 
 <span class="c1">#</span>
-<span class="c1"># Find all analytes that are related to &quot;boron&quot;</span>
+<span class="c1"># Find all analytes that are related to "boron"</span>
 <span class="c1">#</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All analytes related to &#39;boron&#39;...&quot;</span><span class="p">)</span>
-<span class="n">boron_analytes</span> <span class="o">=</span> <span class="n">chem_bio</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">analytes</span><span class="p">,</span> <span class="s2">&quot;boron&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"All analytes related to 'boron'..."</span><span class="p">)</span>
+<span class="n">boron_analytes</span> <span class="o">=</span> <span class="n">chem_bio</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">analytes</span><span class="p">,</span> <span class="s2">"boron"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">analyte</span> <span class="ow">in</span> <span class="n">boron_analytes</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">analyte</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">analyte</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1">#</span>
-<span class="c1"># Search the &quot;Chemistry and Biology&quot; database for NMIs that are capable of</span>
-<span class="c1"># performing measurements with &quot;boron&quot; analytes and print some information</span>
+<span class="c1"># Search the "Chemistry and Biology" database for NMIs that are capable of</span>
+<span class="c1"># performing measurements with "boron" analytes and print some information</span>
 <span class="c1"># about each NMI</span>
 <span class="c1">#</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All NMIs that have capabilities with &#39;boron&#39; analytes...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"All NMIs that have capabilities with 'boron' analytes..."</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">analyte</span> <span class="ow">in</span> <span class="n">boron_analytes</span><span class="p">:</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">chem_bio</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">analyte</span><span class="o">=</span><span class="n">analyte</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">nmi_code</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">category_value</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">nmi_service_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">nmi_code</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">category_value</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">nmi_service_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
+<!-- fmt: on -->
+
 <h2 id="output">Output<a class="headerlink" href="#output" title="Permanent link">¤</a></h2>
 <p>Running this script outputs the following, although, some values may change from what you observe when you run this script since information in the <abbr title="Key Comparison Database">KCDB</abbr> is continually changing.</p>
 <div class="highlight"><pre><span></span><code>Getting all reference data for Chemistry and Biology...
   There are 104 countries
   There are 1754 analytes
   There are 15 categories
-All analytes related to &#39;boron&#39;...
-  Analyte(id=2, label=&#39;boron&#39;, value=&#39;boron&#39;)
-All NMIs that have capabilities with &#39;boron&#39; analytes...
+All analytes related to 'boron'...
+  Analyte(id=2, label='boron', value='boron')
+All NMIs that have capabilities with 'boron' analytes...
   NIST (Advanced materials): 8395201
   NIST (Advanced materials): 8395202
   NIST (Advanced materials): 8395206
@@ -1190,7 +1193,7 @@ All NMIs that have capabilities with &#39;boron&#39; analytes...
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.footer", "navigation.indexes", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search.highlight", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
