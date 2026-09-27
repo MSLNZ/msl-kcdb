@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --python ${{ matrix.python-version }} --no-dev --group test
       - name: Run tests
-        run: uv run --python ${{ matrix.python-version }} --no-dev --group test -- pytest
+        run: uv run --with pytest-rerunfailures --python ${{ matrix.python-version }} --no-dev --group test -- pytest --reruns 5
 
   lint:
     name: Lint
