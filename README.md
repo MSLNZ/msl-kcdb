@@ -16,13 +16,26 @@ pip install msl-kcdb
 ```
 
 ## User Guide
-Three classes are available to search the three metrology domains
+The following classes are available to (synchronously) search the three metrology domains
 
-* [ChemistryBiology](https://mslnz.github.io/msl-kcdb/latest/api/chemistry_biology/) &mdash; Search the Chemistry and Biology database
-* [Physics](https://mslnz.github.io/msl-kcdb/latest/api/general_physics/) &mdash; Search the General Physics database
-* [Radiation](https://mslnz.github.io/msl-kcdb/latest/api/ionizing_radiation/) &mdash; Search the Ionizing Radiation database
+* [ChemistryBiology] &mdash; Search the Chemistry and Biology database
+* [Physics] &mdash; Search the General Physics database
+* [Radiation] &mdash; Search the Ionizing Radiation database
+
+and there are asynchronous (use of `async`/`await`) alternatives
+
+* [AsyncChemistryBiology]
+* [AsyncPhysics]
+* [AsyncRadiation]
 
 See the [examples](https://mslnz.github.io/msl-kcdb/latest/examples/) on how to use each of these classes to extract information from the KCDB. Example scripts are also available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/examples).
 
 ## Documentation
 The documentation for `msl-kcdb` is available [here](https://mslnz.github.io/msl-kcdb/).
+
+[ChemistryBiology]: https://mslnz.github.io/msl-kcdb/latest/api/chemistry_biology/#msl.kcdb.chemistry_biology.ChemistryBiology
+[Physics]: https://mslnz.github.io/msl-kcdb/dev/api/general_physics/#msl.kcdb.general_physics.Physics
+[Radiation]: https://mslnz.github.io/msl-kcdb/latest/api/ionizing_radiation/#msl.kcdb.ionizing_radiation.Radiation
+[AsyncChemistryBiology]: https://mslnz.github.io/msl-kcdb/latest/api/chemistry_biology/#msl.kcdb.chemistry_biology.AsyncChemistryBiology
+[AsyncPhysics]: https://mslnz.github.io/msl-kcdb/latest/api/general_physics/#msl.kcdb.general_physics.AsyncPhysics
+[AsyncRadiation]: https://mslnz.github.io/msl-kcdb/latest/api/ionizing_radiation/#msl.kcdb.ionizing_radiation.AsyncRadiation
