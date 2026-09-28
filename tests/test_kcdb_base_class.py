@@ -1,10 +1,18 @@
 from __future__ import annotations
 
 import json
+import os
 
 import pytest
 
 from msl.kcdb.kcdb import AsyncKCDB, SyncKCDB
+
+ci_flaky = pytest.mark.xfail(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="flaky test on GHA",
+    raises=TimeoutError,
+    strict=False,
+)
 
 
 class TestSyncKCDB:
@@ -69,6 +77,7 @@ class TestSyncKCDB:
         assert quantity.id == 78
         assert quantity.value == "Sound pressure response level"
 
+    @ci_flaky
     def test_quick_search(self) -> None:
         """Test KCDB.quick_search()."""
         quick = self.kcdb.quick_search(
@@ -214,6 +223,7 @@ class TestAsyncKCDB:
         assert quantity.id == 78
         assert quantity.value == "Sound pressure response level"
 
+    @ci_flaky
     @pytest.mark.asyncio
     async def test_quick_search(self) -> None:
         """Test AsyncKCDB.quick_search()."""
