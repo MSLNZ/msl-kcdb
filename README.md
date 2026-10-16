@@ -28,7 +28,7 @@ and there are asynchronous (use of `async`/`await`) alternatives
 * [AsyncPhysics]
 * [AsyncRadiation]
 
-See the [examples](https://mslnz.github.io/msl-kcdb/latest/examples/) on how to use each of these classes to extract information from the KCDB. Example scripts are also available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/examples).
+See the [examples](https://mslnz.github.io/msl-kcdb/latest/examples/) on how to use these classes to extract information from the KCDB. Example scripts are also available in the `msl-kcdb` [repository](https://github.com/MSLNZ/msl-kcdb/tree/main/examples).
 
 ## Documentation
 The documentation for `msl-kcdb` is available [here](https://mslnz.github.io/msl-kcdb/).
