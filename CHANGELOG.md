@@ -2,7 +2,7 @@
 
 ---
 
-## unreleased
+## 1.1.0 (2026-10-16)
 
 * Implement asynchronous classes [AsyncChemistryBiology][msl.kcdb.chemistry_biology.AsyncChemistryBiology], [AsyncPhysics][msl.kcdb.general_physics.AsyncPhysics] and [AsyncRadiation][msl.kcdb.ionizing_radiation.AsyncRadiation]
 * Support KCDB API version `1.0.13`
